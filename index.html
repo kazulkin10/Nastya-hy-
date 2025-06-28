@@ -5,54 +5,379 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Наша история — Википедия</title>
 
-<!-- Иконка Википедии (белый глобус) в base64 -->
+<!-- Фавиконка Википедии -->
 <link rel="icon" type="image/png"
       href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAb1BMVEUAAAD///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////9lD39FAAAAMXRSTlMAAQIDBAUGBwgJCgsMDQ4PEBESExQVFhcYGRobHB0eHyAiIyQlJicoKSorLC0uLzEzMzQ6Oj4/QDFJy9MAAAB3SURBVBjTjY+bDoMwDEQ9W2L93/9zYvYIoZBXGvpiXlOdyYU6XzGUz51UaagwDqEhOoW8MdYU6VnklLBRIoGm/Q3SRXKMyqoqh4FtSf2qcyMyiWTUfeaB++IjO1u0h6N/oYGNxERbBzPxT6kEIp2GpNfa7TuP4Q9nZqIX1SwkqcgtUuqzD0pZ+wReOxLxtmI60spGXD4A0o57HcXcpAAAAAElFTkSuQmCC"/>
 
-<!-- Мини-копия стилей Vector -->
 <style>
-/* Общие */
-html,body{margin:0;padding:0;background:#f8f9fa;color:#202122;font-family:"Linux Libertine","Times New Roman",serif}
-a{color:#0645ad;text-decoration:none}
-a:hover{text-decoration:underline}
-h1{font-size:1.7em;margin:0.6em 0 0.3em}
-h2{font-size:1.35em;border-bottom:1px solid #a2a9b1;margin:1.3em 0 0.6em}
-p{margin:0.4em 0 0.9em;line-height:1.5em}
+/* Базовые стили */
+html,body{margin:0;padding:0;background:#f8f9fa;color:#202122;font-family:"Linux Libertine","Georgia","Times New Roman",serif;overflow-x:hidden}
+a{color:#0645ad;text-decoration:none;transition:color 0.2s}
+a:hover{text-decoration:underline;color:#0b0080}
 
-/* Шапка */
-#mw-head{display:flex;align-items:center;gap:18px;background:#fff;border-bottom:1px solid #a2a9b1;padding:5px 12px;position:sticky;top:0;z-index:100}
-#w-logo{width:50px;height:50px;background:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Wikipedia-logo-v2.svg/50px-Wikipedia-logo-v2.svg.png') center/contain no-repeat}
-#site-name{font-weight:bold;font-size:22px;white-space:nowrap}
-#search-box{margin-left:auto;display:flex;align-items:center}
-#search-box input{padding:4px 6px;width:180px;border:1px solid #a2a9b1;border-radius:2px;font-family:inherit;font-size:14px}
-#search-box button{padding:4px 10px;margin-left:4px;background:#f8f9fa;border:1px solid #a2a9b1;border-radius:2px;cursor:pointer}
-#search-box button:hover{background:#eee}
+/* Анимации для заголовков */
+@keyframes fadeInDown {
+    0% { opacity: 0; transform: translateY(-30px) }
+    100% { opacity: 1; transform: translateY(0) }
+}
 
-/* Левый сайдбар */
-#mw-panel{position:fixed;top:61px;left:0;width:180px;background:#fff;border-right:1px solid #a2a9b1;padding:10px 0;font-size:14px;max-height:calc(100vh - 61px);overflow:auto}
-#mw-panel b{display:block;margin:0 0 6px 14px}
-#mw-panel ul{list-style:none;margin:0;padding:0}
-#mw-panel li{margin:4px 0;padding-left:14px}
+@keyframes fadeInUp {
+    0% { opacity: 0; transform: translateY(20px) }
+    100% { opacity: 1; transform: translateY(0) }
+}
 
-/* Основной контент */
-#content{margin-left:200px;padding:20px;max-width:920px}
+@keyframes fadeInLeft {
+    0% { opacity: 0; transform: translateX(-50px) }
+    100% { opacity: 1; transform: translateX(0) }
+}
 
-/* Инфобокс */
-.infobox{float:right;margin:0 0 1em 1em;border:1px solid #a2a9b1;background:#f9f9f9;padding:8px;width:250px;font-size:90%}
-.infobox th{text-align:center;background:#eaecf0;font-weight:bold;padding:4px 6px}
-.infobox td{padding:4px 6px}
+@keyframes slideInRight {
+    0% { opacity: 0; transform: translateX(100px) }
+    100% { opacity: 1; transform: translateX(0) }
+}
 
-/* Оглавление */
-#toc{border:1px solid #a2a9b1;background:#f8f9fa;padding:10px;font-size:14px;width:260px;margin:12px 0}
-#toc ul{list-style:none;margin:4px 0 0;padding-left:18px}
-#toc li{margin:4px 0}
+@keyframes textGlow {
+    0%, 100% { text-shadow: 0 0 5px rgba(54, 102, 204, 0.3) }
+    50% { text-shadow: 0 0 15px rgba(54, 102, 204, 0.6) }
+}
 
-/* Кнопка сюрприза */
-#surprise-btn{display:block;margin:45px auto 60px;padding:12px 26px;background:#36c;color:#fff;border:none;border-radius:4px;font-size:18px;cursor:pointer;font-family:inherit}
-#surprise-btn:hover{background:#2a4b8d}
+@keyframes float {
+    0%, 100% { transform: translateY(0px) }
+    50% { transform: translateY(-10px) }
+}
 
-/* Полноэкранный оверлей */
-#overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);color:#fff;display:flex;align-items:center;justify-content:center;font-size:54px;letter-spacing:1px;text-align:center;z-index:999;visibility:hidden;opacity:0;transition:opacity .4s}
+/* Шапка с анимацией */
+#mw-head{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    background:linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+    border-bottom:2px solid #a2a9b1;
+    padding:8px 15px;
+    position:sticky;
+    top:0;
+    z-index:100;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    animation: fadeInDown 0.8s ease-out;
+}
+
+#w-logo{
+    width:55px;
+    height:55px;
+    background:url('https://ru.wikipedia.org/static/images/project-logos/ruwiki.png') center/contain no-repeat;
+    animation: float 3s ease-in-out infinite;
+    transition: transform 0.3s ease;
+}
+
+#w-logo:hover {
+    transform: scale(1.1) rotate(5deg);
+}
+
+#site-name{
+    font-weight:bold;
+    font-size:24px;
+    white-space:nowrap;
+    background: linear-gradient(45deg, #0645ad, #36c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGlow 2s ease-in-out infinite;
+}
+
+#tagline {
+    font-size:14px;
+    color:#54595d;
+    font-style:italic;
+    animation: fadeInUp 1s ease-out 0.3s both;
+}
+
+#search-box{
+    margin-left:auto;
+    display:flex;
+    align-items:center;
+    animation: slideInRight 0.8s ease-out 0.2s both;
+}
+
+#search-box input{
+    padding:6px 10px;
+    width:200px;
+    border:2px solid #a2a9b1;
+    border-radius:20px;
+    font-family:inherit;
+    font-size:14px;
+    transition:all 0.3s ease;
+}
+
+#search-box input:focus {
+    outline:none;
+    border-color:#36c;
+    box-shadow:0 0 10px rgba(54, 102, 204, 0.3);
+    transform:scale(1.02);
+}
+
+#search-box button{
+    padding:6px 15px;
+    margin-left:8px;
+    background:linear-gradient(135deg, #36c, #0645ad);
+    color:white;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    font-weight:bold;
+    transition:all 0.3s ease;
+}
+
+#search-box button:hover{
+    transform:translateY(-2px);
+    box-shadow:0 4px 12px rgba(54, 102, 204, 0.4);
+}
+
+/* Левый сайдбар с анимацией */
+#mw-panel{
+    position:fixed;
+    top:75px;
+    left:0;
+    width:200px;
+    background:linear-gradient(180deg, #ffffff 0%, #f8f9fa 100%);
+    border-right:2px solid #a2a9b1;
+    padding:15px 0;
+    font-size:14px;
+    max-height:calc(100vh - 75px);
+    overflow:auto;
+    box-shadow:2px 0 5px rgba(0,0,0,0.1);
+    animation: fadeInLeft 0.8s ease-out 0.4s both;
+}
+
+#mw-panel b{
+    display:block;
+    margin:0 0 8px 16px;
+    color:#36c;
+    font-size:16px;
+}
+
+#mw-panel ul{
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+#mw-panel li{
+    margin:6px 0;
+    padding-left:16px;
+    transition:all 0.3s ease;
+}
+
+#mw-panel li:hover {
+    background:rgba(54, 102, 204, 0.1);
+    padding-left:20px;
+}
+
+#mw-panel a {
+    display:block;
+    padding:4px 0;
+    transition:all 0.3s ease;
+}
+
+/* Основной контент с анимацией */
+#content{
+    margin-left:220px;
+    padding:25px;
+    max-width:920px;
+    animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+/* Заголовки с анимацией */
+h1{
+    font-size:2em;
+    margin:0.6em 0 0.4em;
+    background: linear-gradient(45deg, #202122, #36c);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInDown 0.8s ease-out 0.8s both;
+}
+
+h2{
+    font-size:1.4em;
+    border-bottom:2px solid #a2a9b1;
+    margin:1.4em 0 0.7em;
+    padding-bottom:5px;
+    animation: fadeInLeft 0.6s ease-out var(--delay, 1s) both;
+    position:relative;
+}
+
+h2::after {
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:0;
+    height:2px;
+    background:linear-gradient(90deg, #36c, #0645ad);
+    animation: lineExpand 1s ease-out var(--delay, 1s) both;
+}
+
+@keyframes lineExpand {
+    to { width: 100% }
+}
+
+/* Параграфы с анимацией */
+p{
+    margin:0.5em 0 1em;
+    line-height:1.6em;
+    animation: fadeInUp 0.6s ease-out var(--delay, 1.2s) both;
+}
+
+/* Инфобокс с анимацией */
+.infobox{
+    float:right;
+    margin:0 0 1.5em 1.5em;
+    border:2px solid #a2a9b1;
+    background:linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+    padding:12px;
+    width:260px;
+    font-size:90%;
+    border-radius:8px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+    animation: slideInRight 0.8s ease-out 1s both;
+    transition: transform 0.3s ease;
+}
+
+.infobox:hover {
+    transform: translateY(-5px);
+    box-shadow:0 8px 16px rgba(0,0,0,0.15);
+}
+
+.infobox th{
+    text-align:center;
+    background:linear-gradient(135deg, #36c, #0645ad);
+    color:white;
+    font-weight:bold;
+    padding:8px;
+    border-radius:4px 4px 0 0;
+}
+
+.infobox td{
+    padding:6px 8px;
+    border-bottom:1px solid #eee;
+}
+
+/* Оглавление с анимацией */
+#toc{
+    border:2px solid #a2a9b1;
+    background:linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+    padding:15px;
+    font-size:14px;
+    width:280px;
+    margin:15px 0;
+    border-radius:8px;
+    box-shadow:0 3px 6px rgba(0,0,0,0.1);
+    animation: fadeInUp 0.8s ease-out 1.4s both;
+}
+
+#toc b {
+    color:#36c;
+    font-size:16px;
+}
+
+#toc ul{
+    list-style:none;
+    margin:6px 0 0;
+    padding-left:20px;
+}
+
+#toc li{
+    margin:6px 0;
+    transition:all 0.3s ease;
+}
+
+#toc li:hover {
+    transform:translateX(5px);
+}
+
+/* Кнопка сюрприза с анимацией */
+#surprise-btn{
+    display:block;
+    margin:50px auto 70px;
+    padding:15px 35px;
+    background:linear-gradient(135deg, #36c, #0645ad);
+    color:#fff;
+    border:none;
+    border-radius:25px;
+    font-size:20px;
+    font-weight:bold;
+    cursor:pointer;
+    font-family:inherit;
+    position:relative;
+    overflow:hidden;
+    animation: float 2s ease-in-out infinite, fadeInUp 0.8s ease-out 2s both;
+    box-shadow:0 4px 15px rgba(54, 102, 204, 0.3);
+    transition:all 0.3s ease;
+}
+
+#surprise-btn:hover{
+    transform:translateY(-3px) scale(1.05);
+    box-shadow:0 8px 25px rgba(54, 102, 204, 0.4);
+}
+
+#surprise-btn::before {
+    content:'';
+    position:absolute;
+    top:0;
+    left:-100%;
+    width:100%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition:left 0.5s;
+}
+
+#surprise-btn:hover::before {
+    left:100%;
+}
+
+/* Полноэкранный оверлей с анимацией */
+#overlay{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:linear-gradient(45deg, rgba(54, 102, 204, 0.9), rgba(6, 69, 173, 0.9));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:60px;
+    font-weight:bold;
+    letter-spacing:2px;
+    text-align:center;
+    text-shadow:0 0 20px rgba(255,255,255,0.5);
+    z-index:999;
+    visibility:hidden;
+    opacity:0;
+    transition:all 0.6s ease;
+}
+
+#overlay.show {
+    visibility:visible;
+    opacity:1;
+    animation: overlayPulse 1s ease-in-out;
+}
+
+@keyframes overlayPulse {
+    0%, 100% { transform: scale(1) }
+    50% { transform: scale(1.05) }
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    #mw-panel { display: none }
+    #content { margin-left: 20px }
+    #search-box input { width: 150px }
+    h1 { font-size: 1.6em }
+    .infobox { width: 100%; float: none; margin: 0 0 1em 0 }
+    #overlay { font-size: 36px }
+}
 </style>
 </head>
 
@@ -62,7 +387,7 @@ p{margin:0.4em 0 0.9em;line-height:1.5em}
 <div id="mw-head">
     <div id="w-logo"></div>
     <div id="site-name">Википедия</div>
-    <div style="font-size:13px;color:#54595d">— свободная энциклопедия</div>
+    <div id="tagline">— свободная энциклопедия</div>
 
     <form id="search-box" onsubmit="return false;">
         <input type="search" placeholder="Поиск по Википедии">
@@ -75,9 +400,9 @@ p{margin:0.4em 0 0.9em;line-height:1.5em}
     <b>Навигация</b>
     <ul>
         <li><a href="#Истоки">Истоки</a></li>
-        <li><a href="#Разлука">Годы&nbsp;разлуки</a></li>
-        <li><a href="#Встреча">Новая&nbsp;встреча</a></li>
-        <li><a href="#Испытание">Испытание&nbsp;дружбы</a></li>
+        <li><a href="#Разлука">Годы разлуки</a></li>
+        <li><a href="#Встреча">Новая встреча</a></li>
+        <li><a href="#Испытание">Испытание дружбы</a></li>
         <li><a href="#Сближение">Сближение</a></li>
         <li><a href="#Настоящее">Настоящее</a></li>
         <li><a href="#Наследие">Наследие</a></li>
@@ -93,10 +418,11 @@ p{margin:0.4em 0 0.9em;line-height:1.5em}
 <div class="infobox">
 <table>
 <tr><th colspan="2">Краткая информация</th></tr>
-<tr><td>Участники</td><td><b>Егор</b>, <b>Настя</b></td></tr>
-<tr><td>Начало</td><td>2018 год</td></tr>
-<tr><td>Символ</td><td>Летящий стул</td></tr>
-<tr><td>Ценности</td><td>Доверие, поддержка, смех</td></tr>
+<tr><td><b>Участники</b></td><td>Егор, Настя</td></tr>
+<tr><td><b>Начало</b></td><td>2018 год</td></tr>
+<tr><td><b>Символ</b></td><td>Летящий стул</td></tr>
+<tr><td><b>Ценности</b></td><td>Доверие, поддержка, смех</td></tr>
+<tr><td><b>Статус</b></td><td>Активная дружба</td></tr>
 </table>
 </div>
 
@@ -105,51 +431,79 @@ p{margin:0.4em 0 0.9em;line-height:1.5em}
 <b>Содержание</b>
 <ul>
 <li><a href="#Истоки">1 Истоки</a></li>
-<li><a href="#Разлука">2 Годы&nbsp;разлуки</a></li>
-<li><a href="#Встреча">3 Новая&nbsp;встреча</a></li>
-<li><a href="#Испытание">4 Испытание&nbsp;дружбы</a></li>
+<li><a href="#Разлука">2 Годы разлуки</a></li>
+<li><a href="#Встреча">3 Новая встреча</a></li>
+<li><a href="#Испытание">4 Испытание дружбы</a></li>
 <li><a href="#Сближение">5 Сближение</a></li>
 <li><a href="#Настоящее">6 Настоящее</a></li>
 <li><a href="#Наследие">7 Наследие</a></li>
 </ul>
 </div>
 
-<h2 id="Истоки">Истоки</h2>
-<p>История Егора и Насти началась во втором классе на продлёнке. Егор строил домик из парт, а Настя, разгневавшись, метнула стул — так «летящий стул» стал их первым символом.</p>
+<h2 id="Истоки" style="--delay: 1.6s">Истоки</h2>
+<p style="--delay: 1.8s">История <b>Егора и Насти</b> началась во втором классе на продлёнке. Егор увлечённо строил домик из парт и стульев, когда Настя, разгневавшись на что-то, метнула в его сторону стул. Этот неожиданный «летящий стул» стал символическим началом их необычной истории дружбы.</p>
 
-<h2 id="Разлука">Годы разлуки</h2>
-<p>После этого пути ребят разошлись: разные школы, разные компании. Однако воспоминание о необычном знакомстве жило где-то на периферии памяти.</p>
+<h2 id="Разлука" style="--delay: 2s">Годы разлуки</h2>
+<p style="--delay: 2.2s">После эпизода со стулом пути детей разошлись: они учились в разных школах и вращались в разных компаниях. Несколько лет они практически не пересекались, лишь изредка вспоминая о том странном знакомстве в продлёнке.</p>
 
-<h2 id="Встреча">Новая встреча</h2>
-<p>В пятом классе в коридоре новой школы они одновременно узнали друг друга. Фраза «Настя?… Егор?!» открыла новую главу.</p>
+<h2 id="Встреча" style="--delay: 2.4s">Новая встреча</h2>
+<p style="--delay: 2.6s">Судьбоносный момент произошёл в пятом классе, когда они встретились в коридоре новой школы. Услышав знакомое имя, Настя обернулась: <i>«Настя?»</i> — <i>«Егор?!»</i> Мгновенное узнавание пробудило воспоминания о детской «битве стульев».</p>
 
-<h2 id="Испытание">Испытание дружбы</h2>
-<p>Дружба не сложилась сразу: близкая подруга Насти — Эвелина — позже нарушила её доверие, и именно тогда рядом оказался Егор. Общий опыт предательства стал фундаментом будущей крепкой связи.</p>
+<h2 id="Испытание" style="--delay: 2.8s">Испытание дружбы</h2>
+<p style="--delay: 3s">Дружба складывалась непросто. У Насти была близкая подруга Эвелина, которой она полностью доверяла. Однако когда Эвелина предала это доверие, раскрыв Настины секреты, девочка оказалась в сложной ситуации. В этот трудный момент поддержка пришла от Егора.</p>
 
-<h2 id="Сближение">Сближение</h2>
-<p>Седьмой класс посадил их за одну парту. Танцы и тхэквондо для Насти, IT-проекты для Егора — но разговоры не смолкали, а доверие росло.</p>
+<h2 id="Сближение" style="--delay: 3.2s">Сближение</h2>
+<p style="--delay: 3.4s">Седьмой класс стал переломным: судьба посадила Егора и Настю за одну парту. Несмотря на разные увлечения — танцы и тхэквондо у Насти, IT-технологии у Егора — между ними завязались глубокие дружеские отношения, основанные на взаимном понимании и доверии.</p>
 
-<h2 id="Настоящее">Настоящее</h2>
-<p>Сейчас, в восьмом классе, они почти неразлучны: делятся идеями, поддерживают друг друга на соревнованиях, смеются над шутками, понятными только им.</p>
+<h2 id="Настоящее" style="--delay: 3.6s">Настоящее</h2>
+<p style="--delay: 3.8s">Сейчас, в восьмом классе, Егор и Настя представляют собой неразлучную пару друзей. Они делятся идеями и мечтами, поддерживают друг друга на соревнованиях и в учёбе, обмениваются сообщениями и смеются над шутками, понятными только им двоим.</p>
 
-<h2 id="Наследие">Наследие</h2>
-<p>История далека от конца. «Летящий стул» стал мостом между двумя мирами, а их дружба — примером того, как случай может перерасти в нечто дорогое и прочное.</p>
+<h2 id="Наследие" style="--delay: 4s">Наследие</h2>
+<p style="--delay: 4.2s">История их дружбы продолжается. <b>«Летящий стул»</b>, когда-то ставший причиной первого знакомства, превратился в мост между двумя мирами. Их связь стала ярким примером того, как случайность может перерасти в глубокую и прочную дружбу.</p>
 
 <!-- Кнопка-сюрприз -->
-<button id="surprise-btn">Нажмите сюда</button>
+<button id="surprise-btn">✨ Нажмите сюда ✨</button>
 
-</div><!-- /content -->
+</div>
 
 <!-- Полноэкранная надпись -->
-<div id="overlay">Настя, го&nbsp;гулять!</div>
+<div id="overlay">
+    <div>Настя, го гулять! 🌟</div>
+</div>
 
-<!-- JS -->
+<!-- JavaScript для анимаций -->
 <script>
+// Кнопка сюрприза
 document.getElementById('surprise-btn').onclick = function () {
-    const ov = document.getElementById('overlay');
-    ov.style.visibility = 'visible';
-    ov.style.opacity = '1';
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('show');
+    
+    // Закрытие при клике
+    overlay.onclick = function() {
+        overlay.classList.remove('show');
+    };
 };
+
+// Плавная прокрутка к якорям
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+
+// Параллакс-эффект для логотипа
+window.addEventListener('scroll', () => {
+    const logo = document.getElementById('w-logo');
+    const scrolled = window.pageYOffset;
+    logo.style.transform = `translateY(${scrolled * 0.2}px) rotate(${scrolled * 0.1}deg)`;
+});
 </script>
 
 </body>
