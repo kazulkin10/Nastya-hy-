@@ -629,7 +629,7 @@
             <h3>🌟 Наша миссия</h3>
             <p>Мы стремимся воспитать всесторонне развитую личность, готовую к успешной самореализации в современном мире. Наша задача — не только дать качественные знания, но и сформировать активную жизненную позицию, патриотизм и гражданственность.</p>
         </section>
-        
+    
         <aside class="sidebar">
             <div class="widget">
                 <h3>📢 Последние новости</h3>
@@ -639,4 +639,39 @@
                     <p>Подведены итоги успешно завершенного учебного года. Поздравляем всех отличников и хорошистов!</p>
                 </div>
                 <div class="news-item">
-        
+        <!-- Кнопка внизу страницы -->
+<button id="surprise-btn"
+        style="position:fixed;bottom:30px;right:30px;z-index:1000;
+               background:#e91e63;color:#fff;padding:18px 36px;
+               border:none;border-radius:30px;font-size:20px;
+               font-weight:bold;box-shadow:0 4px 16px rgba(233,30,99,0.2);
+               cursor:pointer;transition:.3s;">
+    Нажми если ты красивая
+</button>
+
+<!-- Полноэкранное сообщение -->
+<div id="surprise-overlay"
+     style="position:fixed;top:0;left:0;width:100vw;height:100vh;
+            background:rgba(233,30,99,0.95);color:#fff;display:flex;
+            align-items:center;justify-content:center;font-size:48px;
+            font-weight:bold;text-align:center;z-index:2000;visibility:hidden;opacity:0;transition:.4s;">
+    18.07.2025, молодежная 26В,<br>жду тебя, Ася ✨
+</div>
+
+<script>
+document.getElementById('surprise-btn').onclick = function() {
+    let ov = document.getElementById('surprise-overlay');
+    ov.style.visibility = 'visible';
+    ov.style.opacity = '1';
+    // Закрытие по клику или через 6 секунд
+    ov.onclick = function() {
+        ov.style.visibility = 'hidden';
+        ov.style.opacity = '0';
+    };
+    setTimeout(function() {
+        ov.style.visibility = 'hidden';
+        ov.style.opacity = '0';
+    }, 6000);
+};
+</script>
+
