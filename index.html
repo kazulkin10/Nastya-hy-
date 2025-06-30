@@ -18,15 +18,15 @@
             font-family: 'Arial', 'Helvetica', sans-serif;
             line-height: 1.6;
             color: #333;
-            background: #f5f5f5;
+            background: #f8f9fa;
         }
         
         /* Верхняя служебная полоса */
         .top-bar {
-            background: #2c3e50;
+            background: #0e4b99;
             color: white;
-            padding: 5px 0;
-            font-size: 12px;
+            padding: 8px 0;
+            font-size: 13px;
         }
         
         .top-bar-content {
@@ -40,10 +40,10 @@
         
         /* Основная шапка */
         .header {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
+            background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%);
             color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 15px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.15);
         }
         
         .header-content {
@@ -52,7 +52,7 @@
             padding: 0 20px;
             display: flex;
             align-items: center;
-            gap: 30px;
+            gap: 25px;
         }
         
         .logo-section {
@@ -61,46 +61,54 @@
             gap: 20px;
         }
         
+        /* ОРИГИНАЛЬНЫЙ логотип школы */
         .school-logo {
-            width: 80px;
-            height: 80px;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23fff" stroke="%232980b9" stroke-width="3"/><polygon points="30,70 50,25 70,70" fill="%232980b9"/><rect x="25" y="70" width="50" height="15" fill="%232980b9"/><text x="50" y="85" text-anchor="middle" font-size="8" font-weight="bold" fill="%23fff">ШКОЛА</text><text x="50" y="50" text-anchor="middle" font-size="16" font-weight="bold" fill="%23fff">35</text></svg>') center/contain no-repeat;
-            border-radius: 50%;
-            border: 3px solid white;
+            width: 90px;
+            height: 90px;
+            background: url('https://ramsch35.edumsko.ru/uploads/56100/56088/generalimage/Foto_shkoly/.thumbs/163x0_506x622__size__logo.png?1741165998390') center/contain no-repeat;
+            border-radius: 8px;
+            border: 2px solid rgba(255,255,255,0.8);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
         
         .school-info h1 {
-            font-size: 26px;
-            margin-bottom: 5px;
+            font-size: 28px;
+            margin-bottom: 8px;
             font-weight: bold;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
         
         .school-info .subtitle {
-            font-size: 16px;
-            opacity: 0.9;
+            font-size: 18px;
+            opacity: 0.95;
             font-style: italic;
+            font-weight: 500;
         }
         
         .school-info .address {
             font-size: 14px;
-            opacity: 0.8;
+            opacity: 0.85;
             margin-top: 5px;
         }
         
         .contact-info {
             margin-left: auto;
             text-align: right;
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
         }
         
         .contact-info p {
-            margin: 2px 0;
+            margin: 3px 0;
             font-size: 14px;
         }
         
         /* Главное меню */
         .main-nav {
-            background: #34495e;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: #0d47a1;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
         .nav-container {
@@ -116,7 +124,7 @@
         }
         
         .nav-menu li {
-            border-right: 1px solid rgba(255,255,255,0.1);
+            border-right: 1px solid rgba(255,255,255,0.15);
         }
         
         .nav-menu li:last-child {
@@ -127,13 +135,15 @@
             display: block;
             color: white;
             text-decoration: none;
-            padding: 15px 20px;
-            transition: background 0.3s;
+            padding: 16px 22px;
+            transition: all 0.3s ease;
             font-weight: 500;
+            position: relative;
         }
         
         .nav-menu a:hover {
-            background: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-1px);
         }
         
         /* Основной контент */
@@ -148,77 +158,114 @@
         
         .content-area {
             background: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e3f2fd;
         }
         
         .content-area h2 {
-            color: #2980b9;
-            margin-bottom: 20px;
-            font-size: 28px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 10px;
+            color: #0d47a1;
+            margin-bottom: 25px;
+            font-size: 32px;
+            border-bottom: 3px solid #1e88e5;
+            padding-bottom: 12px;
+            position: relative;
+        }
+        
+        .content-area h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #ffab40;
         }
         
         .content-area h3 {
-            color: #34495e;
-            margin: 25px 0 15px;
-            font-size: 22px;
+            color: #1565c0;
+            margin: 30px 0 18px;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .content-area p {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             text-align: justify;
             font-size: 16px;
-            line-height: 1.7;
+            line-height: 1.8;
+            color: #424242;
         }
         
         .achievements-list {
             list-style: none;
-            margin: 15px 0;
+            margin: 20px 0;
+            background: #f3f8ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #1e88e5;
         }
         
         .achievements-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #ecf0f1;
+            padding: 10px 0;
+            border-bottom: 1px solid #e1f5fe;
             position: relative;
-            padding-left: 25px;
+            padding-left: 30px;
+            font-size: 16px;
         }
         
         .achievements-list li:before {
             content: "✓";
             position: absolute;
             left: 0;
-            color: #27ae60;
+            color: #4caf50;
             font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .achievements-list li:last-child {
+            border-bottom: none;
         }
         
         /* Сайдбар */
         .sidebar {
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
         
         .widget {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            border: 1px solid #e3f2fd;
         }
         
         .widget h3 {
-            color: #2980b9;
-            margin-bottom: 15px;
-            font-size: 20px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 8px;
+            color: #0d47a1;
+            margin-bottom: 20px;
+            font-size: 22px;
+            border-bottom: 2px solid #1e88e5;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .news-item {
-            padding: 12px 0;
-            border-bottom: 1px solid #ecf0f1;
+            padding: 15px 0;
+            border-bottom: 1px solid #f5f5f5;
+            transition: all 0.3s ease;
+        }
+        
+        .news-item:hover {
+            background: #f8f9fa;
+            padding-left: 10px;
+            border-radius: 6px;
         }
         
         .news-item:last-child {
@@ -226,20 +273,25 @@
         }
         
         .news-date {
-            color: #7f8c8d;
+            color: #ff7043;
             font-size: 12px;
             font-weight: bold;
+            background: #fff3e0;
+            padding: 2px 8px;
+            border-radius: 12px;
+            display: inline-block;
         }
         
         .news-item h4 {
-            margin: 5px 0;
-            color: #2c3e50;
+            margin: 8px 0;
+            color: #1565c0;
             font-size: 16px;
         }
         
         .news-item p {
             font-size: 14px;
-            color: #555;
+            color: #666;
+            line-height: 1.5;
         }
         
         .important-dates {
@@ -247,21 +299,25 @@
         }
         
         .important-dates li {
-            padding: 8px 0;
-            border-bottom: 1px solid #ecf0f1;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
             font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
         .important-dates strong {
-            color: #e74c3c;
+            color: #d32f2f;
+            font-weight: 600;
         }
         
         /* Футер */
         .footer {
-            background: #2c3e50;
+            background: linear-gradient(135deg, #263238 0%, #37474f 100%);
             color: white;
-            padding: 40px 0 20px;
-            margin-top: 50px;
+            padding: 50px 0 20px;
+            margin-top: 60px;
         }
         
         .footer-content {
@@ -269,20 +325,22 @@
             margin: 0 auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
         }
         
         .footer h4 {
-            margin-bottom: 15px;
-            color: #3498db;
-            font-size: 18px;
+            margin-bottom: 20px;
+            color: #64b5f6;
+            font-size: 20px;
+            border-bottom: 2px solid #64b5f6;
+            padding-bottom: 8px;
         }
         
         .footer p, .footer li {
             font-size: 14px;
-            line-height: 1.6;
-            color: #bdc3c7;
+            line-height: 1.7;
+            color: #cfd8dc;
         }
         
         .footer ul {
@@ -290,57 +348,99 @@
         }
         
         .footer ul li {
-            padding: 4px 0;
+            padding: 6px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer ul li:hover {
+            padding-left: 10px;
         }
         
         .footer a {
-            color: #3498db;
+            color: #81d4fa;
             text-decoration: none;
         }
         
         .footer a:hover {
             text-decoration: underline;
+            color: #4fc3f7;
         }
         
-        /* Кнопка-сюрприз в футере */
+        /* КНОПКА-СЮРПРИЗ В ФУТЕРЕ */
         .surprise-section {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #34495e;
+            margin-top: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            border-top: 3px solid #ff4081;
         }
         
         .surprise-btn {
-            background: linear-gradient(45deg, #e74c3c, #c0392b);
+            background: linear-gradient(45deg, #ff4081, #e91e63);
             color: white;
             border: none;
-            padding: 15px 30px;
+            padding: 18px 40px;
             border-radius: 50px;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 64, 129, 0.4);
+            transition: all 0.4s ease;
             display: inline-flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            position: relative;
+            overflow: hidden;
         }
         
         .surprise-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
-            background: linear-gradient(45deg, #c0392b, #a93226);
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 0 12px 35px rgba(255, 64, 129, 0.6);
+            background: linear-gradient(45deg, #e91e63, #c2185b);
         }
         
+        .surprise-btn:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+        
+        /* Анимированное сердечко */
         .heart {
-            color: #ff69b4;
-            font-size: 22px;
+            color: #ffeb3b;
+            font-size: 26px;
             animation: heartbeat 1.5s ease-in-out infinite;
+            filter: drop-shadow(0 0 5px rgba(255, 235, 59, 0.7));
         }
         
         @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+            0%, 100% { 
+                transform: scale(1); 
+            }
+            25% { 
+                transform: scale(1.2) rotate(-5deg); 
+            }
+            50% { 
+                transform: scale(1.3); 
+            }
+            75% { 
+                transform: scale(1.2) rotate(5deg); 
+            }
+        }
+        
+        /* Блестящий эффект кнопки */
+        .surprise-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.6s;
+        }
+        
+        .surprise-btn:hover::before {
+            left: 100%;
         }
         
         /* Полноэкранный overlay */
@@ -350,14 +450,15 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(45deg, rgba(231, 76, 60, 0.95), rgba(192, 57, 43, 0.95));
+            background: linear-gradient(45deg, rgba(255, 64, 129, 0.95), rgba(233, 30, 99, 0.95));
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 9999;
             visibility: hidden;
             opacity: 0;
-            transition: all 0.5s ease;
+            transition: all 0.6s ease;
+            backdrop-filter: blur(10px);
         }
         
         .overlay.show {
@@ -368,28 +469,39 @@
         .overlay-content {
             text-align: center;
             color: white;
-            font-size: 48px;
+            font-size: 52px;
             font-weight: bold;
-            text-shadow: 0 0 20px rgba(0,0,0,0.5);
-            animation: pulse 2s infinite;
-            padding: 40px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 20px;
+            text-shadow: 0 0 30px rgba(0,0,0,0.7);
+            animation: pulse 2s infinite, glow 3s ease-in-out infinite;
+            padding: 50px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 25px;
+            border: 2px solid rgba(255,255,255,0.3);
+            backdrop-filter: blur(15px);
         }
         
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.08); }
+        }
+        
+        @keyframes glow {
+            0%, 100% { 
+                text-shadow: 0 0 30px rgba(255,255,255,0.8), 0 0 60px rgba(255,255,255,0.4); 
+            }
+            50% { 
+                text-shadow: 0 0 50px rgba(255,255,255,1), 0 0 80px rgba(255,255,255,0.6); 
+            }
         }
         
         /* Копирайт */
         .copyright {
             text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #34495e;
-            color: #7f8c8d;
-            font-size: 12px;
+            margin-top: 40px;
+            padding-top: 25px;
+            border-top: 1px solid #455a64;
+            color: #90a4ae;
+            font-size: 13px;
         }
         
         /* Адаптивность */
@@ -416,17 +528,22 @@
             
             .nav-menu li {
                 border-right: none;
-                border-bottom: 1px solid rgba(255,255,255,0.1);
+                border-bottom: 1px solid rgba(255,255,255,0.15);
             }
             
             .overlay-content {
-                font-size: 32px;
-                padding: 20px;
+                font-size: 36px;
+                padding: 30px;
             }
             
             .footer-content {
                 grid-template-columns: 1fr;
-                gap: 20px;
+                gap: 25px;
+            }
+            
+            .surprise-btn {
+                font-size: 18px;
+                padding: 15px 30px;
             }
         }
     </style>
@@ -496,7 +613,7 @@
             </ul>
             
             <h3>📚 Образовательные программы</h3>
-            <p>Школа реализует программы начального общего, основного общего и среднего общего образования в соответствии с федеральными государственными образовательными стандартами.</p>
+            <p>Школа реализует программы начального общего, основного общего и среднего общего образования в соответствии с федеральными государственными образовательными стандартами[3][4].</p>
             
             <div class="program-info">
                 <h4>🎓 Начальная школа (1-4 классы)</h4>
@@ -522,71 +639,4 @@
                     <p>Подведены итоги успешно завершенного учебного года. Поздравляем всех отличников и хорошистов!</p>
                 </div>
                 <div class="news-item">
-                    <div class="news-date">20.06.2025</div>
-                    <h4>Выпускной вечер</h4>
-                    <p>Состоялся торжественный выпускной вечер для учащихся 11-х классов. Желаем выпускникам удачи!</p>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">15.06.2025</div>
-                    <h4>Результаты ЕГЭ-2025</h4>
-                    <p>Наши выпускники показали отличные результаты на едином государственном экзамене.</p>
-                </div>
-                <div class="news-item">
-                    <div class="news-date">10.06.2025</div>
-                    <h4>Летняя оздоровительная кампания</h4>
-                    <p>Начинает работу летний пришкольный лагерь "Солнышко". Запись открыта!</p>
-                </div>
-            </div>
-            
-            <div class="widget">
-                <h3>📅 Важные даты</h3>
-                <ul class="important-dates">
-                    <li><strong>1 сентября</strong> - День знаний</li>
-                    <li><strong>5 октября</strong> - День учителя</li>
-                    <li><strong>4 ноября</strong> - День народного единства</li>
-                    <li><strong>25 декабря</strong> - Новогодние представления</li>
-                    <li><strong>23 февраля</strong> - День защитника Отечества</li>
-                    <li><strong>8 марта</strong> - Международный женский день</li>
-                    <li><strong>9 мая</strong> - День Победы</li>
-                    <li><strong>25 мая</strong> - Последний звонок</li>
-                </ul>
-            </div>
-            
-            <div class="widget">
-                <h3>🏅 Достижения школы</h3>
-                <p>МОУ Раменская СОШ № 35 входит в рейтинг лучших школ Московской области. Наша школа неоднократно становилась победителем различных конкурсов и получала благодарности от администрации района.</p>
-            </div>
-            
-            <div class="widget">
-                <h3>📞 Контактная информация</h3>
-                <p><strong>Адрес:</strong><br>
-                140103, Московская область,<br>
-                г. Раменское, ул. Молодёжная, 19</p>
-                
-                <p><strong>Телефон:</strong><br>
-                +7 (985) 547-02-21</p>
-                
-                <p><strong>Email:</strong><br>
-                ramsch35@edumsko.ru</p>
-                
-                <p><strong>Сайт:</strong><br>
-                ramsch35.edumsko.ru</p>
-            </div>
-        </aside>
-    </main>
-
-    <!-- Футер -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div>
-                <h4>О школе</h4>
-                <p>МОУ Раменская СОШ № 35 "Вектор успеха" — современное образовательное учреждение, обеспечивающее качественное образование в соответствии с федеральными государственными образовательными стандартами.</p>
-            </div>
-            <div>
-                <h4>Полезные ссылки</h4>
-                <ul>
-                    <li><a href="#">Электронный дневник</a></li>
-                    <li><a href="#">Расписание уроков</a></li>
-                    <li><a href="#">Библиотека</a></li>
-                    <li><a href="#">Столовая</a></li>
-                    <li><a href="#">Школьный портал МО</a></li>
+        
