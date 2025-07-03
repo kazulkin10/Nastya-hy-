@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Путешествие Пожеланий для Насти</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
@@ -22,19 +21,6 @@
             position: relative;
         }
         
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 10% 20%, rgba(100, 150, 255, 0.1) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(255, 100, 150, 0.1) 0%, transparent 20%);
-            z-index: -1;
-        }
-        
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -48,7 +34,7 @@
         }
         
         h1 {
-            font-size: 3.5rem;
+            font-size: 3rem;
             margin-bottom: 15px;
             background: linear-gradient(45deg, #ff9a9e, #fad0c4, #a1c4fd);
             -webkit-background-clip: text;
@@ -58,18 +44,6 @@
             font-weight: 800;
             position: relative;
             display: inline-block;
-        }
-        
-        h1::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 200px;
-            height: 4px;
-            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a1c4fd);
-            border-radius: 2px;
         }
         
         .subtitle {
@@ -84,36 +58,49 @@
         
         .content-wrapper {
             display: flex;
+            flex-direction: column;
             gap: 30px;
             margin-top: 30px;
         }
         
         .scene-container {
-            flex: 1;
-            min-height: 500px;
+            min-height: 300px;
             background: rgba(20, 25, 50, 0.4);
             border-radius: 25px;
             overflow: hidden;
             position: relative;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
         }
         
-        #scene {
-            width: 100%;
-            height: 100%;
-            min-height: 500px;
+        .train-animation {
+            font-size: 6rem;
+            color: #3498db;
+            position: relative;
+            animation: train-move 3s infinite linear;
+        }
+        
+        .train-smoke {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            opacity: 0.7;
+            animation: smoke 3s infinite ease-out;
         }
         
         .info-panel {
-            width: 400px;
             background: rgba(15, 20, 40, 0.7);
             border-radius: 25px;
             padding: 30px;
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
             border: 2px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
             display: flex;
             flex-direction: column;
         }
@@ -138,22 +125,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-        }
-        
-        .route-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: 0.5s;
-            z-index: -1;
-        }
-        
-        .route-btn:hover::before {
-            left: 100%;
         }
         
         .route-btn:hover {
@@ -233,6 +204,7 @@
             margin-top: 20px;
             transition: all 0.5s ease;
             border: 2px solid rgba(255, 255, 255, 0.3);
+            min-height: 180px;
         }
         
         .controls {
@@ -276,31 +248,6 @@
             background: linear-gradient(45deg, #4b6cb7, #182848);
         }
         
-        .map-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(10, 15, 30, 0.8);
-            border-radius: 15px;
-            padding: 15px;
-            max-width: 300px;
-            backdrop-filter: blur(5px);
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-        }
-        
-        .map-title {
-            font-size: 1.1rem;
-            margin-bottom: 8px;
-            color: #a1c4fd;
-        }
-        
-        .map-route {
-            font-size: 1.1rem;
-            color: #ffd166;
-            font-weight: 500;
-        }
-        
         footer {
             text-align: center;
             padding: 30px;
@@ -310,31 +257,29 @@
         }
         
         /* Анимации */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        @keyframes train-move {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
         }
         
-        .animated {
-            animation: fadeIn 0.8s ease-out forwards;
+        @keyframes smoke {
+            0% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+            100% { transform: translateX(-50%) translateY(-50px); opacity: 0; }
         }
-        
-        .delay-1 { animation-delay: 0.2s; }
-        .delay-2 { animation-delay: 0.4s; }
-        .delay-3 { animation-delay: 0.6s; }
         
         /* Адаптивность */
-        @media (max-width: 992px) {
+        @media (min-width: 768px) {
             .content-wrapper {
-                flex-direction: column;
+                flex-direction: row;
+            }
+            
+            .scene-container {
+                flex: 1;
+                min-height: 500px;
             }
             
             .info-panel {
-                width: 100%;
-            }
-            
-            h1 {
-                font-size: 2.8rem;
+                width: 400px;
             }
         }
         
@@ -347,19 +292,8 @@
                 font-size: 1.1rem;
             }
             
-            .scene-container {
-                min-height: 400px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            h1 {
-                font-size: 2rem;
-            }
-            
-            .route-btn {
-                padding: 14px 20px;
-                font-size: 1rem;
+            .train-animation {
+                font-size: 4rem;
             }
             
             .message-box {
@@ -373,6 +307,19 @@
                 text-align: center;
             }
         }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animated {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
     </style>
 </head>
 <body>
@@ -384,7 +331,12 @@
         
         <div class="content-wrapper">
             <div class="scene-container animated delay-2">
-                <div id="scene"></div>
+                <div class="train-smoke">
+                    <i class="fas fa-smog"></i>
+                </div>
+                <div class="train-animation">
+                    <i class="fas fa-train"></i>
+                </div>
                 <div class="map-overlay">
                     <div class="map-title">Текущий маршрут:</div>
                     <div class="map-route" id="current-route">Раменское → Казанский вокзал</div>
@@ -496,7 +448,6 @@
         ];
         
         // Основные переменные
-        let scene, camera, renderer, train;
         let currentRoute = 0;
         let currentStation = 0;
         let isPlaying = false;
@@ -504,102 +455,94 @@
         
         // Инициализация приложения
         document.addEventListener('DOMContentLoaded', function() {
-            // Инициализируем сцену Three.js
-            initThreeScene();
+            // Настройка обработчиков событий
+            setupEventListeners();
             
             // Обновляем информацию о станции
             updateStationInfo();
-            
-            // Настройка обработчиков событий
-            setupEventListeners();
         });
         
-        // Инициализация Three.js сцены
-        function initThreeScene() {
-            // Создаем сцену
-            scene = new THREE.Scene();
-            scene.background = new THREE.Color(0x0c1b33);
-            
-            // Создаем камеру
-            const aspect = document.getElementById('scene').offsetWidth / document.getElementById('scene').offsetHeight;
-            camera = new THREE.PerspectiveCamera(75, aspect, 0.1, 1000);
-            camera.position.set(0, 5, 15);
-            
-            // Создаем рендерер
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
-            renderer.shadowMap.enabled = true;
-            document.getElementById('scene').appendChild(renderer.domElement);
-            
-            // Добавляем освещение
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-            scene.add(ambientLight);
-            
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(5, 15, 10);
-            directionalLight.castShadow = true;
-            scene.add(directionalLight);
-            
-            // Создаем рельсы
-            const railGeometry = new THREE.BoxGeometry(30, 0.1, 0.5);
-            const railMaterial = new THREE.MeshStandardMaterial({ color: 0x444444 });
-            const rails = new THREE.Mesh(railGeometry, railMaterial);
-            rails.position.y = -1;
-            rails.receiveShadow = true;
-            scene.add(rails);
-            
-            // Создаем шпалы
-            const sleeperGeometry = new THREE.BoxGeometry(0.2, 0.1, 2);
-            const sleeperMaterial = new THREE.MeshStandardMaterial({ color: 0x5d4037 });
-            
-            for (let i = -14; i <= 14; i += 1.5) {
-                const sleeper = new THREE.Mesh(sleeperGeometry, sleeperMaterial);
-                sleeper.position.set(i, -1.05, 0);
-                sleeper.receiveShadow = true;
-                scene.add(sleeper);
-            }
-            
-            // Создаем поезд
-            train = createTrain();
-            train.position.x = -12;
-            scene.add(train);
-            
-            // Анимация
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                // Анимация дыма
-                const smoke = train.getObjectByName('smoke');
-                if (smoke) {
-                    smoke.scale.x = Math.sin(Date.now() * 0.002) * 0.2 + 1;
-                    smoke.scale.y = Math.sin(Date.now() * 0.0015) * 0.3 + 1;
-                    smoke.position.y += 0.01;
+        // Настройка обработчиков событий
+        function setupEventListeners() {
+            // Переключение маршрута
+            document.querySelectorAll('.route-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.route-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
                     
-                    if (smoke.position.y > 2.5) {
-                        smoke.position.y = 1.9;
-                    }
-                }
-                
-                // Анимация колес
-                train.children.forEach(child => {
-                    if (child.name === 'wheel') {
-                        child.rotation.x += 0.1;
-                    }
+                    currentRoute = parseInt(this.dataset.route);
+                    currentStation = 0;
+                    updateStationInfo();
+                    pauseJourney();
+                    
+                    // Обновляем название маршрута
+                    document.getElementById('current-route').textContent = routes[currentRoute].name;
                 });
-                
-                renderer.render(scene, camera);
-            }
-            
-            animate();
-            
-            // Обработка изменения размера окна
-            window.addEventListener('resize', function() {
-                camera.aspect = document.getElementById('scene').offsetWidth / document.getElementById('scene').offsetHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
             });
+            
+            // Кнопки управления
+            document.getElementById('play-btn').addEventListener('click', startJourney);
+            document.getElementById('pause-btn').addEventListener('click', pauseJourney);
+            document.getElementById('next-btn').addEventListener('click', nextStation);
         }
         
-        // Создаем модель поезда
-        function createTrain() {
-            const trainGroup = new THREE.Group
+        // Обновляем информацию о станции
+        function updateStationInfo() {
+            const route = routes[currentRoute];
+            document.querySelector('.current-route').textContent = `Маршрут: ${route.name}`;
+            document.getElementById('current-station').textContent = route.stations[currentStation];
+            
+            if (currentStation < route.stations.length - 1) {
+                document.getElementById('next-station').textContent = route.stations[currentStation + 1];
+            } else {
+                document.getElementById('next-station').textContent = "Конечная станция";
+            }
+            
+            document.getElementById('message').textContent = route.messages[currentStation];
+            
+            // Обновляем прогресс
+            const progress = (currentStation / (route.stations.length - 1)) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+        }
+        
+        // Переключение на следующую станцию
+        function nextStation() {
+            if (currentStation < routes[currentRoute].stations.length - 1) {
+                currentStation++;
+                updateStationInfo();
+            } else {
+                pauseJourney();
+                document.getElementById('message').textContent = "Маршрут завершён! Настя, твоё путешествие только начинается!";
+            }
+        }
+        
+        // Запуск путешествия
+        function startJourney() {
+            if (isPlaying) return;
+            
+            isPlaying = true;
+            document.getElementById('play-btn').classList.add('active');
+            document.getElementById('pause-btn').classList.remove('active');
+            
+            animationInterval = setInterval(() => {
+                nextStation();
+                
+                // Если достигли конца маршрута
+                if (currentStation >= routes[currentRoute].stations.length - 1) {
+                    pauseJourney();
+                }
+            }, 3000);
+        }
+        
+        // Пауза
+        function pauseJourney() {
+            isPlaying = false;
+            if (animationInterval) {
+                clearInterval(animationInterval);
+            }
+            document.getElementById('play-btn').classList.remove('active');
+            document.getElementById('pause-btn').classList.add('active');
+        }
+    </script>
+</body>
+</html>
