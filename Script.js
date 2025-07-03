@@ -47,37 +47,35 @@ const routes = [
     }
 ];
 
-// Инициализация приложения
-document.addEventListener('DOMContentLoaded', () => {
-    // Создаем искры
-    function createSparkles() {
-        const container = document.querySelector('.container');
-        const sparkleCount = 20;
-        
-        for (let i = 0; i < sparkleCount; i++) {
-            const sparkle = document.createElement('div');
-            sparkle.classList.add('sparkle');
-            
-            // Случайная позиция
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const size = Math.random() * 6 + 4;
-            const delay = Math.random() * 5;
-            
-            sparkle.style.left = `${left}%`;
-            sparkle.style.top = `${top}%`;
-            sparkle.style.width = `${size}px`;
-            sparkle.style.height = `${size}px`;
-            sparkle.style.animationDelay = `${delay}s`;
-            
-            container.appendChild(sparkle);
-        }
-    }
-    createSparkles();
+// Создаем искры
+function createSparkles() {
+    const container = document.querySelector('.container');
+    const sparkleCount = 20;
     
-    // Инициализация Three.js сцены
+    for (let i = 0; i < sparkleCount; i++) {
+        const sparkle = document.createElement('div');
+        sparkle.classList.add('sparkle');
+        
+        // Случайная позиция
+        const left = Math.random() * 100;
+        const top = Math.random() * 100;
+        const size = Math.random() * 6 + 4;
+        const delay = Math.random() * 5;
+        
+        sparkle.style.left = `${left}%`;
+        sparkle.style.top = `${top}%`;
+        sparkle.style.width = `${size}px`;
+        sparkle.style.height = `${size}px`;
+        sparkle.style.animationDelay = `${delay}s`;
+        
+        container.appendChild(sparkle);
+    }
+}
+
+// Инициализация Three.js сцены
+function initScene() {
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.getElementById('scene').offsetWidth / window.getElementById('scene').offsetHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     
     renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
@@ -233,6 +231,17 @@ document.addEventListener('DOMContentLoaded', () => {
         camera.updateProjectionMatrix();
         renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
     });
+    
+    return train;
+}
+
+// Инициализация приложения
+document.addEventListener('DOMContentLoaded', () => {
+    // Создаем искры
+    createSparkles();
+    
+    // Инициализируем сцену
+    const train = initScene();
     
     let currentRoute = 0;
     let currentStation = 0;
