@@ -3,430 +3,207 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚂 Путешествие Насти | Интерактивная карта</title>
-    
+    <title>Путешествие Пожеланий для Насти</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
-        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+            color: white;
             min-height: 100vh;
             overflow-x: hidden;
-            color: #fff;
             position: relative;
         }
         
-        /* Фоновые частицы */
-        .particles {
-            position: fixed;
+        body::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;
-            z-index: 1;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255,255,255,0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255,255,255,0.1) 0%, transparent 20%);
+            z-index: -1;
         }
         
-        .particle {
-            position: absolute;
-            background: rgba(255,255,255,0.6);
-            border-radius: 50%;
-            animation: float 6s ease-in-out infinite;
+        .container {
+            max-width: 100%;
+            padding: 20px;
         }
         
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.6; }
-            50% { transform: translateY(-20px) scale(1.1); opacity: 1; }
-        }
-        
-        /* Заголовок */
-        .header {
+        header {
             text-align: center;
-            padding: 40px 20px;
+            padding: 20px 0;
+            margin-bottom: 20px;
             position: relative;
-            z-index: 10;
         }
         
-        .header h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
-            font-weight: 800;
-            color: white;
-            text-shadow: 0 0 40px rgba(255,255,255,0.8);
-            margin-bottom: 15px;
-            animation: titleGlow 3s ease-in-out infinite alternate;
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4, #fad0c4, #a1c4fd);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
         
-        @keyframes titleGlow {
-            from { text-shadow: 0 0 40px rgba(255,255,255,0.8), 0 0 60px rgba(255,182,193,0.6); }
-            to { text-shadow: 0 0 60px rgba(255,255,255,1), 0 0 80px rgba(255,182,193,0.8); }
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.5;
         }
         
-        .header p {
-            font-size: clamp(1.1rem, 3vw, 1.6rem);
-            color: rgba(255,255,255,0.9);
-            font-weight: 400;
-        }
-        
-        /* Вкладки маршрутов */
-        .tabs {
+        .route-selector {
             display: flex;
             justify-content: center;
             gap: 10px;
-            padding: 20px;
+            margin: 20px 0;
             flex-wrap: wrap;
-            position: relative;
-            z-index: 10;
         }
         
-        .tab {
-            background: rgba(255,255,255,0.15);
-            backdrop-filter: blur(10px);
-            border: none;
+        .route-btn {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: white;
-            padding: 15px 25px;
-            border-radius: 20px;
+            padding: 12px 20px;
+            border-radius: 30px;
             cursor: pointer;
             font-size: 1rem;
-            font-weight: 600;
             transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            backdrop-filter: blur(5px);
+            min-width: 250px;
         }
         
-        .tab:hover {
-            background: rgba(255,255,255,0.25);
-            transform: translateY(-2px);
+        .route-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
         
-        .tab.active {
-            background: rgba(255,255,255,0.3);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        .route-btn.active {
+            background: linear-gradient(45deg, #ff758c, #ff7eb3);
+            box-shadow: 0 5px 15px rgba(255, 117, 140, 0.4);
+            transform: translateY(-3px);
         }
         
-        /* Основной контейнер */
-        .main-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            position: relative;
-            z-index: 10;
-        }
-        
-        /* Карточка маршрута */
-        .route-card {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
-            border: 1px solid rgba(255,255,255,0.2);
-            display: none;
-        }
-        
-        .route-card.active {
-            display: block;
-            animation: slideIn 0.5s ease-out;
-        }
-        
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .route-title {
-            font-size: clamp(1.5rem, 4vw, 2.2rem);
-            font-weight: 700;
-            text-align: center;
-            margin-bottom: 30px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-        
-        /* Карта с поездом */
-        .map-scene {
-            position: relative;
-            height: 400px;
-            background: linear-gradient(45deg, #e8f5e8 0%, #f0f8ff 100%);
+        .scene-container {
+            width: 100%;
+            height: 60vh;
+            background: rgba(0, 0, 0, 0.2);
             border-radius: 20px;
             overflow: hidden;
-            border: 3px solid rgba(255,255,255,0.3);
-            margin-bottom: 25px;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* Сетка карты */
-        .map-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
+        #scene {
             width: 100%;
             height: 100%;
-            background-image: 
-                linear-gradient(rgba(100,100,100,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(100,100,100,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
         }
         
-        /* Железнодорожные пути */
-        .railway-line {
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 8px;
-            background: repeating-linear-gradient(
-                90deg,
-                #8d6e63 0px,
-                #8d6e63 20px,
-                transparent 20px,
-                transparent 40px
-            );
-            border-top: 2px solid #5d4037;
-            border-bottom: 2px solid #5d4037;
-            transform: translateY(-50%);
-        }
-        
-        /* Станции на карте */
-        .station-dot {
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            background: #ffd700;
-            border-radius: 50%;
-            border: 3px solid #ff6b6b;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            animation: pulse 2s ease-in-out infinite;
-            z-index: 5;
-        }
-        
-        .station-dot:hover {
-            transform: scale(1.5);
-            box-shadow: 0 0 20px rgba(255,215,0,0.8);
-        }
-        
-        @keyframes pulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,107,0.7); }
-            50% { box-shadow: 0 0 0 8px rgba(255,107,107,0); }
-        }
-        
-        /* 3D Поезд */
-        .train-3d {
-            position: absolute;
-            top: 45%;
-            left: 5%;
-            transform: translateY(-50%) perspective(1000px) rotateY(-10deg) rotateX(5deg);
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            z-index: 10;
-        }
-        
-        /* Корпус поезда */
-        .train-body {
-            width: 100px;
-            height: 50px;
-            background: linear-gradient(145deg, #ff4757 0%, #ff3838 50%, #ff6b6b 100%);
-            border-radius: 15px 30px 15px 30px;
-            position: relative;
-            box-shadow: 
-                0 15px 30px rgba(0,0,0,0.4),
-                inset 0 3px 6px rgba(255,255,255,0.3),
-                inset 0 -3px 6px rgba(0,0,0,0.2);
-            border: 2px solid rgba(255,255,255,0.4);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.8rem;
-        }
-        
-        /* Дым из трубы */
-        .smoke {
-            position: absolute;
-            top: -20px;
-            left: 15px;
-            display: flex;
-            gap: 5px;
-        }
-        
-        .smoke-puff {
-            width: 8px;
-            height: 8px;
-            background: rgba(255,255,255,0.8);
-            border-radius: 50%;
-            animation: smokeRise 2s ease-in-out infinite;
-        }
-        
-        .smoke-puff:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-        
-        .smoke-puff:nth-child(3) {
-            animation-delay: 0.6s;
-        }
-        
-        @keyframes smokeRise {
-            0% { opacity: 1; transform: translateY(0) scale(0.5); }
-            100% { opacity: 0; transform: translateY(-25px) scale(1.2); }
-        }
-        
-        /* Колёса поезда */
-        .train-wheels {
-            position: absolute;
-            bottom: -15px;
-            display: flex;
-            gap: 50px;
-            left: 10px;
-        }
-        
-        .wheel {
-            width: 25px;
-            height: 25px;
-            background: radial-gradient(circle, #2c3e50 30%, #34495e 50%, #2c3e50 70%);
-            border-radius: 50%;
-            border: 3px solid #1a252f;
-            animation: wheelSpin 1.5s linear infinite;
-            position: relative;
-        }
-        
-        .wheel::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 8px;
-            height: 8px;
-            background: #95a5a6;
-            border-radius: 50%;
-        }
-        
-        @keyframes wheelSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Список станций */
-        .stations-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            margin-top: 25px;
-        }
-        
-        .station-card {
-            background: rgba(255,255,255,0.12);
+        .info-panel {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 18px;
-            border-left: 5px solid #ffd700;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            margin: 20px auto;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .station-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.5s;
+        .current-route {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            color: #ffd166;
+            text-align: center;
         }
         
-        .station-card:hover::before {
-            left: 100%;
-        }
-        
-        .station-card:hover {
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
-        }
-        
-        .station-card.active {
-            background: rgba(255,215,0,0.25);
-            border-left-color: #ff6b6b;
-            box-shadow: 0 20px 40px rgba(255,107,107,0.3);
+        .station-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
         }
         
         .station-name {
-            font-weight: 700;
-            color: white;
-            font-size: 1.1rem;
-            margin-bottom: 8px;
+            font-weight: bold;
+            color: #ff9a8b;
         }
         
-        .station-time {
-            color: rgba(255,255,255,0.8);
-            font-size: 0.9rem;
-            margin-bottom: 10px;
-            font-weight: 500;
+        .message-box {
+            background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            border-radius: 15px;
+            padding: 20px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #333;
+            font-size: 1.4rem;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            margin-top: 20px;
+            transition: transform 0.5s ease;
         }
         
-        .station-preview {
-            color: rgba(255,255,255,0.7);
-            font-size: 0.95rem;
-            font-style: italic;
-            line-height: 1.4;
+        .message-box:hover {
+            transform: scale(1.02);
         }
         
-        /* Кнопки управления */
         .controls {
             display: flex;
-            gap: 15px;
             justify-content: center;
-            margin: 30px 0;
-            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
         }
         
-        .btn {
-            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
-            color: white;
+        .control-btn {
+            background: rgba(255, 255, 255, 0.2);
             border: none;
-            padding: 15px 30px;
+            color: white;
+            padding: 12px 25px;
             border-radius: 30px;
-            font-size: 1rem;
-            font-weight: 700;
             cursor: pointer;
+            font-size: 1rem;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            transition: left 0.5s;
-        }
-        
-        .btn:hover::before {
-            left: 100%;
-        }
-        
-        .btn:hover {
+        .control-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
         }
         
-        .btn:active {
-            transform: translateY(0);
+        .control-btn.play {
+            background: linear-gradient(45deg, #56ab2f, #a8e063);
         }
         
-        /* Прогресс-бар */
+        .control-btn.pause {
+            background: linear-gradient(45deg, #ff5858, #f09819);
+        }
+        
         .progress-container {
-            background: rgba(255,255,255,0.2);
+            width: 100%;
             height: 8px;
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 4px;
             margin: 20px 0;
             overflow: hidden;
@@ -434,224 +211,380 @@
         
         .progress-bar {
             height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffd700);
+            background: linear-gradient(90deg, #ff9a9e, #fad0c4, #a1c4fd);
+            width: 30%;
             border-radius: 4px;
-            width: 0%;
-            transition: width 1.2s ease;
+            transition: width 0.5s ease;
         }
         
-        /* Модальное окно */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
-            backdrop-filter: blur(8px);
-        }
-        
-        .modal.show {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-content {
-            background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
-            padding: 50px;
-            border-radius: 30px;
-            max-width: 90vw;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
-            transform: scale(0.7);
-            transition: transform 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .modal.show .modal-content {
-            transform: scale(1);
-        }
-        
-        .modal-content::before {
-            content: '';
+        .map-overlay {
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 5px;
-            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #ffd700);
+            bottom: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            padding: 10px;
+            max-width: 250px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        .modal h3 {
-            color: #2c3e50;
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            font-weight: 800;
-        }
-        
-        .modal p {
-            color: #34495e;
-            font-size: 1.2rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            font-weight: 500;
-        }
-        
-        .close-btn {
-            background: linear-gradient(45deg, #ff6b6b, #ff5252);
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 700;
+        .map-title {
             font-size: 1rem;
-            transition: all 0.3s ease;
+            margin-bottom: 8px;
+            color: #a1c4fd;
         }
         
-        .close-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255,107,107,0.4);
+        .map-route {
+            font-size: 0.9rem;
+            color: #ffd166;
         }
         
-        /* Мобильная адаптация */
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
         @media (max-width: 768px) {
-            .main-container {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            .route-btn {
+                min-width: 100%;
                 padding: 15px;
+                font-size: 1.1rem;
             }
             
-            .route-card {
-                padding: 25px;
+            .message-box {
+                font-size: 1.2rem;
+                min-height: 120px;
             }
             
-            .map-scene {
-                height: 300px;
+            .scene-container {
+                height: 50vh;
             }
-            
-            .train-body {
-                width: 80px;
-                height: 40px;
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
                 font-size: 1.5rem;
             }
             
-            .wheel {
-                width: 20px;
-                height: 20px;
+            .message-box {
+                font-size: 1.1rem;
+                padding: 15px;
             }
             
-            .stations-grid {
-                grid-template-columns: 1fr;
+            .station-info {
+                flex-direction: column;
+                gap: 5px;
             }
             
             .controls {
-                flex-direction: column;
-                align-items: center;
+                flex-wrap: wrap;
             }
             
-            .btn {
-                width: 250px;
+            .control-btn {
+                flex: 1;
+                justify-content: center;
             }
-            
-            .tabs {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .tab {
-                width: 280px;
-            }
+        }
+        
+        .train-icon {
+            display: inline-block;
+            margin-left: 8px;
+            animation: train-move 1.5s infinite linear;
+        }
+        
+        @keyframes train-move {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(5px); }
+        }
+        
+        .sparkle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            animation: sparkle 3s infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes sparkle {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
         }
     </style>
 </head>
 <body>
-    <!-- Фоновые частицы -->
-    <div class="particles" id="particles"></div>
-    
-    <!-- Заголовок -->
-    <div class="header">
-        <h1>✨ Карта путешествия ✨</h1>
-        <p>Интерактивный маршрут с красивыми станциями и пожеланиями</p>
-    </div>
-    
-    <!-- Вкладки маршрутов -->
-    <div class="tabs">
-        <button class="tab active" onclick="switchRoute(1)">🚊 Раменское → Казанский</button>
-        <button class="tab" onclick="switchRoute(2)">🚇 Казанский → Павелецкий</button>
-        <button class="tab" onclick="switchRoute(3)">🚂 Павелецкий → Дагестан</button>
-    </div>
-    
-    <!-- Основной контейнер -->
-    <div class="main-container">
+    <div class="container">
+        <header>
+            <h1>Путешествие Пожеланий <span class="train-icon">🚂</span></h1>
+            <p class="subtitle">Следуй за поездом, который везёт самые тёплые слова и пожелания для Насти по разным маршрутам!</p>
+        </header>
         
-        <!-- Маршрут 1: Раменское → Казанский -->
-        <div class="route-card active" id="route1">
-            <h2 class="route-title">🚊 Электричка: Раменское → Казанский вокзал</h2>
+        <div class="route-selector">
+            <button class="route-btn active" data-route="0">Раменское → Казанский вокзал</button>
+            <button class="route-btn" data-route="1">Казанский → Павелецкий вокзал</button>
+            <button class="route-btn" data-route="2">Павелецкий → Дагестан</button>
+        </div>
+        
+        <div class="scene-container">
+            <div id="scene"></div>
+            <div class="map-overlay">
+                <div class="map-title">Текущий маршрут:</div>
+                <div class="map-route" id="current-route">Раменское → Казанский вокзал</div>
+            </div>
+        </div>
+        
+        <div class="info-panel">
+            <div class="current-route">Маршрут: <span id="route-name">Раменское → Казанский вокзал</span></div>
             
-            <div class="map-scene">
-                <div class="map-grid"></div>
-                <div class="railway-line"></div>
-                
-                <!-- Станции на карте -->
-                <div class="station-dot" style="top: 45%; left: 8%;" onclick="goToStation(1, 0)"></div>
-                <div class="station-dot" style="top: 45%; left: 20%;" onclick="goToStation(1, 1)"></div>
-                <div class="station-dot" style="top: 45%; left: 32%;" onclick="goToStation(1, 2)"></div>
-                <div class="station-dot" style="top: 45%; left: 44%;" onclick="goToStation(1, 3)"></div>
-                <div class="station-dot" style="top: 45%; left: 56%;" onclick="goToStation(1, 4)"></div>
-                <div class="station-dot" style="top: 45%; left: 68%;" onclick="goToStation(1, 5)"></div>
-                <div class="station-dot" style="top: 45%; left: 80%;" onclick="goToStation(1, 6)"></div>
-                <div class="station-dot" style="top: 45%; left: 92%;" onclick="goToStation(1, 7)"></div>
-                
-                <!-- 3D Поезд -->
-                <div class="train-3d" id="train1">
-                    <div class="train-body">
-                        🚊
-                        <div class="smoke">
-                            <div class="smoke-puff"></div>
-                            <div class="smoke-puff"></div>
-                            <div class="smoke-puff"></div>
-                        </div>
-                    </div>
-                    <div class="train-wheels">
-                        <div class="wheel"></div>
-                        <div class="wheel"></div>
-                    </div>
-                </div>
+            <div class="station-info">
+                <div class="station-name">Текущая станция:</div>
+                <div id="current-station">Раменское</div>
             </div>
             
             <div class="progress-container">
-                <div class="progress-bar" id="progress1"></div>
+                <div class="progress-bar" id="progress-bar"></div>
+            </div>
+            
+            <div class="station-info">
+                <div class="station-name">Следующая станция:</div>
+                <div id="next-station">Быково</div>
+            </div>
+            
+            <div class="message-box" id="message">
+                Настя, пусть каждая остановка приносит тебе улыбку и вдохновение!
             </div>
             
             <div class="controls">
-                <button class="btn" onclick="startJourney(1)">🚀 Начать путешествие</button>
-                <button class="btn" onclick="resetJourney(1)">🔄 Сначала</button>
+                <button class="control-btn play" id="play-btn">
+                    <span>▶</span> Путешествовать
+                </button>
+                <button class="control-btn pause" id="pause-btn">
+                    <span>⏸</span> Пауза
+                </button>
+                <button class="control-btn" id="next-btn">
+                    <span>⏭</span> Следующая станция
+                </button>
             </div>
-            
-            <div class="stations-grid" id="stations1"></div>
         </div>
-        
-        <!-- Маршрут 2: Казанский → Павелецкий -->
-        <div class="route-card" id="route2">
-            <h2 class="route-title">🚇 Переход: Казанский → Павелецкий вокзал</h2>
+    </div>
+    
+    <footer>
+        Создано с теплом и заботой | Путешествие пожеланий © 2025
+    </footer>
+
+    <script>
+        // Создаем случайные искры на странице
+        function createSparkles() {
+            const container = document.querySelector('.container');
+            const sparkleCount = 20;
             
-            <div class="map-scene">
-                <div class="map-grid"></div>
-                <div class="railway-line"></div>
+            for (let i = 0; i < sparkleCount; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
                 
-                <div class="station-dot" style="top: 45%; left: 15%;" onclick="goToStation(2, 0)"></div>
-                <div class="station-dot" style="top: 45%; left: 50%;" onclick="goToStation(2, 1)"></div>
-                <div class="station-dot" style="top: 45%; left: 85%;" onclick="goToStation(2, 2)"></div>
+                // Случайная позиция
+                const left = Math.random() * 100;
+                const top = Math.random() * 100;
+                const size = Math.random() * 6 + 4;
+                const delay = Math.random() * 5;
                 
-                <div class="train-3d" id="train2">
-                    <div class="train-body">
-                        🚇
-                        <div class="
+                sparkle.style.left = `${left}%`;
+                sparkle.style.top = `${top}%`;
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.animationDelay = `${delay}s`;
+                
+                container.appendChild(sparkle);
+            }
+        }
+        
+        // Инициализация Three.js сцены
+        function initScene() {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            
+            renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
+            document.getElementById('scene').appendChild(renderer.domElement);
+            
+            // Настройка камеры
+            camera.position.z = 15;
+            camera.position.y = 5;
+            camera.position.x = 0;
+            
+            // Добавляем освещение
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(10, 20, 15);
+            scene.add(directionalLight);
+            
+            // Создаем "рельсы" (дорожку)
+            const railGeometry = new THREE.BoxGeometry(30, 0.1, 0.5);
+            const railMaterial = new THREE.MeshStandardMaterial({ color: 0x333333 });
+            const rails = new THREE.Mesh(railGeometry, railMaterial);
+            rails.position.y = -1;
+            scene.add(rails);
+            
+            // Создаем шпалы
+            const sleeperGeometry = new THREE.BoxGeometry(0.2, 0.1, 2);
+            const sleeperMaterial = new THREE.MeshStandardMaterial({ color: 0x5d4037 });
+            
+            for (let i = -14; i <= 14; i += 1.5) {
+                const sleeper = new THREE.Mesh(sleeperGeometry, sleeperMaterial);
+                sleeper.position.set(i, -1.05, 0);
+                scene.add(sleeper);
+            }
+            
+            // Создаем простую модель поезда
+            function createTrain() {
+                const trainGroup = new THREE.Group();
+                
+                // Основной корпус
+                const bodyGeometry = new THREE.BoxGeometry(2, 1, 1);
+                const bodyMaterial = new THREE.MeshStandardMaterial({ 
+                    color: 0x3498db,
+                    metalness: 0.3,
+                    roughness: 0.4
+                });
+                const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+                body.position.y = 0.5;
+                trainGroup.add(body);
+                
+                // Кабина
+                const cabinGeometry = new THREE.BoxGeometry(1, 0.8, 1);
+                const cabinMaterial = new THREE.MeshStandardMaterial({ color: 0x2980b9 });
+                const cabin = new THREE.Mesh(cabinGeometry, cabinMaterial);
+                cabin.position.set(-1.2, 0.9, 0);
+                trainGroup.add(cabin);
+                
+                // Окна
+                const windowGeometry = new THREE.BoxGeometry(0.8, 0.5, 0.01);
+                const windowMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+                const window1 = new THREE.Mesh(windowGeometry, windowMaterial);
+                window1.position.set(0.4, 0.7, 0.51);
+                trainGroup.add(window1);
+                
+                const window2 = new THREE.Mesh(windowGeometry, windowMaterial);
+                window2.position.set(-0.4, 0.7, 0.51);
+                trainGroup.add(window2);
+                
+                // Колеса
+                const wheelGeometry = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 16);
+                wheelGeometry.rotateZ(Math.PI/2);
+                const wheelMaterial = new THREE.MeshStandardMaterial({ color: 0x2c3e50 });
+                
+                const wheelPositions = [
+                    [1, -0.3, 0.6],
+                    [1, -0.3, -0.6],
+                    [-1, -0.3, 0.6],
+                    [-1, -0.3, -0.6]
+                ];
+                
+                wheelPositions.forEach(pos => {
+                    const wheel = new THREE.Mesh(wheelGeometry, wheelMaterial);
+                    wheel.position.set(pos[0], pos[1], pos[2]);
+                    trainGroup.add(wheel);
+                });
+                
+                // Дымовая труба
+                const chimneyGeometry = new THREE.CylinderGeometry(0.1, 0.15, 0.5, 16);
+                const chimneyMaterial = new THREE.MeshStandardMaterial({ color: 0x7f8c8d });
+                const chimney = new THREE.Mesh(chimneyGeometry, chimneyMaterial);
+                chimney.position.set(-1.5, 1.4, 0);
+                trainGroup.add(chimney);
+                
+                // Дым
+                const smokeGeometry = new THREE.SphereGeometry(0.2, 8, 8);
+                const smokeMaterial = new THREE.MeshBasicMaterial({ 
+                    color: 0xecf0f1,
+                    transparent: true,
+                    opacity: 0.6
+                });
+                const smoke = new THREE.Mesh(smokeGeometry, smokeMaterial);
+                smoke.position.set(-1.5, 1.9, 0);
+                trainGroup.add(smoke);
+                
+                return trainGroup;
+            }
+            
+            const train = createTrain();
+            train.position.x = -12;
+            scene.add(train);
+            
+            // Анимация дыма
+            function animateSmoke() {
+                const smoke = train.children.find(child => child.position.y > 1.8);
+                if (smoke) {
+                    smoke.scale.x = Math.sin(Date.now() * 0.002) * 0.2 + 1;
+                    smoke.scale.y = Math.sin(Date.now() * 0.0015) * 0.3 + 1;
+                    smoke.position.y += 0.01;
+                    
+                    if (smoke.position.y > 2.5) {
+                        smoke.position.y = 1.9;
+                    }
+                }
+            }
+            
+            // Анимация колес
+            function animateWheels() {
+                train.children.forEach(child => {
+                    if (child.type === 'Mesh' && child.position.y === -0.3) {
+                        child.rotation.x += 0.1;
+                    }
+                });
+            }
+            
+            // Анимация
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                animateSmoke();
+                animateWheels();
+                
+                // Плавное перемещение камеры
+                camera.position.x += (train.position.x - camera.position.x + 3) * 0.05;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Обработка изменения размера окна
+            window.addEventListener('resize', () => {
+                camera.aspect = document.getElementById('scene').offsetWidth / document.getElementById('scene').offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(document.getElementById('scene').offsetWidth, document.getElementById('scene').offsetHeight);
+            });
+            
+            return { scene, camera, renderer, train };
+        }
+        
+        // Данные маршрутов
+        const routes = [
+            {
+                name: "Раменское → Казанский вокзал",
+                stations: [
+                    "Раменское",
+                    "Быково",
+                    "Ильинская",
+                    "Казанский вокзал"
+                ],
+                messages: [
+                    "Настя, пусть твой день начинается с улыбки и позитива!",
+                    "Помни, что
