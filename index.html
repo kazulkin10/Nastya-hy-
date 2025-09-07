@@ -27,14 +27,14 @@
     canvas#stars{position:fixed;inset:0;z-index:-1}
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100" id="body">
+<body class="min-h-screen overflow-hidden bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100" id="body">
   <canvas id="stars"></canvas>
   <!-- декор -->
   <div class="blob -z-10 w-72 h-72 bg-fuchsia-500/30 rounded-full top-10 -left-10"></div>
   <div class="blob -z-10 w-72 h-72 bg-sky-500/30 rounded-full -bottom-16 right-6"></div>
 
   <!-- GATE (код-доступ) -->
-  <div id="gate" class="fixed inset-0 bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100 grid place-items-center">
+  <div id="gate" class="fixed inset-0 z-[9999] bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100 grid place-items-center">
     <div class="w-[92%] max-w-md glass bg-white/10 border border-white/10 rounded-2xl p-6 shadow-soft">
       <div class="text-center text-2xl">🔒 Только для тебя</div>
       <p class="text-center text-zinc-400 mt-2">Введи слово‑ключ и нажми Enter.</p>
@@ -49,7 +49,7 @@
       <div class="flex items-center gap-3">
         <button id="eggBtn" class="w-9 h-9 rounded-2xl bg-white/10 grid place-items-center border border-white/10">💫</button>
         <div class="font-semibold">Привет, Настя</div>
-        <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/10">v5.0</span>
+        <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/10">v5.1</span>
       </div>
       <div class="flex items-center gap-2">
         <a id="tgLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">
@@ -74,11 +74,11 @@
           <div id="sinceDays" class="text-xs text-zinc-400">—</div>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-zinc-400">До твоего ДР (28 декабря)</div>
+          <div class="text-xs text-zinc-400">До ДР Егора (28 декабря)</div>
           <div id="bdayHis" class="text-xl font-semibold">—</div>
         </div>
         <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-          <div class="text-xs text-zinc-400">До твоего ДР (9 декабря)</div>
+          <div class="text-xs text-zinc-400">До ДР Насти (9 декабря)</div>
           <div id="bdayHer" class="text-xl font-semibold">—</div>
         </div>
       </div>
@@ -92,7 +92,6 @@
       <div class="flex items-center gap-3 mb-3"><span>📝</span><h2 class="font-semibold">Записка дня</h2></div>
       <blockquote class="text-sm sm:text-base leading-relaxed text-zinc-100/90 bg-white/5 border border-white/10 rounded-2xl p-4">
         Ты важна. Если устанешь от всего — просто дай знать. Я рядом и тихо.
-        <!-- 👆 Хочешь — поменяй текст прямо здесь в HTML -->
       </blockquote>
     </div>
   </section>
@@ -221,44 +220,49 @@
     }
     window.addEventListener('resize', ()=>{ resize(); makeStars(); }); resize(); makeStars(); tick();
 
-    // ===== СЧЁТЧИК ДНЕЙ (с 2017-09-01) =====
-    function calcYMD(from, to){
-      let y = to.getFullYear() - from.getFullYear();
-      let m = to.getMonth() - from.getMonth();
-      let d = to.getDate() - from.getDate();
-      if(d<0){ m--; const prevMonth = new Date(to.getFullYear(), to.getMonth(), 0).getDate(); d += prevMonth; }
+    // ===== ВРЕМЯ MSK (UTC+3) =====
+    const MSK_OFFSET = 3 * 60 * 60000; // мс
+    function nowUtcMs(){ return Date.now() + (new Date().getTimezoneOffset()*60000); }
+    function nowMskDate(){ return new Date(nowUtcMs() + MSK_OFFSET); }
+
+    // ===== СЧЁТЧИК ДНЕЙ (с 2017-09-01 MSK) =====
+    function calcYMD(fromY, fromM, fromD, now){
+      let y = now.getFullYear() - fromY;
+      let m = now.getMonth() + 1 - fromM; // now.getMonth() 0..11
+      let d = now.getDate() - fromD;
+      if(d<0){ m--; const prevMonthDays = new Date(now.getFullYear(), now.getMonth(), 0).getDate(); d += prevMonthDays; }
       if(m<0){ y--; m += 12; }
       return {y,m,d};
     }
-    const firstMeet = new Date(2017,8,1); // 1 сентября 2017
+    const firstMeetY=2017, firstMeetM=9, firstMeetD=1; // 01.09.2017
     function renderSince(){
-      const now = new Date();
-      const ymd = calcYMD(firstMeet, now);
-      const days = Math.floor((now - firstMeet)/(1000*60*60*24));
+      const nowM = nowMskDate();
+      const ymd = calcYMD(firstMeetY, firstMeetM, firstMeetD, nowM);
+      const firstMeetUtc = Date.UTC(firstMeetY, firstMeetM-1, firstMeetD, 0,0,0) - MSK_OFFSET; // 00:00 MSK
+      const days = Math.floor((nowUtcMs() - firstMeetUtc)/86400000);
       document.getElementById('sinceYMD').textContent = `${ymd.y} лет ${ymd.m} мес ${ymd.d} дн`;
-      document.getElementById('sinceDays').textContent = `${days.toLocaleString('ru-RU')} дней вместе со знакомства.`;
+      document.getElementById('sinceDays').textContent = `${days.toLocaleString('ru-RU')} дней со знакомства.`;
     }
     renderSince(); setInterval(renderSince, 60*1000);
 
-    // ===== ТАЙМЕРЫ НА ДР =====
-    function nextOccur(month, day){
-      const now = new Date();
-      let y = now.getFullYear();
-      let target = new Date(y, month-1, day, 0,0,0);
-      if(target < now) target = new Date(y+1, month-1, day, 0,0,0);
-      return target;
+    // ===== ТАЙМЕРЫ НА ДР (MSK) =====
+    function nextOccurMSK(month, day){
+      const nowM = nowMskDate();
+      let y = nowM.getFullYear();
+      let targetUtcMs = Date.UTC(y, month-1, day, 0,0,0) - MSK_OFFSET; // полночь MSK
+      if(targetUtcMs <= nowUtcMs()) targetUtcMs = Date.UTC(y+1, month-1, day, 0,0,0) - MSK_OFFSET;
+      return targetUtcMs;
     }
-    function renderCountdown(el, target){
-      const now = new Date();
-      let diff = Math.max(0, target - now);
-      const d = Math.floor(diff/86400000); diff -= d*86400000;
-      const h = Math.floor(diff/3600000); diff -= h*3600000;
-      const m = Math.floor(diff/60000); diff -= m*60000;
-      const s = Math.floor(diff/1000);
+    function renderCountdown(el, targetUtcMs){
+      const diff = Math.max(0, targetUtcMs - nowUtcMs());
+      const d = Math.floor(diff/86400000);
+      const h = Math.floor((diff%86400000)/3600000);
+      const m = Math.floor((diff%3600000)/60000);
+      const s = Math.floor((diff%60000)/1000);
       el.textContent = `${d}д ${h}ч ${m}м ${s}с`;
     }
-    const hisTarget = nextOccur(12,28);
-    const herTarget = nextOccur(12,9);
+    const hisTarget = nextOccurMSK(12,28);
+    const herTarget = nextOccurMSK(12,9);
     const elHis = document.getElementById('bdayHis');
     const elHer = document.getElementById('bdayHer');
     function tickTimers(){ renderCountdown(elHis, hisTarget); renderCountdown(elHer, herTarget); }
@@ -316,7 +320,7 @@
     const gate = document.getElementById('gate');
     const gi = document.getElementById('gateInput');
     const ge = document.getElementById('gateError');
-    function unlock(){ gate.style.display='none'; localStorage.setItem(GATE_KEY,'1'); gi.value=''; }
+    function unlock(){ gate.style.display='none'; document.body.classList.remove('overflow-hidden'); localStorage.setItem(GATE_KEY,'1'); gi.value=''; }
     if(localStorage.getItem(GATE_KEY)==='1'){ unlock(); }
     gi.addEventListener('keydown', (e)=>{
       if(e.key==='Enter'){
