@@ -1,168 +1,167 @@
-import React, { useMemo, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Sun, Moon, Star, MessageCircle, Send } from "lucide-react";
-
-// ===== Настройки =====
-const YOU = "Егор";
-const HER = "Настя";
-// Укажи свой (или её) телеграм-юзернейм без @
-const TG_USERNAME = "Tkachev_Egor"; // ← замени при необходимости
-
-const compliments = [
-  "Рада, когда ты отдыхаешь и бережёшь себя.",
-  "Ты важная часть моего дня.",
-  "Спасибо, что есть.",
-  "Пусть сегодня будет чуть легче, чем вчера.",
-  "Если захочешь — я рядом.",
-  "Ты умеешь делать тепло из мелочей.",
-];
-
-const quickMsgs = [
-  "Спокойного дня. Если устанешь — пиши.",
-  "Не перегружай колено сегодня, ладно?", 
-  "Спасибо за заботу — ценю.",
-  "Если надо выговориться — я слушаю.",
-];
-
-const palette = {
-  light: {
-    bg: "from-pink-50 via-violet-50 to-blue-50",
-    card: "bg-white/80 backdrop-blur-sm",
-    text: "text-zinc-800",
-    sub: "text-zinc-500",
-  },
-  dark: {
-    bg: "from-[#0b1220] via-[#0d0b1a] to-[#111827]",
-    card: "bg-white/10 backdrop-blur-sm border border-white/10",
-    text: "text-zinc-100",
-    sub: "text-zinc-400",
-  },
-};
-
-const Card = ({ children, className = "" }) => (
-  <div className={`rounded-2xl p-5 shadow-xl ${className}`}>{children}</div>
-);
-
-export default function App() {
-  const [dark, setDark] = useState(true);
-  const colors = dark ? palette.dark : palette.light;
-  const [idx, setIdx] = useState(0);
-  const [copied, setCopied] = useState(false);
-
-  const compliment = useMemo(() => compliments[idx % compliments.length], [idx]);
-
-  useEffect(() => {
-    if (copied) {
-      const t = setTimeout(() => setCopied(false), 1200);
-      return () => clearTimeout(t);
-    }
-  }, [copied]);
-
-  const copyText = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      setCopied(true);
-    } catch (_) {}
-  };
-
-  const tgLink = `https://t.me/${TG_USERNAME}`;
-
-  return (
-    <div className={`min-h-screen w-full bg-gradient-to-br ${colors.bg} ${colors.text} transition-colors duration-300`}> 
-      {/* Навбар */}
-      <nav className="max-w-3xl mx-auto px-4 py-5 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <motion.div initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ type: "spring", stiffness: 300, damping: 14 }}>
-            <Heart className="w-5 h-5" />
-          </motion.div>
-          <span className="font-semibold tracking-tight">Привет, {HER}</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <a
-            href={tgLink}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-emerald-500/20 hover:bg-emerald-500/30"
-            title="Написать в Telegram"
-          >
-            <Send className="w-4 h-4" /> <span className="text-sm">Написать в ТГ</span>
-          </a>
-          <button
-            onClick={() => setDark((v) => v !== true)}
-            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20"
-            title="Переключить тему"
-          >
-            {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}<span className="text-sm">Тема</span>
-          </button>
-        </div>
-      </nav>
-
-      {/* Хиро */}
-      <header className="max-w-3xl mx-auto px-4">
-        <Card className={`${colors.card}`}>
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.5 }} className="text-2xl sm:text-3xl font-bold">
-                Небольшая открытка от {YOU}
-              </motion.h1>
-              <p className={`mt-2 ${colors.sub}`}>
-                Без метафор и пафоса. Просто тёплое место с парой фраз на день и быстрыми кнопками‑сообщениями. Сделано аккуратно, чтобы приятно открыть и на телефоне, и на ПК.
-              </p>
-            </div>
-          </div>
-        </Card>
-      </header>
-
-      {/* Одно предложение на день */}
-      <section className="max-w-3xl mx-auto px-4 mt-5">
-        <Card className={`${colors.card}`}>
-          <div className="flex items-center gap-3 mb-2">
-            <Star className="w-4 h-4" />
-            <h2 className="font-semibold">Одно предложение на день</h2>
-          </div>
-          <div className="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-            <AnimatePresence mode="wait">
-              <motion.p key={idx} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} className="text-lg">
-                {compliment}
-              </motion.p>
-            </AnimatePresence>
-            <div className="flex gap-2">
-              <button onClick={() => setIdx((v) => v + 1)} className="px-3 py-1.5 rounded-lg border border-white/10 bg-white/10 hover:bg-white/20">Ещё</button>
-              <button onClick={() => copyText(compliment)} className="px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">Скопировать</button>
-            </div>
-          </div>
-          <AnimatePresence>
-            {copied && (
-              <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -6 }} className="text-emerald-400 text-sm mt-2">
-                Скопировано. Можно кидать в чат 🙌
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Card>
-      </section>
-
-      {/* Кнопки‑сообщения */}
-      <section className="max-w-3xl mx-auto px-4 mt-5">
-        <Card className={`${colors.card}`}>
-          <div className="flex items-center gap-3 mb-3">
-            <MessageCircle className="w-4 h-4" />
-            <h2 className="font-semibold">Быстрые сообщения</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-            {quickMsgs.map((t, i) => (
-              <button key={i} onClick={() => copyText(t)} className="text-left px-3 py-2 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20">
-                {t}
-              </button>
-            ))}
-          </div>
-          <div className={`mt-2 text-sm ${colors.sub}`}>Нажми, чтобы скопировать и отправить в чат.</div>
-        </Card>
-      </section>
-
-      {/* Футер */}
-      <footer className="max-w-3xl mx-auto px-4 py-8 opacity-80">
-        <div className="text-sm">Сделано аккуратно и с уважением. Если что — пиши в ТГ.</div>
-      </footer>
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Открытка для Насти</title>
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    html,body{height:100%}
+    .fade-enter{opacity:0;transform:translateY(6px)}
+    .fade-enter-active{opacity:1;transform:translateY(0);transition:.35s}
+    .pulse { animation: pulse 1.8s ease-in-out infinite; }
+    @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800 transition-colors duration-300" id="body">
+  <!-- Шапка -->
+  <nav class="max-w-3xl mx-auto px-4 py-5 flex items-center justify-between">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">💫</span>
+      <span class="font-semibold tracking-tight">Привет, Настя</span>
+      <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-black/5">v1.0</span>
     </div>
-  );
-}
+    <div class="flex items-center gap-2">
+      <a id="tgLink" href="https://t.me/Tkachev_Egor" target="_blank"
+         class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">
+        ✉️ <span class="text-sm">Написать в ТГ</span>
+      </a>
+      <button id="themeBtn"
+        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-black/10 bg-black/5 hover:bg-black/10">
+        <span id="themeIcon">🌙</span><span class="text-sm">Тема</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Хиро -->
+  <header class="max-w-3xl mx-auto px-4">
+    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardTone">
+      <h1 class="text-2xl sm:text-3xl font-bold">Небольшая открытка от Егора</h1>
+      <p class="mt-2 text-zinc-500">
+        Без метафор. Просто спокойный, аккуратный сайт с короткими тёплыми фразами и быстрыми кнопками-сообщениями.
+        Удобно и на телефоне, и на ПК.
+      </p>
+    </div>
+  </header>
+
+  <!-- Одно предложение на день -->
+  <section class="max-w-3xl mx-auto px-4 mt-5">
+    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardOne">
+      <div class="flex items-center gap-3 mb-2">
+        <span>⭐</span><h2 class="font-semibold">Одно предложение на день</h2>
+      </div>
+      <div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
+        <p id="phrase" class="text-lg fade-enter">Пусть сегодня будет чуть легче, чем вчера.</p>
+        <div class="flex gap-2">
+          <button id="nextBtn" class="px-3 py-1.5 rounded-lg border border-black/10 bg-black/5 hover:bg-black/10">Ещё</button>
+          <button id="copyBtn" class="px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">Скопировать</button>
+        </div>
+      </div>
+      <div id="copiedNote" class="text-emerald-600 text-sm mt-2 hidden">Скопировано. Можно кидать в чат 🙌</div>
+    </div>
+  </section>
+
+  <!-- Быстрые сообщения -->
+  <section class="max-w-3xl mx-auto px-4 mt-5 mb-10">
+    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardQuick">
+      <div class="flex items-center gap-3 mb-3">
+        <span>💬</span><h2 class="font-semibold">Быстрые сообщения</h2>
+      </div>
+      <div id="quickWrap" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        <!-- Кнопки вставляются скриптом -->
+      </div>
+      <div class="mt-2 text-sm text-zinc-500">Нажми, чтобы скопировать и отправить в чат.</div>
+    </div>
+  </section>
+
+  <script>
+    // ===== Настройки =====
+    const TG_USERNAME = "Tkachev_Egor"; // замени при необходимости
+    document.getElementById('tgLink').href = `https://t.me/${TG_USERNAME}`;
+
+    // Тёплые короткие фразы
+    const compliments = [
+      "Рада, когда ты отдыхаешь и бережёшь себя.",
+      "Ты важная часть моего дня.",
+      "Спасибо, что есть.",
+      "Пусть сегодня будет чуть легче, чем вчера.",
+      "Если захочешь — я рядом.",
+      "Ты умеешь делать тепло из мелочей."
+    ];
+
+    // Быстрые сообщения (копируются по клику)
+    const quickMsgs = [
+      "Спокойного дня. Если устанешь — пиши.",
+      "Не перегружай колено сегодня, ладно?",
+      "Спасибо за заботу — ценю.",
+      "Если надо выговориться — я слушаю."
+    ];
+
+    // Функции
+    const phraseEl = document.getElementById('phrase');
+    const copiedNote = document.getElementById('copiedNote');
+
+    let idx = 0;
+    function showPhrase() {
+      phraseEl.classList.remove('fade-enter-active');
+      phraseEl.classList.add('fade-enter');
+      setTimeout(() => {
+        phraseEl.textContent = compliments[idx % compliments.length];
+        phraseEl.classList.remove('fade-enter');
+        phraseEl.classList.add('fade-enter-active');
+      }, 10);
+    }
+    showPhrase();
+
+    document.getElementById('nextBtn').onclick = () => { idx++; showPhrase(); };
+
+    document.getElementById('copyBtn').onclick = async () => {
+      try {
+        await navigator.clipboard.writeText(phraseEl.textContent);
+        copiedNote.classList.remove('hidden');
+        setTimeout(() => copiedNote.classList.add('hidden'), 1200);
+      } catch(e) {}
+    };
+
+    // Рендер быстрых сообщений
+    const quickWrap = document.getElementById('quickWrap');
+    quickMsgs.forEach((t) => {
+      const btn = document.createElement('button');
+      btn.className = "text-left px-3 py-2 rounded-xl border border-black/10 bg-black/5 hover:bg-black/10";
+      btn.textContent = t;
+      btn.onclick = async () => {
+        try {
+          await navigator.clipboard.writeText(t);
+          btn.classList.add('pulse');
+          setTimeout(()=>btn.classList.remove('pulse'), 700);
+        } catch(e){}
+      };
+      quickWrap.appendChild(btn);
+    });
+
+    // Тёмная/светлая тема
+    const body = document.getElementById('body');
+    const themeBtn = document.getElementById('themeBtn');
+    const themeIcon = document.getElementById('themeIcon');
+    let dark = false;
+    function applyTheme() {
+      if (dark) {
+        body.className = "min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100 transition-colors duration-300";
+        document.querySelectorAll('#cardTone,#cardOne,#cardQuick').forEach(el=>{
+          el.className = "rounded-2xl p-5 shadow-xl bg-white/10 backdrop-blur-sm border border-white/10";
+        });
+        themeIcon.textContent = "☀️";
+      } else {
+        body.className = "min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800 transition-colors duration-300";
+        document.querySelectorAll('#cardTone,#cardOne,#cardQuick').forEach(el=>{
+          el.className = "rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm";
+        });
+        themeIcon.textContent = "🌙";
+      }
+    }
+    themeBtn.onclick = ()=>{ dark = !dark; applyTheme(); };
+    applyTheme();
+  </script>
+</body>
+</html>
