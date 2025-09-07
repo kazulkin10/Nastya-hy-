@@ -3,84 +3,134 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Открытка для Насти</title>
+  <meta name="theme-color" content="#0b1220" />
+  <title>Для Насти — открытка</title>
+  <meta name="description" content="Тёплая личная открытка: фразы на день, быстрые сообщения, кнопка написать в ТГ. Аккуратно и без лишнего." />
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    html,body{height:100%}
-    .fade-enter{opacity:0;transform:translateY(6px)}
-    .fade-enter-active{opacity:1;transform:translateY(0);transition:.35s}
-    .pulse { animation: pulse 1.8s ease-in-out infinite; }
-    @keyframes pulse { 0%{transform:scale(1)} 50%{transform:scale(1.03)} 100%{transform:scale(1)} }
+    html,body{height:100%;scroll-behavior:smooth}
+    .glass{backdrop-filter: blur(10px)}
+    .fade-in{opacity:0;transform:translateY(10px);animation:fade .5s ease forwards}
+    @keyframes fade{to{opacity:1;transform:none}}
+    .shine{position:relative;overflow:hidden}
+    .shine:after{content:"";position:absolute;top:-120%;left:-120%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0 340deg,rgba(255,255,255,.1) 360deg);animation:spin 14s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .blob{position:absolute;filter:blur(40px);opacity:.4}
+    .pulse{animation:pulse 1.8s ease-in-out}
+    @keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.03)}100%{transform:scale(1)}}
+    .carousel{display:grid;grid-template-columns:100% 100% 100%;scroll-snap-type:x mandatory;overflow-x:auto;border-radius:1rem}
+    .carousel>div{scroll-snap-align:center}
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800 transition-colors duration-300" id="body">
-  <!-- Шапка -->
-  <nav class="max-w-3xl mx-auto px-4 py-5 flex items-center justify-between">
-    <div class="flex items-center gap-2">
-      <span class="text-xl">💫</span>
-      <span class="font-semibold tracking-tight">Привет, Настя</span>
-      <span class="ml-2 text-xs px-2 py-0.5 rounded-full bg-black/5">v1.0</span>
-    </div>
-    <div class="flex items-center gap-2">
-      <a id="tgLink" href="https://t.me/Tkachev_Egor" target="_blank"
-         class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">
-        ✉️ <span class="text-sm">Написать в ТГ</span>
-      </a>
-      <button id="themeBtn"
-        class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-black/10 bg-black/5 hover:bg-black/10">
-        <span id="themeIcon">🌙</span><span class="text-sm">Тема</span>
-      </button>
-    </div>
-  </nav>
+<body class="min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100" id="body">
+  <!-- декоративные пятна -->
+  <div class="blob -z-10 w-72 h-72 bg-fuchsia-500/30 rounded-full top-10 -left-10"></div>
+  <div class="blob -z-10 w-72 h-72 bg-sky-500/30 rounded-full -bottom-16 right-6"></div>
 
-  <!-- Хиро -->
-  <header class="max-w-3xl mx-auto px-4">
-    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardTone">
-      <h1 class="text-2xl sm:text-3xl font-bold">Небольшая открытка от Егора</h1>
-      <p class="mt-2 text-zinc-500">
-        Без метафор. Просто спокойный, аккуратный сайт с короткими тёплыми фразами и быстрыми кнопками-сообщениями.
-        Удобно и на телефоне, и на ПК.
-      </p>
-    </div>
+  <header class="max-w-4xl mx-auto px-4 pt-7 pb-2">
+    <nav class="flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-9 h-9 rounded-2xl bg-white/10 grid place-items-center border border-white/10">💫</div>
+        <div class="font-semibold">Привет, Настя</div>
+        <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/10">v2.0</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a id="tgLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">
+          ✉️ <span class="text-sm">Написать в ТГ</span>
+        </a>
+        <button id="themeBtn" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20">
+          <span id="themeIcon">☀️</span><span class="text-sm">Тема</span>
+        </button>
+      </div>
+    </nav>
   </header>
 
-  <!-- Одно предложение на день -->
-  <section class="max-w-3xl mx-auto px-4 mt-5">
-    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardOne">
-      <div class="flex items-center gap-3 mb-2">
-        <span>⭐</span><h2 class="font-semibold">Одно предложение на день</h2>
+  <!-- Hero -->
+  <section class="max-w-4xl mx-auto px-4">
+    <div id="heroCard" class="shine glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10">
+      <div class="flex flex-col md:flex-row md:items-center gap-6">
+        <div class="flex-1">
+          <h1 class="text-2xl sm:text-3xl font-bold fade-in">Небольшая личная открытка от Егора</h1>
+          <p class="mt-2 text-zinc-400 fade-in" style="animation-delay:.1s">Тихо, аккуратно и по‑делу: короткая фраза на день, быстрые сообщения на один тап и кнопка связаться. Без метафор и пафоса.</p>
+          <div class="mt-4 flex flex-wrap gap-2 fade-in" style="animation-delay:.2s">
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs">мобильный + ПК</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs">плавные анимации</span>
+            <span class="px-3 py-1 rounded-full bg-white/10 border border-white/10 text-xs">без лишнего</span>
+          </div>
+        </div>
+        <div class="flex-none w-full md:w-64">
+          <div class="carousel border border-white/10 bg-white/5">
+            <div class="aspect-[4/3] grid place-items-center text-zinc-300">Фото 1 (браслет)</div>
+            <div class="aspect-[4/3] grid place-items-center text-zinc-300">Фото 2 (улыбка)</div>
+            <div class="aspect-[4/3] grid place-items-center text-zinc-300">Фото 3 (пейзаж)</div>
+          </div>
+          <div class="text-[11px] text-zinc-400 mt-1">Свайпай в сторону • заменяемые фото</div>
+        </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Фраза дня -->
+  <section class="max-w-4xl mx-auto px-4 mt-6">
+    <div id="cardOne" class="glass rounded-2xl p-6 border border-white/10 bg-white/10">
+      <div class="flex items-center gap-3 mb-2"><span>⭐</span><h2 class="font-semibold">Одно предложение на день</h2></div>
       <div class="flex flex-col sm:flex-row sm:items-center gap-3 justify-between">
-        <p id="phrase" class="text-lg fade-enter">Пусть сегодня будет чуть легче, чем вчера.</p>
+        <p id="phrase" class="text-lg">Пусть сегодня будет чуть легче, чем вчера.</p>
         <div class="flex gap-2">
-          <button id="nextBtn" class="px-3 py-1.5 rounded-lg border border-black/10 bg-black/5 hover:bg-black/10">Ещё</button>
+          <button id="nextBtn" class="px-3 py-1.5 rounded-lg border border-white/10 bg-white/10 hover:bg-white/20">Ещё</button>
           <button id="copyBtn" class="px-3 py-1.5 rounded-lg border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">Скопировать</button>
         </div>
       </div>
-      <div id="copiedNote" class="text-emerald-600 text-sm mt-2 hidden">Скопировано. Можно кидать в чат 🙌</div>
+      <div id="copiedNote" class="text-emerald-400 text-sm mt-2 hidden">Скопировано. Можно кидать в чат 🙌</div>
     </div>
   </section>
 
-  <!-- Быстрые сообщения -->
-  <section class="max-w-3xl mx-auto px-4 mt-5 mb-10">
-    <div class="rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm" id="cardQuick">
-      <div class="flex items-center gap-3 mb-3">
-        <span>💬</span><h2 class="font-semibold">Быстрые сообщения</h2>
+  <!-- Быстрые сообщения + конструктор -->
+  <section class="max-w-4xl mx-auto px-4 mt-6">
+    <div id="cardQuick" class="glass rounded-2xl p-6 border border-white/10 bg-white/10">
+      <div class="flex items-center gap-3 mb-3"><span>💬</span><h2 class="font-semibold">Быстрые сообщения</h2></div>
+      <div id="quickWrap" class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-4"></div>
+      <div class="mt-2 text-sm text-zinc-400">Нажми, чтобы скопировать и отправить.</div>
+      <hr class="my-4 border-white/10" />
+      <div class="flex items-end gap-2 flex-wrap">
+        <div class="flex-1 min-w-[240px]">
+          <label class="text-xs text-zinc-400">Собери своё сообщение</label>
+          <textarea id="compose" rows="2" class="w-full mt-1 rounded-xl border border-white/10 bg-white/5 px-3 py-2 outline-none focus:ring-1 focus:ring-emerald-400" placeholder="Например: спокойного дня. Если устанешь — пиши." ></textarea>
+        </div>
+        <button id="copyCompose" class="h-10 px-3 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">Скопировать</button>
       </div>
-      <div id="quickWrap" class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-        <!-- Кнопки вставляются скриптом -->
-      </div>
-      <div class="mt-2 text-sm text-zinc-500">Нажми, чтобы скопировать и отправить в чат.</div>
     </div>
   </section>
+
+  <!-- Музыка-обмен (микро) -->
+  <section class="max-w-4xl mx-auto px-4 mt-6">
+    <div class="glass rounded-2xl p-6 border border-white/10 bg-white/10">
+      <div class="flex items-center gap-3 mb-3"><span>🎧</span><h2 class="font-semibold">Два трека навстречу</h2></div>
+      <p class="text-sm text-zinc-400 mb-3">Ты кидаешь 2 любимых — я 2 своих. Без споров, чистое любопытство.</p>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+        <ul class="list-disc list-inside space-y-1">
+          <li><a class="hover:underline" href="#" target="_blank">Nightwish — Shudder Before the Beautiful</a></li>
+          <li><a class="hover:underline" href="#" target="_blank">Nightwish — Planet Hell</a></li>
+        </ul>
+        <ul class="list-disc list-inside space-y-1">
+          <li><a class="hover:underline" href="#" target="_blank">Tommee Profitt, Fleurie — Sound of War</a></li>
+          <li><a class="hover:underline" href="#" target="_blank">BTS — Not Today</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer class="max-w-4xl mx-auto px-4 py-10 text-zinc-400 text-sm">
+    Сделано аккуратно. Если что — пиши в ТГ.
+  </footer>
 
   <script>
-    // ===== Настройки =====
+    // Настройки
     const TG_USERNAME = "Tkachev_Egor"; // замени при необходимости
     document.getElementById('tgLink').href = `https://t.me/${TG_USERNAME}`;
 
-    // Тёплые короткие фразы
+    // Фразы
     const compliments = [
       "Рада, когда ты отдыхаешь и бережёшь себя.",
       "Ты важная часть моего дня.",
@@ -89,78 +139,57 @@
       "Если захочешь — я рядом.",
       "Ты умеешь делать тепло из мелочей."
     ];
+    let idx = 0;
+    const phraseEl = document.getElementById('phrase');
+    const copiedNote = document.getElementById('copiedNote');
+    function showPhrase(){ phraseEl.textContent = compliments[idx % compliments.length]; }
+    showPhrase();
+    document.getElementById('nextBtn').onclick = ()=>{ idx++; phraseEl.classList.add('pulse'); showPhrase(); setTimeout(()=>phraseEl.classList.remove('pulse'),700); };
+    document.getElementById('copyBtn').onclick = async ()=>{ try{ await navigator.clipboard.writeText(phraseEl.textContent); copiedNote.classList.remove('hidden'); setTimeout(()=>copiedNote.classList.add('hidden'),1200);}catch(e){} };
 
-    // Быстрые сообщения (копируются по клику)
+    // Быстрые сообщения
     const quickMsgs = [
       "Спокойного дня. Если устанешь — пиши.",
       "Не перегружай колено сегодня, ладно?",
       "Спасибо за заботу — ценю.",
-      "Если надо выговориться — я слушаю."
+      "Если надо выговориться — я слушаю.",
+      "Доберись спокойно домой. Я на связи.",
+      "Если будет тяжело — можем помолчать вместе."
     ];
-
-    // Функции
-    const phraseEl = document.getElementById('phrase');
-    const copiedNote = document.getElementById('copiedNote');
-
-    let idx = 0;
-    function showPhrase() {
-      phraseEl.classList.remove('fade-enter-active');
-      phraseEl.classList.add('fade-enter');
-      setTimeout(() => {
-        phraseEl.textContent = compliments[idx % compliments.length];
-        phraseEl.classList.remove('fade-enter');
-        phraseEl.classList.add('fade-enter-active');
-      }, 10);
-    }
-    showPhrase();
-
-    document.getElementById('nextBtn').onclick = () => { idx++; showPhrase(); };
-
-    document.getElementById('copyBtn').onclick = async () => {
-      try {
-        await navigator.clipboard.writeText(phraseEl.textContent);
-        copiedNote.classList.remove('hidden');
-        setTimeout(() => copiedNote.classList.add('hidden'), 1200);
-      } catch(e) {}
-    };
-
-    // Рендер быстрых сообщений
     const quickWrap = document.getElementById('quickWrap');
-    quickMsgs.forEach((t) => {
-      const btn = document.createElement('button');
-      btn.className = "text-left px-3 py-2 rounded-xl border border-black/10 bg-black/5 hover:bg-black/10";
-      btn.textContent = t;
-      btn.onclick = async () => {
-        try {
-          await navigator.clipboard.writeText(t);
-          btn.classList.add('pulse');
-          setTimeout(()=>btn.classList.remove('pulse'), 700);
-        } catch(e){}
-      };
-      quickWrap.appendChild(btn);
+    quickMsgs.forEach(t=>{
+      const b = document.createElement('button');
+      b.className = "text-left px-3 py-2 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20";
+      b.textContent = t;
+      b.onclick = async ()=>{ try{ await navigator.clipboard.writeText(t); b.classList.add('pulse'); setTimeout(()=>b.classList.remove('pulse'),700);}catch(e){} };
+      quickWrap.appendChild(b);
     });
 
-    // Тёмная/светлая тема
+    // Конструктор сообщения
+    document.getElementById('copyCompose').onclick = async ()=>{
+      const t = document.getElementById('compose').value.trim();
+      if(!t) return;
+      try{ await navigator.clipboard.writeText(t); const btn = document.getElementById('copyCompose'); btn.classList.add('pulse'); setTimeout(()=>btn.classList.remove('pulse'),700);}catch(e){}
+    };
+
+    // Тема
     const body = document.getElementById('body');
     const themeBtn = document.getElementById('themeBtn');
     const themeIcon = document.getElementById('themeIcon');
-    let dark = false;
-    function applyTheme() {
-      if (dark) {
-        body.className = "min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100 transition-colors duration-300";
-        document.querySelectorAll('#cardTone,#cardOne,#cardQuick').forEach(el=>{
-          el.className = "rounded-2xl p-5 shadow-xl bg-white/10 backdrop-blur-sm border border-white/10";
-        });
+    let dark = true;
+    function applyTheme(){
+      const cards = [document.getElementById('heroCard'), document.getElementById('cardOne'), document.getElementById('cardQuick')];
+      if(dark){
+        body.className = "min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#111827] text-zinc-100";
+        cards.forEach(el=> el.className = "shine glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10");
         themeIcon.textContent = "☀️";
       } else {
-        body.className = "min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800 transition-colors duration-300";
-        document.querySelectorAll('#cardTone,#cardOne,#cardQuick').forEach(el=>{
-          el.className = "rounded-2xl p-5 shadow-xl bg-white/80 backdrop-blur-sm";
-        });
+        body.className = "min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800";
+        cards.forEach(el=> el.className = "shine glass rounded-2xl p-6 md:p-7 border border-black/10 bg-white/80");
         themeIcon.textContent = "🌙";
       }
     }
-    themeBtn.onclick = ()=>{ dark = !dark; applyTheme(); };
+    themeBtn.onclick = ()=>{ dark=!dark; applyTheme(); };
     applyTheme();
   </script>
 </body>
