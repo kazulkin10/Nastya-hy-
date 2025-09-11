@@ -1,280 +1,291 @@
-<!doctype html>
-<html lang="ru">
+<!DOCTYPE html><html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#0b1220" />
-  <title>Насте 🌸</title>
-  <link id="app-manifest" rel="manifest" />
-  <link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y="0.9em" font-size="90">🌸</text></svg>' />
-  <meta name="description" content="Тёплая открытка для Насти: фото, послания, музыка, счётчик дней, таймеры, прогресс‑кольца, лёгкие анимации. Аккуратно и красиво." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Для Насти · лёгко и красиво</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f9d7eb'/%3E%3Cpath d='M32 48c-9-6-16-12-16-20a9 9 0 0 1 16-6 9 9 0 0 1 16 6c0 8-7 14-16 20z' fill='%23ff5aa5'/%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
   <style>
-    html,body{height:100%;scroll-behavior:smooth}
-    .glass{backdrop-filter:blur(10px)}
-    .reveal{opacity:0;transform:translateY(14px);transition:opacity .5s ease,transform .5s ease}
-    .reveal.show{opacity:1;transform:none}
-    .blob{position:absolute;filter:blur(42px);opacity:.28}
-    .shadow-soft{box-shadow:0 10px 30px rgba(0,0,0,.22)}
-    .masonry{column-gap:.75rem}
-    .masonry>figure{break-inside:avoid;margin:0 0 .75rem}
-    @media(min-width:640px){.masonry{column-count:2}}
-    @media(min-width:1024px){.masonry{column-count:3}}
-    .lb-enter{opacity:0;transform:scale(.98)}
-    .lb-enter.show{opacity:1;transform:scale(1);transition:opacity .2s ease,transform .2s ease}
-    canvas#stars{position:fixed;inset:0;z-index:-1}
-    #installBar{position:fixed;left:0;right:0;bottom:0;z-index:50;}
-    .gradient-card{position:relative}
-    .gradient-card:before{content:"";position:absolute;inset:0;border-radius:1rem;padding:1px;background:linear-gradient(135deg,rgba(16,185,129,.6),rgba(99,102,241,.5),rgba(236,72,153,.5));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+    :root{
+      --bg:#0b1020;
+      --text:#e9edf7;
+      --muted:#b6c0d9;
+      --card: rgba(255,255,255,.08);
+      --card2: rgba(255,255,255,.12);
+      --accent:#ff71b8;
+      --accent2:#7aa6ff;
+      --ok:#7dd3fc; --good:#86efac; --bad:#fda4af; --happy:#f0abfc;
+      --radius:20px;
+      --shadow:0 10px 30px rgba(0,0,0,.25);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;background:radial-gradient(1200px 800px at 70% -10%, #14204a 0%, #0b1020 60%  , #050812 100%);
+      color:var(--text); font:400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden;
+    }
+    a{color:inherit}/* floating background */
+canvas#bg{position:fixed;inset:0;z-index:-2}
+.glow{position:fixed;inset: -10vmax; z-index:-3; filter: blur(80px); opacity:.35; pointer-events:none}
+.g1{background: radial-gradient(circle at 20% 30%, #ff71b820, transparent 50%),
+                     radial-gradient(circle at 80% 10%, #7aa6ff20, transparent 50%),
+                     radial-gradient(circle at 60% 80%, #a2ffde22, transparent 60%);}  
+
+header{
+  position:sticky; top:0; backdrop-filter: blur(10px); background:linear-gradient(180deg, rgba(10,15,30,.6), rgba(10,15,30,.2) 60%, transparent);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  z-index:20;
+}
+.wrap{max-width:1050px; margin:0 auto; padding:18px 20px}
+.row{display:flex; align-items:center; gap:14px}
+.brand{font:700 18px Inter; letter-spacing:.3px}
+.chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid rgba(255,255,255,.08)}
+.chip small{color:var(--muted)}
+.tg{margin-left:auto}
+.btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; background:linear-gradient(135deg, var(--accent), #ff8ed1); color:#120816; font-weight:700; text-decoration:none; box-shadow:0 6px 20px rgba(255,113,184,.25); transition:transform .2s ease, filter .2s ease}
+.btn:hover{transform:translateY(-1px); filter:saturate(1.1)}
+
+/* hero */
+.hero{padding:56px 20px 24px}
+.hero-inner{max-width:1050px;margin:0 auto; display:grid; grid-template-columns:1.2fr .8fr; gap:22px}
+.card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
+.p24{padding:24px}
+.title{font:800 40px/1.2 Inter; letter-spacing:.2px; margin:0}
+.subtitle{color:var(--muted); margin:10px 0 0}
+.heart{font-size:22px; display:inline-flex; align-items:center; gap:8px; user-select:none}
+.heart .tap{opacity:.6; font-weight:600}
+
+.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px}
+.stat{padding:16px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.06)}
+.stat b{display:block; font:800 22px Inter}
+.stat span{color:var(--muted); font-size:13px}
+
+.countdowns{display:grid; gap:10px}
+.pill{padding:14px; border-radius:16px; border:1px dashed rgba(255,255,255,.15); background:rgba(255,255,255,.04)}
+
+/* notes */
+.notes{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
+.note{padding:18px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.06)}
+.note h4{margin:0 0 8px; font:700 16px Inter}
+.note p{margin:0; color:var(--text)}
+
+/* gallery */
+section{padding:28px 20px}
+.sec-title{max-width:1050px;margin:0 auto 14px; display:flex; align-items:end; justify-content:space-between}
+.sec-title h3{margin:0; font:800 22px Inter}
+.grid{max-width:1050px; margin:0 auto; columns: 1; column-gap:14px}
+@media(min-width:680px){ .grid{columns:2} }
+@media(min-width:980px){ .grid{columns:3} }
+.ph{break-inside:avoid; border-radius:16px; overflow:hidden; margin:0 0 14px; position:relative; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow)}
+.ph img{width:100%; display:block; transition: transform .4s ease, filter .4s ease}
+.ph:hover img{transform:scale(1.04)}
+
+/* lightbox */
+.lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(6px); background:rgba(4,6,14,.65); z-index:50}
+.lightbox.active{display:flex}
+.lb-inner{max-width:min(92vw,1100px); max-height:90vh; position:relative}
+.lb-inner img{max-width:100%; max-height:90vh; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lb-x{position:absolute; top:-44px; right:0; background:var(--card2); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:8px 12px; cursor:pointer}
+
+/* footer */
+footer{padding:34px 20px 60px; color:var(--muted); text-align:center}
+.tiny{opacity:.7; font-size:13px}
+
+/* micro animations */
+.floatY{animation:floatY 9s ease-in-out infinite}
+@keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+
+.badge{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:linear-gradient(135deg,var(--card2),rgba(255,255,255,.06)); border:1px solid rgba(255,255,255,.08)}
+.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; color:var(--muted)}
+
+/* hidden easter */
+.secret{display:none; margin-top:10px; color:#ffe1f1}
+
+/* music */
+.music{display:grid; grid-template-columns:1fr; gap:12px}
+@media(min-width:760px){ .music{grid-template-columns:1fr 1fr} }
+
   </style>
 </head>
-<body class="min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#0f172a] text-zinc-100" id="body">
-  <canvas id="stars"></canvas>
-  <div class="blob -z-10 w-72 h-72 bg-fuchsia-500/30 rounded-full top-10 -left-10"></div>
-  <div class="blob -z-10 w-72 h-72 bg-sky-500/30 rounded-full -bottom-16 right-6"></div>
-
-  <!-- Install banner (PWA) -->
-  <div id="installBar" class="hidden">
-    <div class="mx-auto max-w-6xl px-4 pb-4">
-      <div class="glass rounded-2xl border border-white/10 bg-white/10 p-3 flex items-center justify-between">
-        <div class="text-sm">Добавить «Насте 🌸» на экран — будет как приложение (офлайн работает).</div>
-        <div class="flex gap-2">
-          <button id="installBtn" class="px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20 text-sm">Установить</button>
-          <button id="installClose" class="px-3 py-1.5 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20 text-sm">Скрыть</button>
-        </div>
+<body>
+  <div class="glow g1"></div>
+  <canvas id="bg" aria-hidden="true"></canvas>  <header>
+    <div class="wrap row">
+      <div class="brand">для Насти</div>
+      <div class="chip"><span>🌸</span><small>спокойное место, которое можно показать кому угодно</small></div>
+      <a class="btn tg" href="https://t.me/Tkachev_Egor" target="_blank" rel="noreferrer">Написать в Telegram</a>
+    </div>
+  </header>  <section class="hero">
+    <div class="hero-inner">
+      <div class="card p24">
+        <p class="heart" id="heart">💗 <span class="tap">(нажми 3 раза)</span></p>
+        <h1 class="title">Привет, Настя. Здесь тихо, красиво и без лишнего.
+        </h1>
+        <p class="subtitle">Никаких громких слов — только то, что действительно важно. Фотографии, пара тёплых записок, музыка и чуть магии времени.</p><div class="stats">
+      <div class="stat">
+        <b id="daysTogether">—</b>
+        <span>дней знакомы (с 01.09.2017)</span>
       </div>
+      <div class="stat">
+        <b id="nextBdayN">—</b>
+        <span>до др Насти (9 декабря, МСК)</span>
+      </div>
+      <div class="stat">
+        <b id="nextBdayE">—</b>
+        <span>до др Егора (28 декабря, МСК)</span>
+      </div>
+    </div>
+
+    <div class="secret" id="secret">
+      Тихая пасхалка: иногда достаточно просто быть рядом. Спасибо, что ты есть.
     </div>
   </div>
 
-  <!-- Header -->
-  <header class="max-w-6xl mx-auto px-4 pt-7 pb-4 select-none">
-    <nav class="flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <button id="eggBtn" class="w-9 h-9 rounded-2xl bg-white/10 grid place-items-center border border-white/10">💫</button>
-        <div class="text-xl font-semibold tracking-wide">Насте</div>
-        <span class="ml-2 text-[11px] px-2 py-0.5 rounded-full bg-white/10 border border-white/10">v7.0</span>
+  <div class="card p24">
+    <div class="countdowns">
+      <div class="pill"><b>⏳ До прогулки:</b> <span id="walk">∞</span></div>
+      <div class="pill"><b>🎧 Музыка:</b>
+        <div class="music" style="margin-top:10px">
+          <a class="badge" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8" target="_blank" rel="noreferrer">Плейлист Насти</a>
+          <a class="badge" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a" target="_blank" rel="noreferrer">Плейлист Егора</a>
+        </div>
       </div>
-      <div class="flex items-center gap-2">
-        <button id="notifBtn" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20">🔔 <span class="text-sm">Уведомления</span></button>
-        <a id="tgLink" href="#" target="_blank" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-emerald-500/30 bg-emerald-500/10 hover:bg-emerald-500/20">✉️ <span class="text-sm">Написать в ТГ</span></a>
-        <button id="themeBtn" class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl border border-white/10 bg-white/10 hover:bg-white/20"><span id="themeIcon">☀️</span><span class="text-sm">Тема</span></button>
-      </div>
-    </nav>
-  </header>
-
-  <!-- HERO -->
-  <section class="max-w-6xl mx-auto px-4">
-    <div id="heroCard" class="reveal gradient-card rounded-2xl">
-      <div class="glass rounded-2xl p-6 md:p-8 border border-white/10 bg-white/10">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
-          <div>
-            <h1 class="text-3xl md:text-4xl font-bold leading-tight">Привет, Настя. Это тихое место с фото, музыкой и небольшими знаками внимания.</h1>
-            <p class="mt-3 text-zinc-400">Ничего лишнего — только то, что приятно открыть на телефоне или на ноуте.</p>
-            <div class="mt-5 grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
-                <div class="text-xs text-zinc-400">Мы знакомы</div>
-                <div id="sinceYMD" class="text-xl font-semibold">—</div>
-                <div id="sinceDays" class="text-xs text-zinc-400">—</div>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col items-center gap-2">
-                <div class="text-xs text-zinc-400">До ДР Егора (28 декабря)</div>
-                <svg width="90" height="90" viewBox="0 0 90 90">
-                  <circle cx="45" cy="45" r="36" stroke="rgba(255,255,255,.15)" stroke-width="8" fill="none"/>
-                  <circle id="ringHis" cx="45" cy="45" r="36" stroke="url(#g1)" stroke-linecap="round" stroke-width="8" fill="none" stroke-dasharray="226.194" stroke-dashoffset="226.194" transform="rotate(-90 45 45)"/>
-                  <defs><linearGradient id="g1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#10b981"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
-                </svg>
-                <div id="bdayHis" class="text-sm">—</div>
-              </div>
-              <div class="rounded-2xl border border-white/10 bg-white/5 p-4 flex flex-col items-center gap-2">
-                <div class="text-xs text-zinc-400">До ДР Насти (9 декабря)</div>
-                <svg width="90" height="90" viewBox="0 0 90 90">
-                  <circle cx="45" cy="45" r="36" stroke="rgba(255,255,255,.15)" stroke-width="8" fill="none"/>
-                  <circle id="ringHer" cx="45" cy="45" r="36" stroke="url(#g2)" stroke-linecap="round" stroke-width="8" fill="none" stroke-dasharray="226.194" stroke-dashoffset="226.194" transform="rotate(-90 45 45)"/>
-                  <defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#a78bfa"/><stop offset="1" stop-color="#f472b6"/></linearGradient></defs>
-                </svg>
-                <div id="bdayHer" class="text-sm">—</div>
-              </div>
-            </div>
-            <div class="mt-3 text-sm text-zinc-400">До нашей прогулки: <span id="walkLeft" class="text-lg">∞</span> (14‑е, 12:00 MSK)</div>
-          </div>
-          <div class="grid grid-cols-2 gap-3">
-            <img src="IMG_20250313_132014.jpg" alt="Класс" class="rounded-2xl border border-white/10 shadow-soft object-cover w-full h-40 md:h-56"/>
-            <img src="20250125_164132.jpg" alt="Каток" class="rounded-2xl border border-white/10 shadow-soft object-cover w-full h-40 md:h-56"/>
-            <img src="IMG_20250313_134601_edit_13096874764951.jpg" alt="Волосы" class="rounded-2xl border border-white/10 shadow-soft object-cover w-full h-40 md:h-56"/>
-            <img src="IMG_20250307_085915.jpg" alt="Букет" class="rounded-2xl border border-white/10 shadow-soft object-cover w-full h-40 md:h-56"/>
-          </div>
+      <div class="pill"><b>📌 Маленькие заметки</b>
+        <div class="notes" style="margin-top:10px">
+          <div class="note"><h4>Про колено</h4><p>Скажи, если потянет — сумка и маршрут под тебя. Всегда.</p></div>
+          <div class="note"><h4>Про смех</h4><p>Пусть будет громко. Это один из лучших звуков на свете.</p></div>
+          <div class="note"><h4>Про мелочи</h4><p>Браслет на руке — не аксессуар, а память о человеке.</p></div>
         </div>
       </div>
     </div>
-  </section>
-
-  <!-- Записка дня -->
-  <section class="max-w-6xl mx-auto px-4 mt-8">
-    <div class="reveal glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10">
-      <div class="flex items-center gap-3 mb-3"><span>📝</span><h2 class="text-xl font-semibold">Записка дня</h2></div>
-      <blockquote class="text-sm sm:text-base leading-relaxed text-zinc-100/90 bg-white/5 border border-white/10 rounded-2xl p-4">
-        Ты важна. Если устанешь от всего — просто дай знать. Я рядом и тихо.
-      </blockquote>
-    </div>
-  </section>
-
-  <!-- Галерея -->
-  <section class="max-w-6xl mx-auto px-4 mt-8">
-    <div class="reveal glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10">
-      <div class="flex items-center gap-3 mb-3"><span>📷</span><h2 class="text-xl font-semibold">Фотографии</h2></div>
-      <div id="gallery" class="masonry">
-        <figure><img loading="lazy" src="20250125_160454.jpg" alt="Зима" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="20250125_164132.jpg" alt="Каток" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250307_085915.jpg" alt="Букет" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250313_132014.jpg" alt="В классе — телефон" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250313_134601_edit_13096874764951.jpg" alt="В классе — волосы" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250405_164952.jpg" alt="Шоу" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250405_172025.jpg" alt="Сцена 1" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250405_172033.jpg" alt="Сцена 2" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-        <figure><img loading="lazy" src="IMG_20250417_091150.jpg" alt="Весна" class="w-full rounded-2xl border border-white/10 shadow-soft bg-white/5 object-contain cursor-zoom-in"/></figure>
-      </div>
-      <div class="text-[11px] text-zinc-400 mt-2">Снимки показываются целиком (без обрезки), аккуратно подстраиваются под размер.</div>
-    </div>
-  </section>
-
-  <!-- Lightbox overlay -->
-  <div id="lightbox" class="fixed inset-0 bg-black/90 hidden">
-    <div class="absolute inset-0 flex items-center justify-center select-none">
-      <img id="lbImg" src="" alt="" class="max-w-[92vw] max-h-[88vh] rounded-xl lb-enter" />
-    </div>
-    <button id="lbClose" class="absolute top-3 right-3 text-white/80 text-2xl">✕</button>
-    <button id="lbPrev" class="absolute left-3 top-1/2 -translate-y-1/2 text-white/80 text-2xl">‹</button>
-    <button id="lbNext" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/80 text-2xl">›</button>
+    <div class="mono" style="margin-top:8px">MSK · автоматические таймеры обновляются сами</div>
   </div>
+</div>
 
-  <!-- Послания -->
-  <section class="max-w-6xl mx-auto px-4 mt-8">
-    <div class="reveal glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10">
-      <div class="flex items-center gap-3 mb-3"><span>💬</span><h2 class="text-xl font-semibold">Несколько слов для тебя</h2></div>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-sm leading-relaxed">
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Хорошего дня. Если устанешь — просто скажи, я рядом.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Береги колено. Никакой гонки сегодня.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Спасибо, что делишься со мной маленькими моментами.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Ты важна. Даже когда всё вокруг спешит.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если будет тяжело — можно просто помолчать вместе.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пусть вечер будет спокойным и тёплым.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Я рядом без давления. Всегда.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Ты делаешь мой день теплее, просто оставаясь собой.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если что-то не так — лучше скажи прямо. Я слушаю.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Спасибо за браслет: я ношу его как знак заботы.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">На уроках — фокус, на переменах — немного смеха.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Не трать силы на лишних людей. Береги себя.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Я ценю твою прямоту и честность.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пиши, когда захочешь. Я всегда на связи.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если нужна пауза от всех — скажи, я сделаю тишину.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пусть тренировки приносят радость, а не боль.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Спасибо, что веришь в меня, даже когда я сомневаюсь.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Твои мелочи — это мой большой уют.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если хочешь — устроим маленькую прогулку без разговоров.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Ты — человек, с которым спокойно.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пусть утро начнётся без спешки и переписок «через силу».</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Я слышу тебя. И вижу. Всегда.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если на душе шумно — найдём тихий уголок.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Спасибо за твою доброту даже в сложные дни.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Ты ничего никому не должна. Береги силы для важного.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пусть сегодня у тебя получится хоть одна маленькая радость.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Я рядом, чтобы поддержать, а не тянуть одеяло на себя.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Мне важно, как ты. И я это не забуду.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Пиши, даже если «не о чем». Я рад любому слову.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Спасибо за доверие. Я берегу его.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Если устала — остановись. Я подстрахую.</li>
-        <li class="p-3 rounded-xl border border-white/10 bg-white/5">Ты — мой человек спокойствия.</li>
-      </ul>
+  </section>  <section>
+    <div class="sec-title">
+      <h3>Фотографии</h3>
+      <div class="mono">нажми на фото, чтобы открыть</div>
     </div>
-  </section>
-
-  <!-- Музыка -->
-  <section class="max-w-6xl mx-auto px-4 mt-8">
-    <div class="reveal glass rounded-2xl p-6 md:p-7 border border-white/10 bg-white/10">
-      <div class="flex items-center gap-3 mb-3"><span>🎧</span><h2 class="text-xl font-semibold">Немного музыки</h2></div>
-      <p class="text-sm text-zinc-400 mb-3">Разные вкусы — это нормально. Можно просто заглянуть в мир друг друга.</p>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm">
-        <a class="rounded-xl p-4 border border-white/10 bg-white/5 hover:bg-white/10" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a?utm_source=web&utm_medium=copy_link" target="_blank">
-          <div class="font-medium mb-1">Плейлист Егора</div>
-          <div class="text-zinc-400">Симфоника/метал. Начать можно с Nightwish — Shudder Before the Beautiful и Planet Hell.</div>
-        </a>
-        <a class="rounded-xl p-4 border border-white/10 bg-white/5 hover:bg-white/10" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8?utm_medium=copy_link&ref_id=b0bb5bfb-3eed-4339-ae6a-94b4aed65c79" target="_blank">
-          <div class="font-medium mb-1">Плейлист Насти</div>
-          <div class="text-zinc-400">Лёгкий поп/инди и немного кинематографа. Например, Tommee Profitt — Sound of War, BTS — Not Today.</div>
-        </a>
-      </div>
+    <div class="grid" id="gallery">
+      <!-- ВСТАВЛЕНЫ ТВОИ ФОТО: пути соответствуют загрузкам GitHub Pages; при локальном открытии можно положить в ту же папку -->
+      <figure class="ph"><img src="IMG_20250307_085915.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="IMG_20250313_132014.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="IMG_20250313_134601_edit_13096874764951.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="20250125_160454.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="20250125_164132.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="IMG_20250405_164952.jpg" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="Снимок экрана (1).png" alt="" loading="lazy"></figure>
+      <figure class="ph"><img src="Снимок экрана (2).png" alt="" loading="lazy"></figure>
     </div>
-  </section>
-
-  <footer class="max-w-6xl mx-auto px-4 py-12 text-zinc-400 text-sm">
-    Сделано аккуратно. Если что — пиши в ТГ.
-  </footer>
-
-  <script>
-    // ===== НАСТРОЙКИ =====
-    const TG_USERNAME = "Tkachev_Egor"; // замени при необходимости
-    document.getElementById('tgLink').href = `https://t.me/${TG_USERNAME}`;
-
-    // ===== PWA: manifest + service worker (через Blob) =====
-    (function(){
-      function emojiIcon(size){
-        const c=document.createElement('canvas');c.width=c.height=size;const x=c.getContext('2d');x.fillStyle='#111827';x.fillRect(0,0,size,size);x.font=`${Math.floor(size*0.9)}px serif`;x.textAlign='center';x.textBaseline='middle';x.fillText('🌸',size/2,size/2+2);return c.toDataURL('image/png');
+  </section>  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+    <div class="lb-inner">
+      <img id="lb-img" src="" alt="" />
+      <button class="lb-x" id="lb-close">закрыть ✕</button>
+    </div>
+  </div>  <footer>
+    <div class="wrap">
+      Сделано аккуратно и с уважением. <span class="tiny">Без ярлыков, без давления.</span>
+    </div>
+  </footer>  <script>
+    // ===== легкая анимация точек на фоне =====
+    const cvs = document.getElementById('bg');
+    const ctx = cvs.getContext('2d');
+    let w, h, dots=[];
+    function resize(){ w = cvs.width = innerWidth; h = cvs.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+    function initDots(){
+      const count = Math.min(100, Math.floor(w*h/18000));
+      dots = Array.from({length:count}, () => ({
+        x: Math.random()*w,
+        y: Math.random()*h,
+        r: Math.random()*1.8+0.2,
+        vx: (Math.random()-.5)*0.25,
+        vy: (Math.random()-.5)*0.25,
+        a: Math.random()*0.4+0.2
+      }));
+    }
+    initDots();
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      for(const d of dots){
+        d.x += d.vx; d.y += d.vy;
+        if(d.x<0||d.x>w) d.vx*=-1; if(d.y<0||d.y>h) d.vy*=-1;
+        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
+        ctx.fillStyle = `rgba(255,255,255,${d.a})`; ctx.fill();
       }
-      const manifest = {
-        name: 'Насте 🌸', short_name: 'Насте', start_url: './?v=7.0', display: 'standalone', background_color:'#0b1220', theme_color:'#0b1220',
-        icons:[{src:emojiIcon(192),sizes:'192x192',type:'image/png',purpose:'any maskable'},{src:emojiIcon(512),sizes:'512x512',type:'image/png',purpose:'any maskable'}]
-      };
-      const mURL = URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'}));
-      document.getElementById('app-manifest').href = mURL;
+      requestAnimationFrame(tick);
+    }
+    tick();
 
-      if('serviceWorker' in navigator){
-        const ASSETS = [
-          './','index.html',
-          '20250125_160454.jpg','20250125_164132.jpg','IMG_20250307_085915.jpg','IMG_20250313_132014.jpg','IMG_20250313_134601_edit_13096874764951.jpg','IMG_20250405_164952.jpg','IMG_20250405_172025.jpg','IMG_20250405_172033.jpg','IMG_20250417_091150.jpg'
-        ];
-        const swCode = `const C='v7.0'; const ASSETS=${JSON.stringify(ASSETS)}; self.addEventListener('install',e=>{self.skipWaiting(); e.waitUntil(caches.open(C).then(c=>c.addAll(ASSETS.map(u=>new Request(u,{mode:'no-cors'})))))}); self.addEventListener('activate',e=>{e.waitUntil(Promise.all([caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==C).map(k=>caches.delete(k)))) , self.clients.claim()]));}); self.addEventListener('fetch',e=>{const u=new URL(e.request.url); if(ASSETS.some(a=>u.pathname.endsWith(a)||u.pathname.endsWith(a.replace('./','/')))){ e.respondWith(caches.match(e.request).then(r=>r||fetch(e.request).then(res=>{ const cc=res.clone(); caches.open(C).then(c=>c.put(e.request,cc)); return res; }))); } });`;
-        const swURL = URL.createObjectURL(new Blob([swCode],{type:'text/javascript'}));
-        navigator.serviceWorker.register(swURL);
+    // ===== счётчики времени (MSK) =====
+    const MSK_OFFSET = 3 * 60; // минуты
+    function nowMSK(){
+      const now = new Date();
+      const utc = now.getTime() + now.getTimezoneOffset()*60000;
+      return new Date(utc + MSK_OFFSET*60000);
+    }
+    function daysSince(dateStr){
+      const start = new Date(dateStr+'T00:00:00+03:00');
+      const diff = nowMSK() - start; return Math.floor(diff/86400000);
+    }
+    function daysTo(month, day){
+      const n = nowMSK();
+      let target = new Date(Date.UTC(n.getUTCFullYear(), month-1, day, 0,0,0));
+      // сдвиг на +3ч для МСК
+      target = new Date(target.getTime() + 3*3600*1000);
+      if(target < n){ target = new Date(Date.UTC(n.getUTCFullYear()+1, month-1, day)); target = new Date(target.getTime() + 3*3600*1000); }
+      const diff = target - n; return Math.max(0, Math.ceil(diff/86400000));
+    }
+    function renderClocks(){
+      document.getElementById('daysTogether').textContent = daysSince('2017-09-01');
+      document.getElementById('nextBdayN').textContent = daysTo(12,9);
+      document.getElementById('nextBdayE').textContent = daysTo(12,28);
+      document.getElementById('walk').textContent = '∞';
+    }
+    renderClocks(); setInterval(renderClocks, 60_000);
+
+    // ===== галерея / лайтбокс =====
+    const box = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lb-img');
+    const close = document.getElementById('lb-close');
+    document.getElementById('gallery').addEventListener('click', e=>{
+      const img = e.target.closest('img'); if(!img) return;
+      lbImg.src = img.src; box.classList.add('active');
+    });
+    function hide(){ box.classList.remove('active'); lbImg.src=''; }
+    close.addEventListener('click', hide);
+    box.addEventListener('click', e=>{ if(e.target===box) hide(); });
+    addEventListener('keydown', e=>{ if(e.key==='Escape') hide(); });
+
+    // ===== пасхалка: 3 тапa по сердечку → сообщение + конфетти =====
+    const heart = document.getElementById('heart');
+    const secret = document.getElementById('secret');
+    let taps = 0, tId;
+    heart.addEventListener('click', ()=>{
+      taps++; clearTimeout(tId); tId = setTimeout(()=>taps=0, 500);
+      if(taps>=3){
+        secret.style.display = 'block';
+        confetti(); taps=0;
       }
-    })();
+    });
 
-    // ===== Install banner =====
-    (function(){ let deferred; const bar=document.getElementById('installBar'); const btn=document.getElementById('installBtn'); const close=document.getElementById('installClose'); window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferred=e; bar.classList.remove('hidden'); }); btn&&btn.addEventListener('click', async()=>{ if(!deferred) return; deferred.prompt(); await deferred.userChoice; deferred=null; bar.classList.add('hidden'); }); close&&close.addEventListener('click', ()=> bar.classList.add('hidden')); })();
-
-    // ===== Пасхалка (тройной клик по 💫) + конфетти =====
-    (()=>{ let clicks=0, timer=null; const btn=document.getElementById('eggBtn'); btn.addEventListener('click', ()=>{ clicks++; if(!timer){ timer=setTimeout(()=>{ clicks=0; timer=null; }, 900); } if(clicks>=3){ clearTimeout(timer); timer=null; clicks=0; confetti(150); } }); })();
-
-    // ===== Фон: звёзды + конфетти =====
-    const cvs=document.getElementById('stars'); const ctx=cvs.getContext('2d'); let W,H; function resize(){W=innerWidth;H=innerHeight;cvs.width=W;cvs.height=H;} addEventListener('resize',resize); resize(); const stars=[]; for(let i=0;i<80;i++) stars.push({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.2+.3,vx:(Math.random()-.5)*.04,vy:Math.random()*.05+.01,a:Math.random()*.6+.2}); const conf=[]; function confetti(n=100){ for(let i=0;i<n;i++) conf.push({x:W/2,y:H*.2,r:Math.random()*3+2,vx:(Math.random()-.5)*3,vy:Math.random()*-2-2,g:.06,life:Math.random()*120+80}); } function draw(){ ctx.clearRect(0,0,W,H); ctx.fillStyle='#fff'; for(const s of stars){ ctx.globalAlpha=s.a; ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,6.283); ctx.fill(); s.x+=s.vx; s.y+=s.vy; if(s.y>H+10)s.y=-10; if(s.x<-10)s.x=W+10; if(s.x>W+10)s.x=-10; } for(let i=conf.length-1;i>=0;i--){ const p=conf[i]; ctx.globalAlpha=1; ctx.fillStyle=`hsl(${(i*17)%360} 80% 60%)`; ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,6.283); ctx.fill(); p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; if(--p.life<=0||p.y>H+20) conf.splice(i,1);} requestAnimationFrame(draw);} draw();
-
-    // ===== Время MSK (UTC+3) =====
-    const MSK_OFFSET=3*60*60000; function nowUtcMs(){ return Date.now() + (new Date().getTimezoneOffset()*60000);} function nowMskDate(){ return new Date(nowUtcMs()+MSK_OFFSET); }
-
-    // ===== Счётчик дней (с 2017‑09‑01) =====
-    function calcYMD(y0,m0,d0,now){ let y=now.getFullYear()-y0; let m=now.getMonth()+1-m0; let d=now.getDate()-d0; if(d<0){m--; const prevDays=new Date(now.getFullYear(),now.getMonth(),0).getDate(); d+=prevDays;} if(m<0){y--; m+=12;} return {y,m,d}; }
-    const firstMeetY=2017, firstMeetM=9, firstMeetD=1; function renderSince(){ const nm=nowMskDate(); const ymd=calcYMD(firstMeetY,firstMeetM,firstMeetD,nm); const firstUtc=Date.UTC(firstMeetY,firstMeetM-1,firstMeetD,0,0,0)-MSK_OFFSET; const days=Math.floor((nowUtcMs()-firstUtc)/86400000); document.getElementById('sinceYMD').textContent=`${ymd.y} лет ${ymd.m} мес ${ymd.d} дн`; document.getElementById('sinceDays').textContent=`${days.toLocaleString('ru-RU')} дней со знакомства.`; } renderSince(); setInterval(renderSince,60000);
-
-    // ===== Таймеры ДР + кольца =====
-    function nextOccurMSK(M,D){ const nm=nowMskDate(); let Y=nm.getFullYear(); let t=Date.UTC(Y,M-1,D,0,0,0)-MSK_OFFSET; if(t<=nowUtcMs()) t=Date.UTC(Y+1,M-1,D,0,0,0)-MSK_OFFSET; return t; }
-    function prevOccurMSK(M,D){ const nm=nowMskDate(); let Y=nm.getFullYear(); let t=Date.UTC(Y,M-1,D,0,0,0)-MSK_OFFSET; if(t>nowUtcMs()) t=Date.UTC(Y-1,M-1,D,0,0,0)-MSK_OFFSET; return t; }
-    function renderCountdown(el,t){ const diff=Math.max(0,t-nowUtcMs()); const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000); el.textContent=`${d}д ${h}ч ${m}м ${s}с`; }
-    function renderRing(el,M,D){ const next=nextOccurMSK(M,D), prev=prevOccurMSK(M,D); const total=next-prev; const part=nowUtcMs()-prev; const f=Math.min(1,Math.max(0,part/total)); const C=2*Math.PI*36; el.style.strokeDashoffset=String(C*(1-f)); }
-    const hisT=nextOccurMSK(12,28), herT=nextOccurMSK(12,9); const elHis=document.getElementById('bdayHis'), elHer=document.getElementById('bdayHer'); const ringHis=document.getElementById('ringHis'), ringHer=document.getElementById('ringHer'); function tickTimers(){ renderCountdown(elHis,hisT); renderCountdown(elHer,herT); renderRing(ringHis,12,28); renderRing(ringHer,12,9);} tickTimers(); setInterval(tickTimers,1000);
-
-    // ===== Прогулка 14‑го 12:00 MSK =====
-    const WALK_KEY='walk_fired_month'; function nextWalkUtc(){ const nm=nowMskDate(); let Y=nm.getFullYear(), M=nm.getMonth(), D=14; let t=Date.UTC(Y,M,D,12,0,0)-MSK_OFFSET; if(t<=nowUtcMs()) t=Date.UTC(Y,M+1,D,12,0,0)-MSK_OFFSET; return t; } function tickWalk(){ const t=nextWalkUtc(); const diff=t-nowUtcMs(); const out=document.getElementById('walkLeft'); if(diff>0){ const d=Math.floor(diff/86400000), h=Math.floor((diff%86400000)/3600000), mi=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000); out.textContent=`${d}д ${h}ч ${mi}м ${s}с`; } else out.textContent='сегодня!'; const stamp=new Date(nowMskDate().getFullYear(),nowMskDate().getMonth()).toISOString(); if(diff<=0 && localStorage.getItem(WALK_KEY)!==stamp){ try{ if(Notification.permission==='granted'){ new Notification('Сегодня прогулка!', { body:'Встречаемся в 12:00 (MSK). Ура! 🎉'}); } }catch(_){} confetti(220); localStorage.setItem(WALK_KEY,stamp);} } tickWalk(); setInterval(tickWalk,1000);
-
-    // ===== Лайтбокс =====
-    const imgs = Array.from(document.querySelectorAll('#gallery img')); const lb=document.getElementById('lightbox'); const lbImg=document.getElementById('lbImg'); const lbPrev=document.getElementById('lbPrev'); const lbNext=document.getElementById('lbNext'); const lbClose=document.getElementById('lbClose'); let idx=0,startX=null; function openLB(i){ idx=i; lbImg.src=imgs[idx].src; lb.classList.remove('hidden'); setTimeout(()=>lbImg.classList.add('show'),10); } function closeLB(){ lb.classList.add('hidden'); lbImg.classList.remove('show'); } function nav(d){ idx=(idx+d+imgs.length)%imgs.length; lbImg.classList.remove('show'); setTimeout(()=>{ lbImg.src=imgs[idx].src; lbImg.classList.add('show'); },50); } imgs.forEach((im,i)=> im.addEventListener('click',()=>openLB(i)) ); lbClose.addEventListener('click', closeLB); lb.addEventListener('click', (e)=>{ if(e.target===lb) closeLB(); }); lbPrev.addEventListener('click', ()=>nav(-1)); lbNext.addEventListener('click', ()=>nav(1)); lb.addEventListener('touchstart', e=>{ startX=e.changedTouches[0].clientX; }); lb.addEventListener('touchend', e=>{ const dx=e.changedTouches[0].clientX-startX; if(Math.abs(dx)>40) nav(dx>0?-1:1); }); addEventListener('keydown', e=>{ if(lb.classList.contains('hidden')) return; if(e.key==='ArrowLeft') nav(-1); if(e.key==='ArrowRight') nav(1); if(e.key==='Escape') closeLB(); });
-
-    // ===== Тема =====
-    const bodyEl=document.getElementById('body'); const themeBtn=document.getElementById('themeBtn'); const themeIcon=document.getElementById('themeIcon'); let dark=true; function applyTheme(){ const cards=document.querySelectorAll('.glass'); if(dark){ bodyEl.className="min-h-screen bg-gradient-to-br from-[#0b1220] via-[#0d0b1a] to-[#0f172a] text-zinc-100"; cards.forEach(el=>{el.classList.remove('bg-white/80','border-black/10'); el.classList.add('bg-white/10','border-white/10');}); themeIcon.textContent='☀️'; } else { bodyEl.className="min-h-screen bg-gradient-to-br from-pink-50 via-violet-50 to-blue-50 text-zinc-800"; cards.forEach(el=>{el.classList.remove('bg-white/10','border-white/10'); el.classList.add('bg-white/80','border-black/10');}); themeIcon.textContent='🌙'; } } themeBtn.onclick=()=>{ dark=!dark; applyTheme(); }; applyTheme();
-
-    // ===== Появление секций =====
-    const io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); }); },{threshold:.12}); document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-    // ===== Уведомления =====
-    document.getElementById('notifBtn').addEventListener('click', async()=>{ try{ const p=await Notification.requestPermission(); if(p==='granted'){ new Notification('Готово', { body:'Уведомления включены.' }); } }catch(_){} });
-  </script>
-</body>
+    function confetti(){
+      const N=80; const frag=document.createDocumentFragment();
+      for(let i=0;i<N;i++){
+        const s=document.createElement('span');
+        const size = Math.random()*8+4;
+        s.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:-10px;width:${size}px;height:${size}px;border-radius:50%;background:hsl(${Math.random()*360} 90% 65%);opacity:.9;pointer-events:none;z-index:60;`;
+        document.body.appendChild(s);
+        const dur= 1200+Math.random()*1200;
+        const dx = (Math.random()*2-1)*160;
+        s.animate([
+          { transform:`translate(0,0) rotate(0deg)` },
+          { transform:`translate(${dx}px, 110vh) rotate(${Math.random()*720-360}deg)` }
+        ], { duration: dur, easing:'cubic-bezier(.2,.7,.2,1)' }).onfinish = ()=> s.remove();
+        frag.appendChild(s);
+      }
+      document.body.appendChild(frag);
+    }
+  </script></body>
 </html>
