@@ -1,174 +1,192 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Для Насти · лёгко и красиво</title>
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23f9d7eb'/%3E%3Cpath d='M32 48c-9-6-16-12-16-20a9 9 0 0 1 16-6 9 9 0 0 1 16 6c0 8-7 14-16 20z' fill='%23ff5aa5'/%3E%3C/svg%3E" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Pacifico&display=swap" rel="stylesheet">
+  <title>Насте · тихо, красиво, профессионально</title>
+  <meta name="theme-color" content="#0b1020" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff71b8'/%3E%3Cstop offset='1' stop-color='%237aa6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230b1020'/%3E%3Cpath d='M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z' fill='url(%23g)'/%3E%3C/svg%3E" />
   <style>
     :root{
       --bg:#0b1020;
-      --text:#e9edf7;
-      --muted:#b6c0d9;
-      --card: rgba(255,255,255,.08);
-      --card2: rgba(255,255,255,.12);
+      --bg2:#0a0f1f;
+      --text:#ecf2ff;
+      --muted:#b9c4e3;
+      --line:rgba(255,255,255,.08);
+      --card:rgba(255,255,255,.06);
+      --card2:rgba(255,255,255,.1);
       --accent:#ff71b8;
       --accent2:#7aa6ff;
-      --ok:#7dd3fc; --good:#86efac; --bad:#fda4af; --happy:#f0abfc;
-      --radius:20px;
-      --shadow:0 10px 30px rgba(0,0,0,.25);
+      --green:#86efac; --blue:#7dd3fc; --rose:#fda4af; --vio:#c4b5fd; --amber:#facc15;
+      --radius:22px; --shadow:0 10px 35px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;background:radial-gradient(1200px 800px at 70% -10%, #14204a 0%, #0b1020 60%  , #050812 100%);
-      color:var(--text); font:400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden;
-    }
-    a{color:inherit}/* floating background */
-canvas#bg{position:fixed;inset:0;z-index:-2}
-.glow{position:fixed;inset: -10vmax; z-index:-3; filter: blur(80px); opacity:.35; pointer-events:none}
-.g1{background: radial-gradient(circle at 20% 30%, #ff71b820, transparent 50%),
-                     radial-gradient(circle at 80% 10%, #7aa6ff20, transparent 50%),
-                     radial-gradient(circle at 60% 80%, #a2ffde22, transparent 60%);}  
+    body{margin:0;background:radial-gradient(1200px 800px at 70% -10%, #141d3c 0%, #0b1020 55%, #060a16 100%);
+      color:var(--text); font:400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden}
+    a{color:inherit}
 
-header{
-  position:sticky; top:0; backdrop-filter: blur(10px); background:linear-gradient(180deg, rgba(10,15,30,.6), rgba(10,15,30,.2) 60%, transparent);
-  border-bottom:1px solid rgba(255,255,255,.05);
-  z-index:20;
-}
-.wrap{max-width:1050px; margin:0 auto; padding:18px 20px}
-.row{display:flex; align-items:center; gap:14px}
-.brand{font:700 18px Inter; letter-spacing:.3px}
-.chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid rgba(255,255,255,.08)}
-.chip small{color:var(--muted)}
-.tg{margin-left:auto}
-.btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; background:linear-gradient(135deg, var(--accent), #ff8ed1); color:#120816; font-weight:700; text-decoration:none; box-shadow:0 6px 20px rgba(255,113,184,.25); transition:transform .2s ease, filter .2s ease}
-.btn:hover{transform:translateY(-1px); filter:saturate(1.1)}
+    /* BACKGROUND PARTICLES */
+    canvas#bg{position:fixed;inset:0;z-index:-3}
+    .glow{position:fixed;inset:-20vmax;z-index:-4;filter:blur(90px);opacity:.35;pointer-events:none;background:
+      radial-gradient(40vmax 40vmax at 20% 20%, #ff71b820, transparent 60%),
+      radial-gradient(40vmax 40vmax at 80% 0%, #7aa6ff20, transparent 55%),
+      radial-gradient(60vmax 60vmax at 50% 85%, #a2ffde25, transparent 60%)}
 
-/* hero */
-.hero{padding:56px 20px 24px}
-.hero-inner{max-width:1050px;margin:0 auto; display:grid; grid-template-columns:1.2fr .8fr; gap:22px}
-.card{background:var(--card); border:1px solid rgba(255,255,255,.08); border-radius:var(--radius); box-shadow:var(--shadow)}
-.p24{padding:24px}
-.title{font:800 40px/1.2 Inter; letter-spacing:.2px; margin:0}
-.subtitle{color:var(--muted); margin:10px 0 0}
-.heart{font-size:22px; display:inline-flex; align-items:center; gap:8px; user-select:none}
-.heart .tap{opacity:.6; font-weight:600}
+    /* APP SHELL */
+    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+      background:linear-gradient(180deg, rgba(10,15,30,.7), rgba(10,15,30,.35) 60%, transparent);
+      border-bottom:1px solid var(--line)}
+    .wrap{max-width:1180px;margin:0 auto;padding:16px 20px}
+    .row{display:flex;align-items:center;gap:14px}
+    .brand{font:900 18px Inter;letter-spacing:.3px}
+    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line)}
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:linear-gradient(135deg, var(--accent), #ff8ed1);color:#120816;font-weight:800;text-decoration:none;box-shadow:0 6px 24px rgba(255,113,184,.28);transition:transform .2s ease, filter .2s ease}
+    .btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
 
-.stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:18px}
-.stat{padding:16px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.06)}
-.stat b{display:block; font:800 22px Inter}
-.stat span{color:var(--muted); font-size:13px}
+    /* HERO */
+    .hero{padding:56px 20px 26px}
+    .hero-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:22px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .p24{padding:24px}
+    h1.title{margin:6px 0 0;font:900 44px/1.15 Inter}
+    .subtitle{color:var(--muted);margin:12px 0 0}
+    .heart{font-size:22px;display:inline-flex;align-items:center;gap:8px;user-select:none}
+    .heart .tap{opacity:.65;font-weight:700}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .stat{padding:16px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid var(--line)}
+    .stat b{display:block;font:900 22px Inter}
+    .stat span{color:var(--muted);font-size:13px}
 
-.countdowns{display:grid; gap:10px}
-.pill{padding:14px; border-radius:16px; border:1px dashed rgba(255,255,255,.15); background:rgba(255,255,255,.04)}
+    .countdowns{display:grid;gap:12px}
+    .pill{padding:14px;border-radius:16px;border:1px dashed var(--line);background:rgba(255,255,255,.04)}
 
-/* notes */
-.notes{display:grid; grid-template-columns:repeat(3,1fr); gap:14px}
-.note{padding:18px; border-radius:18px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.06)}
-.note h4{margin:0 0 8px; font:700 16px Inter}
-.note p{margin:0; color:var(--text)}
+    /* RINGS */
+    .rings{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
+    .ring{display:flex;align-items:center;gap:14px;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
+    .ring svg{width:64px;height:64px}
+    .ring .lbl{font-weight:700}
 
-/* gallery */
-section{padding:28px 20px}
-.sec-title{max-width:1050px;margin:0 auto 14px; display:flex; align-items:end; justify-content:space-between}
-.sec-title h3{margin:0; font:800 22px Inter}
-.grid{max-width:1050px; margin:0 auto; columns: 1; column-gap:14px}
-@media(min-width:680px){ .grid{columns:2} }
-@media(min-width:980px){ .grid{columns:3} }
-.ph{break-inside:avoid; border-radius:16px; overflow:hidden; margin:0 0 14px; position:relative; border:1px solid rgba(255,255,255,.08); box-shadow:var(--shadow)}
-.ph img{width:100%; display:block; transition: transform .4s ease, filter .4s ease}
-.ph:hover img{transform:scale(1.04)}
+    /* NOTES */
+    .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .note{padding:18px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid var(--line)}
+    .note h4{margin:0 0 8px;font:800 16px Inter}
+    .note p{margin:0}
 
-/* lightbox */
-.lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(6px); background:rgba(4,6,14,.65); z-index:50}
-.lightbox.active{display:flex}
-.lb-inner{max-width:min(92vw,1100px); max-height:90vh; position:relative}
-.lb-inner img{max-width:100%; max-height:90vh; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.5)}
-.lb-x{position:absolute; top:-44px; right:0; background:var(--card2); border:1px solid rgba(255,255,255,.1); border-radius:12px; padding:8px 12px; cursor:pointer}
+    /* MOOD WIDGET */
+    .mood{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
+    .mood .opt{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line);cursor:pointer}
+    .chip.active{outline:2px solid var(--accent)}
+    .mood textarea{width:100%;min-height:80px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:10px}
 
-/* footer */
-footer{padding:34px 20px 60px; color:var(--muted); text-align:center}
-.tiny{opacity:.7; font-size:13px}
+    /* GALLERY */
+    section{padding:28px 20px}
+    .sec-title{max-width:1180px;margin:0 auto 14px;display:flex;align-items:end;justify-content:space-between}
+    .sec-title h3{margin:0;font:900 24px Inter}
+    .grid{max-width:1180px;margin:0 auto;columns:1;column-gap:14px}
+    @media(min-width:680px){.grid{columns:2}}@media(min-width:980px){.grid{columns:3}}
+    .ph{break-inside:avoid;border-radius:16px;overflow:hidden;margin:0 0 14px;position:relative;border:1px solid var(--line);box-shadow:var(--shadow)}
+    .ph img{width:100%;display:block;transition:transform .4s ease, filter .4s ease}
+    .ph:hover img{transform:scale(1.04)}
+    .up{display:flex;gap:10px;align-items:center}
 
-/* micro animations */
-.floatY{animation:floatY 9s ease-in-out infinite}
-@keyframes floatY{ 0%{transform:translateY(0)} 50%{transform:translateY(-8px)} 100%{transform:translateY(0)} }
+    /* LIGHTBOX + SWIPE */
+    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);background:rgba(4,6,14,.65);z-index:70}
+    .lightbox.active{display:flex}
+    .lb-inner{max-width:min(92vw,1100px);max-height:90vh;position:relative}
+    .lb-inner img{max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .lb-x{position:absolute;top:-44px;right:0;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer}
+    .lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 12px;border-radius:12px;cursor:pointer}
+    .lb-prev{left:-52px}.lb-next{right:-52px}
 
-.badge{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:linear-gradient(135deg,var(--card2),rgba(255,255,255,.06)); border:1px solid rgba(255,255,255,.08)}
-.mono{font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; color:var(--muted)}
+    /* GUESTBOOK (LOCAL) */
+    .guest{display:grid;grid-template-columns:1fr;gap:10px}
+    .guest input,.guest textarea{width:100%;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:10px}
+    .g-list{display:grid;gap:10px}
+    .g-item{padding:12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
 
-/* hidden easter */
-.secret{display:none; margin-top:10px; color:#ffe1f1}
-
-/* music */
-.music{display:grid; grid-template-columns:1fr; gap:12px}
-@media(min-width:760px){ .music{grid-template-columns:1fr 1fr} }
-
+    /* FOOTER */
+    footer{padding:36px 20px 70px;color:var(--muted);text-align:center}
+    .tiny{opacity:.75;font-size:13px}
   </style>
 </head>
 <body>
-  <div class="glow g1"></div>
-  <canvas id="bg" aria-hidden="true"></canvas>  <header>
+  <div class="glow" aria-hidden="true"></div>
+  <canvas id="bg" aria-hidden="true"></canvas>
+
+  <header>
     <div class="wrap row">
-      <div class="brand">для Насти</div>
-      <div class="chip"><span>🌸</span><small>спокойное место, которое можно показать кому угодно</small></div>
-      <a class="btn tg" href="https://t.me/Tkachev_Egor" target="_blank" rel="noreferrer">Написать в Telegram</a>
+      <div class="brand">для Насти · v2 pro</div>
+      <span class="badge">🌸 спокойно и красиво</span>
+      <span class="badge" id="installBadge" style="display:none;cursor:pointer">📲 Установить на телефон</span>
+      <a class="btn" href="https://t.me/Tkachev_Egor" target="_blank" rel="noreferrer" style="margin-left:auto">Написать в Telegram</a>
     </div>
-  </header>  <section class="hero">
+  </header>
+
+  <section class="hero">
     <div class="hero-inner">
       <div class="card p24">
         <p class="heart" id="heart">💗 <span class="tap">(нажми 3 раза)</span></p>
-        <h1 class="title">Привет, Настя. Здесь тихо, красиво и без лишнего.
-        </h1>
-        <p class="subtitle">Никаких громких слов — только то, что действительно важно. Фотографии, пара тёплых записок, музыка и чуть магии времени.</p><div class="stats">
-      <div class="stat">
-        <b id="daysTogether">—</b>
-        <span>дней знакомы (с 01.09.2017)</span>
-      </div>
-      <div class="stat">
-        <b id="nextBdayN">—</b>
-        <span>до др Насти (9 декабря, МСК)</span>
-      </div>
-      <div class="stat">
-        <b id="nextBdayE">—</b>
-        <span>до др Егора (28 декабря, МСК)</span>
-      </div>
-    </div>
-
-    <div class="secret" id="secret">
-      Тихая пасхалка: иногда достаточно просто быть рядом. Спасибо, что ты есть.
-    </div>
-  </div>
-
-  <div class="card p24">
-    <div class="countdowns">
-      <div class="pill"><b>⏳ До прогулки:</b> <span id="walk">∞</span></div>
-      <div class="pill"><b>🎧 Музыка:</b>
-        <div class="music" style="margin-top:10px">
-          <a class="badge" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8" target="_blank" rel="noreferrer">Плейлист Насти</a>
-          <a class="badge" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a" target="_blank" rel="noreferrer">Плейлист Егора</a>
+        <h1 class="title">Привет, Настя. Здесь всё сделано аккуратно и с уважением.</h1>
+        <p class="subtitle">Без громких слов — только важное: время, музыка, фотографии, заметки и чуть-чуть магии.
+        </p>
+        <div class="stats">
+          <div class="stat"><b id="daysTogether">—</b><span>дней знакомы (с 01.09.2017)</span></div>
+          <div class="stat"><b id="nextBdayN">—</b><span>до др Насти (9 декабря, МСК)</span></div>
+          <div class="stat"><b id="nextBdayE">—</b><span>до др Егора (28 декабря, МСК)</span></div>
         </div>
-      </div>
-      <div class="pill"><b>📌 Маленькие заметки</b>
-        <div class="notes" style="margin-top:10px">
-          <div class="note"><h4>Про колено</h4><p>Скажи, если потянет — сумка и маршрут под тебя. Всегда.</p></div>
-          <div class="note"><h4>Про смех</h4><p>Пусть будет громко. Это один из лучших звуков на свете.</p></div>
-          <div class="note"><h4>Про мелочи</h4><p>Браслет на руке — не аксессуар, а память о человеке.</p></div>
+        <div class="rings">
+          <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringN" cx="60" cy="60" r="54" stroke="url(#gr1)" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/><defs><linearGradient id="gr1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff71b8"/><stop offset="1" stop-color="#7aa6ff"/></linearGradient></defs></svg><div><div class="lbl">До ДР Насти</div><div id="pctN">—</div></div></div>
+          <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringE" cx="60" cy="60" r="54" stroke="#7dd3fc" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/></svg><div><div class="lbl">До ДР Егора</div><div id="pctE">—</div></div></div>
         </div>
+        <div class="mood">
+          <div class="opt" id="moodOpts">
+            <div class="chip" data-m="bad">😶‍🌫️ трудно</div>
+            <div class="chip" data-m="ok">🙂 норм</div>
+            <div class="chip" data-m="good">😊 хорошо</div>
+            <div class="chip" data-m="happy">🤩 супер</div>
+          </div>
+          <div>
+            <textarea id="moodTxt" placeholder="Короткая заметка на день (хранится неделю)"></textarea>
+            <div class="row" style="justify-content:flex-end;margin-top:8px"><a class="btn" id="saveMood" style="background:linear-gradient(135deg,#7aa6ff,#a2ffde)">Сохранить день</a></div>
+          </div>
+        </div>
+        <div class="subtitle" id="moodInfo" style="margin-top:8px"></div>
+      </div>
+
+      <div class="card p24">
+        <div class="countdowns">
+          <div class="pill"><b>⏳ До прогулки:</b> <span id="walk">∞</span></div>
+          <div class="pill"><b>🎧 Музыка:</b>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+              <a class="badge" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8" target="_blank" rel="noreferrer">Плейлист Насти</a>
+              <a class="badge" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a" target="_blank" rel="noreferrer">Плейлист Егора</a>
+            </div>
+          </div>
+          <div class="pill"><b>📌 Маленькие заметки</b>
+            <div class="notes" style="margin-top:10px">
+              <div class="note"><h4>Про колено</h4><p>Скажи, если потянет — сумка и маршрут под тебя. Всегда.</p></div>
+              <div class="note"><h4>Про смех</h4><p>Пусть будет громко. Это один из лучших звуков на свете.</p></div>
+              <div class="note"><h4>Про мелочи</h4><p>Браслет на руке — не аксессуар, а память о человеке.</p></div>
+            </div>
+          </div>
+          <div class="pill up">
+            <input type="file" id="upPhoto" accept="image/*"/>
+            <span class="subtitle">Добавить своё фото (только у тебя на устройстве)</span>
+          </div>
+        </div>
+        <div class="badge" style="margin-top:10px">MSK · таймеры обновляются автоматически</div>
       </div>
     </div>
-    <div class="mono" style="margin-top:8px">MSK · автоматические таймеры обновляются сами</div>
-  </div>
-</div>
+  </section>
 
-  </section>  <section>
-    <div class="sec-title">
-      <h3>Фотографии</h3>
-      <div class="mono">нажми на фото, чтобы открыть</div>
-    </div>
+  <section>
+    <div class="sec-title"><h3>Фотографии</h3><div class="badge">нажми на фото</div></div>
     <div class="grid" id="gallery">
-      <!-- ВСТАВЛЕНЫ ТВОИ ФОТО: пути соответствуют загрузкам GitHub Pages; при локальном открытии можно положить в ту же папку -->
       <figure class="ph"><img src="IMG_20250307_085915.jpg" alt="" loading="lazy"></figure>
       <figure class="ph"><img src="IMG_20250313_132014.jpg" alt="" loading="lazy"></figure>
       <figure class="ph"><img src="IMG_20250313_134601_edit_13096874764951.jpg" alt="" loading="lazy"></figure>
@@ -178,114 +196,159 @@ footer{padding:34px 20px 60px; color:var(--muted); text-align:center}
       <figure class="ph"><img src="Снимок экрана (1).png" alt="" loading="lazy"></figure>
       <figure class="ph"><img src="Снимок экрана (2).png" alt="" loading="lazy"></figure>
     </div>
-  </section>  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  </section>
+
+  <section>
+    <div class="sec-title"><h3>Гостевая (локально)</h3><div class="badge">записи видишь только ты на этом устройстве</div></div>
+    <div class="wrap" style="max-width:1180px;padding:0">
+      <div class="card p24">
+        <div class="guest">
+          <input id="gName" placeholder="Имя"/>
+          <textarea id="gMsg" placeholder="Сообщение"></textarea>
+          <div class="row" style="justify-content:flex-end"><a class="btn" id="gAdd">Добавить</a></div>
+          <div class="g-list" id="gList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <div class="lb-inner">
+      <button class="lb-prev" aria-label="предыдущее">◀</button>
       <img id="lb-img" src="" alt="" />
+      <button class="lb-next" aria-label="следующее">▶</button>
       <button class="lb-x" id="lb-close">закрыть ✕</button>
     </div>
-  </div>  <footer>
-    <div class="wrap">
-      Сделано аккуратно и с уважением. <span class="tiny">Без ярлыков, без давления.</span>
-    </div>
-  </footer>  <script>
-    // ===== легкая анимация точек на фоне =====
+  </div>
+
+  <footer>
+    <div class="wrap">Сделано профессионально, но по‑домашнему. <span class="tiny">Без ярлыков, без давления. PWA, офлайн, лайтбокс, пасхалки, локальные заметки.</span></div>
+  </footer>
+
+  <script>
+    // ===== particles background =====
     const cvs = document.getElementById('bg');
     const ctx = cvs.getContext('2d');
-    let w, h, dots=[];
-    function resize(){ w = cvs.width = innerWidth; h = cvs.height = innerHeight; }
-    addEventListener('resize', resize); resize();
-    function initDots(){
-      const count = Math.min(100, Math.floor(w*h/18000));
-      dots = Array.from({length:count}, () => ({
-        x: Math.random()*w,
-        y: Math.random()*h,
-        r: Math.random()*1.8+0.2,
-        vx: (Math.random()-.5)*0.25,
-        vy: (Math.random()-.5)*0.25,
-        a: Math.random()*0.4+0.2
-      }));
-    }
+    let w,h,dots=[]; function rs(){w=cvs.width=innerWidth; h=cvs.height=innerHeight}
+    addEventListener('resize', rs); rs();
+    function initDots(){const n=Math.min(140, Math.floor(w*h/16000)); dots=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.2,vx:(Math.random()-.5)*0.25,vy:(Math.random()-.5)*0.25,a:Math.random()*0.45+0.15}))}
     initDots();
-    function tick(){
-      ctx.clearRect(0,0,w,h);
-      for(const d of dots){
-        d.x += d.vx; d.y += d.vy;
-        if(d.x<0||d.x>w) d.vx*=-1; if(d.y<0||d.y>h) d.vy*=-1;
-        ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2);
-        ctx.fillStyle = `rgba(255,255,255,${d.a})`; ctx.fill();
-      }
-      requestAnimationFrame(tick);
-    }
-    tick();
+    (function loop(){ctx.clearRect(0,0,w,h); for(const d of dots){d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>w)d.vx*=-1; if(d.y<0||d.y>h)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${d.a})`; ctx.fill()} requestAnimationFrame(loop)})()
 
-    // ===== счётчики времени (MSK) =====
-    const MSK_OFFSET = 3 * 60; // минуты
-    function nowMSK(){
-      const now = new Date();
-      const utc = now.getTime() + now.getTimezoneOffset()*60000;
-      return new Date(utc + MSK_OFFSET*60000);
-    }
-    function daysSince(dateStr){
-      const start = new Date(dateStr+'T00:00:00+03:00');
-      const diff = nowMSK() - start; return Math.floor(diff/86400000);
-    }
-    function daysTo(month, day){
-      const n = nowMSK();
-      let target = new Date(Date.UTC(n.getUTCFullYear(), month-1, day, 0,0,0));
-      // сдвиг на +3ч для МСК
-      target = new Date(target.getTime() + 3*3600*1000);
-      if(target < n){ target = new Date(Date.UTC(n.getUTCFullYear()+1, month-1, day)); target = new Date(target.getTime() + 3*3600*1000); }
-      const diff = target - n; return Math.max(0, Math.ceil(diff/86400000));
-    }
+    // ===== time utils (MSK) =====
+    const MSK_OFFSET = 3*60; // minutes
+    function nowMSK(){ const n=new Date(); const utc=n.getTime()+n.getTimezoneOffset()*60000; return new Date(utc+MSK_OFFSET*60000) }
+    function daysSince(dateStr){ const start=new Date(dateStr+'T00:00:00+03:00'); const diff=nowMSK()-start; return Math.floor(diff/86400000) }
+    function msToNext(month,day){ const n=nowMSK(); let t=new Date(Date.UTC(n.getUTCFullYear(),month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000); if(t<n){ t=new Date(Date.UTC(n.getUTCFullYear()+1,month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000) } return t - n }
+    function pctYearTo(month,day){ const n=nowMSK(); const start=new Date(Date.UTC(n.getUTCFullYear(),0,1)); const end=new Date(Date.UTC(n.getUTCFullYear()+1,0,1)); const target=new Date(Date.UTC(n.getUTCFullYear(),month-1,day)); const total=end-start; const done=target-start; const nowpos=n-start; return Math.max(0, Math.min(1, nowpos/done)) }
+
     function renderClocks(){
       document.getElementById('daysTogether').textContent = daysSince('2017-09-01');
-      document.getElementById('nextBdayN').textContent = daysTo(12,9);
-      document.getElementById('nextBdayE').textContent = daysTo(12,28);
+      const dn = Math.ceil(msToNext(12,9)/86400000); // Настя
+      const de = Math.ceil(msToNext(12,28)/86400000); // Егор
+      document.getElementById('nextBdayN').textContent = dn;
+      document.getElementById('nextBdayE').textContent = de;
+      // rings
+      const circ=339;
+      const pn = 1 - pctYearTo(12,9);
+      const pe = 1 - pctYearTo(12,28);
+      document.getElementById('ringN').style.strokeDashoffset = String(circ * pn);
+      document.getElementById('ringE').style.strokeDashoffset = String(circ * pe);
+      document.getElementById('pctN').textContent = Math.round((1-pn)*100) + '% прожито';
+      document.getElementById('pctE').textContent = Math.round((1-pe)*100) + '% прожито';
       document.getElementById('walk').textContent = '∞';
     }
     renderClocks(); setInterval(renderClocks, 60_000);
 
-    // ===== галерея / лайтбокс =====
+    // ===== lightbox + swipe =====
+    const gallery = Array.from(document.querySelectorAll('#gallery img'));
     const box = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
-    const close = document.getElementById('lb-close');
-    document.getElementById('gallery').addEventListener('click', e=>{
-      const img = e.target.closest('img'); if(!img) return;
-      lbImg.src = img.src; box.classList.add('active');
-    });
-    function hide(){ box.classList.remove('active'); lbImg.src=''; }
-    close.addEventListener('click', hide);
-    box.addEventListener('click', e=>{ if(e.target===box) hide(); });
-    addEventListener('keydown', e=>{ if(e.key==='Escape') hide(); });
+    const prevBtn = document.querySelector('.lb-prev');
+    const nextBtn = document.querySelector('.lb-next');
+    const closeBtn = document.getElementById('lb-close');
+    let idx=0; function openAt(i){idx=i; lbImg.src=gallery[idx].src; box.classList.add('active')}
+    document.getElementById('gallery').addEventListener('click', e=>{ const img=e.target.closest('img'); if(!img) return; openAt(gallery.indexOf(img)) });
+    function hide(){ box.classList.remove('active'); lbImg.src='' }
+    closeBtn.addEventListener('click', hide);
+    box.addEventListener('click', e=>{ if(e.target===box) hide() });
+    prevBtn.addEventListener('click', ()=> openAt((idx-1+gallery.length)%gallery.length));
+    nextBtn.addEventListener('click', ()=> openAt((idx+1)%gallery.length));
+    addEventListener('keydown', e=>{ if(e.key==='Escape') hide(); if(!box.classList.contains('active')) return; if(e.key==='ArrowLeft') prevBtn.click(); if(e.key==='ArrowRight') nextBtn.click(); });
+    // touch swipe
+    let sx=0; lbImg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX});
+    lbImg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX - sx; if(Math.abs(dx)>40){ dx>0?prevBtn.click():nextBtn.click(); }});
 
-    // ===== пасхалка: 3 тапa по сердечку → сообщение + конфетти =====
-    const heart = document.getElementById('heart');
-    const secret = document.getElementById('secret');
-    let taps = 0, tId;
-    heart.addEventListener('click', ()=>{
-      taps++; clearTimeout(tId); tId = setTimeout(()=>taps=0, 500);
-      if(taps>=3){
-        secret.style.display = 'block';
-        confetti(); taps=0;
-      }
-    });
-
-    function confetti(){
-      const N=80; const frag=document.createDocumentFragment();
-      for(let i=0;i<N;i++){
-        const s=document.createElement('span');
-        const size = Math.random()*8+4;
-        s.style.cssText = `position:fixed;left:${Math.random()*100}vw;top:-10px;width:${size}px;height:${size}px;border-radius:50%;background:hsl(${Math.random()*360} 90% 65%);opacity:.9;pointer-events:none;z-index:60;`;
-        document.body.appendChild(s);
-        const dur= 1200+Math.random()*1200;
-        const dx = (Math.random()*2-1)*160;
-        s.animate([
-          { transform:`translate(0,0) rotate(0deg)` },
-          { transform:`translate(${dx}px, 110vh) rotate(${Math.random()*720-360}deg)` }
-        ], { duration: dur, easing:'cubic-bezier(.2,.7,.2,1)' }).onfinish = ()=> s.remove();
-        frag.appendChild(s);
-      }
-      document.body.appendChild(frag);
+    // ===== mood (7-day rolling) =====
+    const moodKey='nastya.mood';
+    const moodOpts=document.getElementById('moodOpts');
+    const moodTxt=document.getElementById('moodTxt');
+    const moodInfo=document.getElementById('moodInfo');
+    let moodState=JSON.parse(localStorage.getItem(moodKey)||'[]').filter(x=>Date.now()-x.t < 7*86400000);
+    function renderMood(){
+      localStorage.setItem(moodKey, JSON.stringify(moodState));
+      const today=new Date(nowMSK().toDateString()).getTime();
+      const todayRec=moodState.find(x=> new Date(x.t).toDateString()===new Date(today).toDateString());
+      document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', !!todayRec && todayRec.m===c.dataset.m));
+      moodTxt.value = todayRec? (todayRec.txt||'') : '';
+      moodInfo.textContent = `Записей за неделю: ${moodState.length}`;
     }
-  </script></body>
+    moodOpts.addEventListener('click', e=>{ const c=e.target.closest('.chip'); if(!c) return; const m=c.dataset.m; const t=nowMSK().getTime(); let r=moodState.find(x=> new Date(x.t).toDateString()===new Date(t).toDateString()); if(!r){ r={t, m, txt:''}; moodState.push(r) } else { r.m=m } renderMood() });
+    document.getElementById('saveMood').addEventListener('click', ()=>{ const t=nowMSK().getTime(); let r=moodState.find(x=> new Date(x.t).toDateString()===new Date(t).toDateString()); if(!r){ r={t, m:'ok', txt:moodTxt.value} ; moodState.push(r) } else { r.txt=moodTxt.value } renderMood(); sparkle() });
+    renderMood();
+
+    // ===== photo upload (local only) =====
+    const up=document.getElementById('upPhoto');
+    up.addEventListener('change', async ()=>{
+      const f=up.files[0]; if(!f) return; const url=URL.createObjectURL(f); const fig=document.createElement('figure'); fig.className='ph'; const im=document.createElement('img'); im.loading='lazy'; im.src=url; fig.appendChild(im); document.getElementById('gallery').prepend(fig); gallery.unshift(im); openAt(0);
+    });
+
+    // ===== easter: 3 taps + confetti =====
+    const heart=document.getElementById('heart'); let taps=0,tId; heart.addEventListener('click',()=>{ taps++; clearTimeout(tId); tId=setTimeout(()=>taps=0,500); if(taps>=3){
+      toast('Тихая пасхалка: иногда достаточно просто быть рядом. Спасибо, что ты есть.'); confetti(); taps=0; } });
+
+    function toast(text){ const d=document.createElement('div'); d.textContent=text; d.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(6px);padding:12px 16px;border-radius:12px;z-index:99'; document.body.appendChild(d); setTimeout(()=>d.remove(),2600) }
+
+    function confetti(){ const N=100; for(let i=0;i<N;i++){ const s=document.createElement('span'); const size=Math.random()*8+4; s.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:${size}px;height:${size}px;border-radius:50%;background:hsl(${Math.random()*360} 90% 65%);opacity:.95;pointer-events:none;z-index:95`; document.body.appendChild(s); const dur=1200+Math.random()*1400; const dx=(Math.random()*2-1)*160; s.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:`translate(${dx}px, 110vh) rotate(${Math.random()*720-360}deg)`}],{duration:dur,easing:'cubic-bezier(.2,.7,.2,1)'}).onfinish=()=>s.remove(); } }
+    function sparkle(){ const s=document.createElement('span'); s.textContent='✔ Сохранено'; toast(s.textContent) }
+
+    // ===== PWA: manifest + service worker (Blob) =====
+    const manifest = {
+      name: 'Насте — тихо и красиво', short_name: 'Насте', start_url: '.', display: 'standalone', background_color: '#0b1020', theme_color: '#0b1020',
+      icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%23ff71b8%22/><stop offset=%221%22 stop-color=%22%237aa6ff%22/></linearGradient></defs><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%230b1020%22/><path d=%22M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z%22 fill=%22url(%23g)%22/></svg>', sizes:'64x64', type:'image/svg+xml'}]
+    };
+    const manUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/json'}));
+    const link = document.createElement('link'); link.rel='manifest'; link.href=manUrl; document.head.appendChild(link);
+
+    // Service Worker inline
+    const swCode = `self.addEventListener('install', e=>{ e.waitUntil(caches.open('nastya-v1').then(c=>c.addAll(['./'])) )});
+self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
+    if('serviceWorker' in navigator){
+      const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'}));
+      navigator.serviceWorker.register(swUrl);
+    }
+
+    // Install prompt
+    let deferredPrompt; window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBadge').style.display='inline-flex' });
+    document.getElementById('installBadge').addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; if(outcome==='accepted'){ toast('Установлено на экран!') } deferredPrompt=null })
+
+    // Notification for 14th 12:00 MSK
+    async function schedule14(){
+      if(!('Notification' in window)) return; 
+      if(Notification.permission!=='granted'){ try{ await Notification.requestPermission() }catch(e){} }
+      // check date
+      const n=nowMSK(); if(n.getDate()===14 && n.getHours()===12){ new Notification('Сегодня прогулка!'); confetti() }
+    }
+    setInterval(schedule14, 60_000);
+
+  </script>
+</body>
 </html>
+		
+
+
+
+
+
+
+		
