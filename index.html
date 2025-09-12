@@ -2,215 +2,231 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Насте · тихо, красиво, профессионально</title>
-  <meta name="theme-color" content="#0b1020" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Насте · app‑site</title>
+  <meta name="theme-color" content="#0a0f1f" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop stop-color='%23ff71b8'/%3E%3Cstop offset='1' stop-color='%237aa6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='%230b1020'/%3E%3Cpath d='M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z' fill='url(%23g)'/%3E%3C/svg%3E" />
   <style>
     :root{
-      --bg:#0b1020;
-      --bg2:#0a0f1f;
-      --text:#ecf2ff;
-      --muted:#b9c4e3;
-      --line:rgba(255,255,255,.08);
-      --card:rgba(255,255,255,.06);
-      --card2:rgba(255,255,255,.1);
-      --accent:#ff71b8;
-      --accent2:#7aa6ff;
-      --green:#86efac; --blue:#7dd3fc; --rose:#fda4af; --vio:#c4b5fd; --amber:#facc15;
+      --bg:#0a0f1f; --bg2:#0b1024; --text:#eef2ff; --muted:#b9c4e3; --line:rgba(255,255,255,.08);
+      --card:rgba(255,255,255,.06); --card2:rgba(255,255,255,.1);
+      --accent:#ff71b8; --accent2:#7aa6ff; --ok:#86efac; --blue:#7dd3fc; --amber:#facc15;
       --radius:22px; --shadow:0 10px 35px rgba(0,0,0,.35);
+      --safe: env(safe-area-inset-bottom);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 800px at 70% -10%, #141d3c 0%, #0b1020 55%, #060a16 100%);
       color:var(--text); font:400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden}
-    a{color:inherit}
+    a{color:inherit;text-decoration:none}
 
-    /* BACKGROUND PARTICLES */
-    canvas#bg{position:fixed;inset:0;z-index:-3}
-    .glow{position:fixed;inset:-20vmax;z-index:-4;filter:blur(90px);opacity:.35;pointer-events:none;background:
+    /* background canvases */
+    canvas#bg, canvas#show {position:fixed; inset:0; z-index:-3}
+    .glow{position:fixed; inset:-20vmax; z-index:-4; filter:blur(90px); opacity:.35; pointer-events:none; background:
       radial-gradient(40vmax 40vmax at 20% 20%, #ff71b820, transparent 60%),
       radial-gradient(40vmax 40vmax at 80% 0%, #7aa6ff20, transparent 55%),
       radial-gradient(60vmax 60vmax at 50% 85%, #a2ffde25, transparent 60%)}
 
-    /* APP SHELL */
-    header{position:sticky;top:0;z-index:50;backdrop-filter:blur(10px);
+    /* app shell */
+    header{position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
       background:linear-gradient(180deg, rgba(10,15,30,.7), rgba(10,15,30,.35) 60%, transparent);
       border-bottom:1px solid var(--line)}
-    .wrap{max-width:1180px;margin:0 auto;padding:16px 20px}
-    .row{display:flex;align-items:center;gap:14px}
-    .brand{font:900 18px Inter;letter-spacing:.3px}
-    .badge{display:inline-flex;gap:8px;align-items:center;padding:8px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line)}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:14px;background:linear-gradient(135deg, var(--accent), #ff8ed1);color:#120816;font-weight:800;text-decoration:none;box-shadow:0 6px 24px rgba(255,113,184,.28);transition:transform .2s ease, filter .2s ease}
-    .btn:hover{transform:translateY(-1px);filter:saturate(1.05)}
+    .wrap{max-width:1080px; margin:0 auto; padding:14px 18px}
+    .row{display:flex; align-items:center; gap:12px}
+    .brand{font:900 18px Inter}
+    .badge{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid var(--line)}
+    .btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; background:linear-gradient(135deg, var(--accent), #ff8ed1); color:#120816; font-weight:800; box-shadow:0 6px 24px rgba(255,113,184,.28)}
 
-    /* HERO */
-    .hero{padding:56px 20px 26px}
-    .hero-inner{max-width:1180px;margin:0 auto;display:grid;grid-template-columns:1.2fr .8fr;gap:22px}
-    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .p24{padding:24px}
-    h1.title{margin:6px 0 0;font:900 44px/1.15 Inter}
-    .subtitle{color:var(--muted);margin:12px 0 0}
-    .heart{font-size:22px;display:inline-flex;align-items:center;gap:8px;user-select:none}
-    .heart .tap{opacity:.65;font-weight:700}
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
-    .stat{padding:16px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid var(--line)}
-    .stat b{display:block;font:900 22px Inter}
-    .stat span{color:var(--muted);font-size:13px}
+    /* tab bar */
+    .tabs{position:fixed; left:0; right:0; bottom:0; z-index:50; backdrop-filter:blur(10px);
+      background:linear-gradient(180deg, rgba(10,15,30,.25), rgba(10,15,30,.6)); border-top:1px solid var(--line); padding-bottom:calc(10px + var(--safe))}
+    .tabs .inner{max-width:1080px; margin:0 auto; padding:8px 12px 6px; display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
+    .tab{display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 6px; border-radius:12px; color:var(--muted)}
+    .tab.active{background:rgba(255,255,255,.06); color:var(--text); font-weight:700}
 
-    .countdowns{display:grid;gap:12px}
-    .pill{padding:14px;border-radius:16px;border:1px dashed var(--line);background:rgba(255,255,255,.04)}
+    main{padding-bottom:90px}
 
-    /* RINGS */
-    .rings{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
-    .ring{display:flex;align-items:center;gap:14px;padding:12px;border-radius:16px;background:rgba(255,255,255,.04);border:1px solid var(--line)}
-    .ring svg{width:64px;height:64px}
-    .ring .lbl{font-weight:700}
+    /* screens */
+    section.screen{padding:22px 18px}
+    .container{max-width:1080px; margin:0 auto; display:grid; gap:16px}
+    .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
+    .p24{padding:22px}
 
-    /* NOTES */
-    .notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-    .note{padding:18px;border-radius:18px;background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));border:1px solid var(--line)}
-    .note h4{margin:0 0 8px;font:800 16px Inter}
-    .note p{margin:0}
+    /* hero */
+    h1.title{margin:6px 0 0; font:900 42px/1.15 Inter}
+    .subtitle{color:var(--muted); margin:10px 0 0}
+    .heart{font-size:22px; display:inline-flex; align-items:center; gap:8px; user-select:none}
+    .heart .tap{opacity:.65; font-weight:700}
+    .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px}
+    .stat{padding:14px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid var(--line)}
+    .stat b{display:block; font:900 22px Inter}
+    .stat span{color:var(--muted); font-size:13px}
 
-    /* MOOD WIDGET */
-    .mood{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:6px}
-    .mood .opt{display:flex;gap:8px;flex-wrap:wrap}
-    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:var(--card2);border:1px solid var(--line);cursor:pointer}
-    .chip.active{outline:2px solid var(--accent)}
-    .mood textarea{width:100%;min-height:80px;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:10px}
+    .rings{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:10px}
+    .ring{display:flex; align-items:center; gap:14px; padding:12px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--line)}
+    .ring svg{width:72px; height:72px}
 
-    /* GALLERY */
-    section{padding:28px 20px}
-    .sec-title{max-width:1180px;margin:0 auto 14px;display:flex;align-items:end;justify-content:space-between}
-    .sec-title h3{margin:0;font:900 24px Inter}
-    .grid{max-width:1180px;margin:0 auto;columns:1;column-gap:14px}
-    @media(min-width:680px){.grid{columns:2}}@media(min-width:980px){.grid{columns:3}}
-    .ph{break-inside:avoid;border-radius:16px;overflow:hidden;margin:0 0 14px;position:relative;border:1px solid var(--line);box-shadow:var(--shadow)}
-    .ph img{width:100%;display:block;transition:transform .4s ease, filter .4s ease}
-    .ph:hover img{transform:scale(1.04)}
-    .up{display:flex;gap:10px;align-items:center}
+    /* music + notes */
+    .grid2{display:grid; grid-template-columns:1fr; gap:12px}
+    @media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
+    .badge2{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid var(--line)}
 
-    /* LIGHTBOX + SWIPE */
-    .lightbox{position:fixed;inset:0;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px);background:rgba(4,6,14,.65);z-index:70}
+    .notes{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+    .note{padding:16px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid var(--line)}
+    .note h4{margin:0 0 6px; font:800 16px Inter}
+
+    /* gallery */
+    .masonry{columns:1; column-gap:12px}
+    @media(min-width:640px){.masonry{columns:2}}
+    @media(min-width:980px){.masonry{columns:3}}
+    .ph{break-inside:avoid; border-radius:14px; overflow:hidden; margin:0 0 12px; position:relative; border:1px solid var(--line); box-shadow:var(--shadow)}
+    .ph img{width:100%; display:block; transition:transform .4s ease}
+    .ph:hover img{transform:scale(1.03)}
+
+    /* lightbox */
+    .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(6px); background:rgba(4,6,14,.65); z-index:70}
     .lightbox.active{display:flex}
-    .lb-inner{max-width:min(92vw,1100px);max-height:90vh;position:relative}
-    .lb-inner img{max-width:100%;max-height:90vh;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.5)}
-    .lb-x{position:absolute;top:-44px;right:0;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:8px 12px;cursor:pointer}
-    .lb-prev,.lb-next{position:absolute;top:50%;transform:translateY(-50%);background:var(--card2);border:1px solid var(--line);padding:10px 12px;border-radius:12px;cursor:pointer}
+    .lb-inner{max-width:min(92vw,1080px); max-height:90vh; position:relative}
+    .lb-inner img{max-width:100%; max-height:90vh; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,.5)}
+    .lb-x{position:absolute; top:-44px; right:0; background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:8px 12px; cursor:pointer}
+    .lb-prev,.lb-next{position:absolute; top:50%; transform:translateY(-50%); background:var(--card2); border:1px solid var(--line); padding:10px 12px; border-radius:12px; cursor:pointer}
     .lb-prev{left:-52px}.lb-next{right:-52px}
 
-    /* GUESTBOOK (LOCAL) */
-    .guest{display:grid;grid-template-columns:1fr;gap:10px}
-    .guest input,.guest textarea{width:100%;border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:var(--text);padding:10px}
-    .g-list{display:grid;gap:10px}
-    .g-item{padding:12px;border-radius:14px;background:rgba(255,255,255,.05);border:1px solid var(--line)}
+    /* mood */
+    .mood{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
+    .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid var(--line); cursor:pointer}
+    .chip.active{outline:2px solid var(--accent)}
+    .mood textarea{width:100%; min-height:92px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); padding:10px}
 
-    /* FOOTER */
-    footer{padding:36px 20px 70px;color:var(--muted);text-align:center}
-    .tiny{opacity:.75;font-size:13px}
+    /* guest */
+    .guest input,.guest textarea{width:100%; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); padding:10px}
+    .g-list{display:grid; gap:10px}
+    .g-item{padding:12px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid var(--line)}
+
+    footer{padding:36px 18px calc(70px + var(--safe)); color:var(--muted); text-align:center}
+    .tiny{opacity:.75; font-size:13px}
   </style>
 </head>
 <body>
   <div class="glow" aria-hidden="true"></div>
   <canvas id="bg" aria-hidden="true"></canvas>
+  <canvas id="show" aria-hidden="true"></canvas>
 
   <header>
     <div class="wrap row">
-      <div class="brand">для Насти · v2 pro</div>
-      <span class="badge">🌸 спокойно и красиво</span>
-      <span class="badge" id="installBadge" style="display:none;cursor:pointer">📲 Установить на телефон</span>
-      <a class="btn" href="https://t.me/Tkachev_Egor" target="_blank" rel="noreferrer" style="margin-left:auto">Написать в Telegram</a>
+      <div class="brand">для Насти · app</div>
+      <span class="badge" id="installBadge" style="display:none;cursor:pointer">📲 Установить</span>
+      <a class="btn" href="https://t.me/Tkachev_Egor" target="_blank" rel="noreferrer" style="margin-left:auto">Написать в TG</a>
     </div>
   </header>
 
-  <section class="hero">
-    <div class="hero-inner">
-      <div class="card p24">
-        <p class="heart" id="heart">💗 <span class="tap">(нажми 3 раза)</span></p>
-        <h1 class="title">Привет, Настя. Здесь всё сделано аккуратно и с уважением.</h1>
-        <p class="subtitle">Без громких слов — только важное: время, музыка, фотографии, заметки и чуть-чуть магии.
-        </p>
-        <div class="stats">
-          <div class="stat"><b id="daysTogether">—</b><span>дней знакомы (с 01.09.2017)</span></div>
-          <div class="stat"><b id="nextBdayN">—</b><span>до др Насти (9 декабря, МСК)</span></div>
-          <div class="stat"><b id="nextBdayE">—</b><span>до др Егора (28 декабря, МСК)</span></div>
-        </div>
-        <div class="rings">
-          <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringN" cx="60" cy="60" r="54" stroke="url(#gr1)" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/><defs><linearGradient id="gr1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff71b8"/><stop offset="1" stop-color="#7aa6ff"/></linearGradient></defs></svg><div><div class="lbl">До ДР Насти</div><div id="pctN">—</div></div></div>
-          <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringE" cx="60" cy="60" r="54" stroke="#7dd3fc" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/></svg><div><div class="lbl">До ДР Егора</div><div id="pctE">—</div></div></div>
-        </div>
-        <div class="mood">
-          <div class="opt" id="moodOpts">
-            <div class="chip" data-m="bad">😶‍🌫️ трудно</div>
-            <div class="chip" data-m="ok">🙂 норм</div>
-            <div class="chip" data-m="good">😊 хорошо</div>
-            <div class="chip" data-m="happy">🤩 супер</div>
+  <main id="main">
+    <section class="screen" data-tab="home">
+      <div class="container">
+        <div class="card p24">
+          <p class="heart" id="heart">💗 <span class="tap">(нажми 3 раза)</span></p>
+          <h1 class="title">Привет, Настя. Здесь спокойно, красиво и очень аккуратно.</h1>
+          <p class="subtitle">Время, музыка, фотографии и маленькие вещи, которые важны. Всё работает как приложение.</p>
+          <div class="stats">
+            <div class="stat"><b id="daysTogether">—</b><span>дней знакомы (с 01.09.2017)</span></div>
+            <div class="stat"><b id="nextBdayN">—</b><span>до др Насти (9 декабря, МСК)</span></div>
+            <div class="stat"><b id="nextBdayE">—</b><span>до др Егора (28 декабря, МСК)</span></div>
           </div>
-          <div>
-            <textarea id="moodTxt" placeholder="Короткая заметка на день (хранится неделю)"></textarea>
-            <div class="row" style="justify-content:flex-end;margin-top:8px"><a class="btn" id="saveMood" style="background:linear-gradient(135deg,#7aa6ff,#a2ffde)">Сохранить день</a></div>
+          <div class="rings">
+            <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringN" cx="60" cy="60" r="54" stroke="url(#gr1)" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/><defs><linearGradient id="gr1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff71b8"/><stop offset="1" stop-color="#7aa6ff"/></linearGradient></defs></svg><div><div class="lbl">До ДР Насти</div><div id="pctN">—</div></div></div>
+            <div class="ring"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="54" stroke="rgba(255,255,255,.12)" stroke-width="10" fill="none"/><circle id="ringE" cx="60" cy="60" r="54" stroke="#7dd3fc" stroke-linecap="round" stroke-width="10" fill="none" transform="rotate(-90 60 60)" stroke-dasharray="339 339" stroke-dashoffset="339"/></svg><div><div class="lbl">До ДР Егора</div><div id="pctE">—</div></div></div>
           </div>
-        </div>
-        <div class="subtitle" id="moodInfo" style="margin-top:8px"></div>
-      </div>
-
-      <div class="card p24">
-        <div class="countdowns">
-          <div class="pill"><b>⏳ До прогулки:</b> <span id="walk">∞</span></div>
-          <div class="pill"><b>🎧 Музыка:</b>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
-              <a class="badge" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8" target="_blank" rel="noreferrer">Плейлист Насти</a>
-              <a class="badge" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a" target="_blank" rel="noreferrer">Плейлист Егора</a>
+          <div class="grid2">
+            <div class="card p24">
+              <b>🎧 Музыка</b>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">
+                <a class="badge2" href="https://music.yandex.ru/playlists/lk.18d8535f-c596-4c96-a160-b743a0bf95e8" target="_blank" rel="noreferrer">Плейлист Насти</a>
+                <a class="badge2" href="https://music.yandex.ru/playlists/lk.2fed664d-e8f2-4d99-86cb-839150e1c88a" target="_blank" rel="noreferrer">Плейлист Егора</a>
+              </div>
+            </div>
+            <div class="card p24">
+              <b>📌 Маленькие заметки</b>
+              <div class="notes" style="margin-top:10px">
+                <div class="note"><h4>Про колено</h4><p>Скажи, если потянет — сумка и маршрут под тебя. Всегда.</p></div>
+                <div class="note"><h4>Про смех</h4><p>Пусть будет громко. Это один из лучших звуков на свете.</p></div>
+                <div class="note"><h4>Про мелочи</h4><p>Браслет на руке — не аксессуар, а память о человеке.</p></div>
+              </div>
             </div>
           </div>
-          <div class="pill"><b>📌 Маленькие заметки</b>
-            <div class="notes" style="margin-top:10px">
-              <div class="note"><h4>Про колено</h4><p>Скажи, если потянет — сумка и маршрут под тебя. Всегда.</p></div>
-              <div class="note"><h4>Про смех</h4><p>Пусть будет громко. Это один из лучших звуков на свете.</p></div>
-              <div class="note"><h4>Про мелочи</h4><p>Браслет на руке — не аксессуар, а память о человеке.</p></div>
-            </div>
-          </div>
-          <div class="pill up">
-            <input type="file" id="upPhoto" accept="image/*"/>
-            <span class="subtitle">Добавить своё фото (только у тебя на устройстве)</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="screen" data-tab="gallery" hidden>
+      <div class="container">
+        <div class="card p24">
+          <div class="row" style="justify-content:space-between;align-items:center"><b>Фотографии</b><label class="badge"><input type="file" id="upPhoto" accept="image/*" style="display:none"><span style="cursor:pointer" id="upBtn">➕ добавить (локально)</span></label></div>
+          <div class="masonry" id="gallery">
+            <figure class="ph"><img src="IMG_20250307_085915.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="IMG_20250313_132014.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="IMG_20250313_134601_edit_13096874764951.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="20250125_160454.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="20250125_164132.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="IMG_20250405_164952.jpg" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="Снимок экрана (1).png" alt="" loading="lazy"></figure>
+            <figure class="ph"><img src="Снимок экрана (2).png" alt="" loading="lazy"></figure>
           </div>
         </div>
-        <div class="badge" style="margin-top:10px">MSK · таймеры обновляются автоматически</div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <section>
-    <div class="sec-title"><h3>Фотографии</h3><div class="badge">нажми на фото</div></div>
-    <div class="grid" id="gallery">
-      <figure class="ph"><img src="IMG_20250307_085915.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="IMG_20250313_132014.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="IMG_20250313_134601_edit_13096874764951.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="20250125_160454.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="20250125_164132.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="IMG_20250405_164952.jpg" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="Снимок экрана (1).png" alt="" loading="lazy"></figure>
-      <figure class="ph"><img src="Снимок экрана (2).png" alt="" loading="lazy"></figure>
-    </div>
-  </section>
-
-  <section>
-    <div class="sec-title"><h3>Гостевая (локально)</h3><div class="badge">записи видишь только ты на этом устройстве</div></div>
-    <div class="wrap" style="max-width:1180px;padding:0">
-      <div class="card p24">
-        <div class="guest">
+    <section class="screen" data-tab="mood" hidden>
+      <div class="container">
+        <div class="card p24">
+          <b>День</b>
+          <div class="mood">
+            <div>
+              <div class="chip" data-m="bad">😶‍🌫️ трудно</div>
+              <div class="chip" data-m="ok">🙂 норм</div>
+              <div class="chip" data-m="good">😊 хорошо</div>
+              <div class="chip" data-m="happy">🤩 супер</div>
+            </div>
+            <div>
+              <textarea id="moodTxt" placeholder="Короткая заметка на день (хранится неделю)"></textarea>
+              <div class="row" style="justify-content:flex-end;margin-top:8px"><a class="btn" id="saveMood" style="background:linear-gradient(135deg,#7aa6ff,#a2ffde)">Сохранить</a></div>
+              <div class="subtitle" id="moodInfo" style="margin-top:8px"></div>
+            </div>
+          </div>
+        </div>
+        <div class="card p24 guest">
+          <b>Гостевая (локально)</b>
           <input id="gName" placeholder="Имя"/>
           <textarea id="gMsg" placeholder="Сообщение"></textarea>
           <div class="row" style="justify-content:flex-end"><a class="btn" id="gAdd">Добавить</a></div>
           <div class="g-list" id="gList"></div>
         </div>
       </div>
+    </section>
+
+    <section class="screen" data-tab="about" hidden>
+      <div class="container">
+        <div class="card p24">
+          <b>Инфо</b>
+          <p class="subtitle">MSK‑время • офлайн‑режим (PWA) • плавные анимации • лайтбокс со свайпом • локальные записи • безопасность (ничего не уходит с устройства).</p>
+          <div class="row" style="gap:10px;flex-wrap:wrap;margin-top:8px">
+            <span class="badge">⏳ До прогулки: <b id="walk">∞</b></span>
+            <span class="badge" id="installAgain" style="cursor:pointer">📲 Установить на экран</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabs" role="tablist">
+    <div class="inner">
+      <a class="tab active" data-go="home" role="tab" aria-selected="true">🏠<small>Дом</small></a>
+      <a class="tab" data-go="gallery" role="tab">🖼️<small>Фото</small></a>
+      <a class="tab" data-go="mood" role="tab">🗒️<small>День</small></a>
+      <a class="tab" data-go="about" role="tab">⚙️<small>Ещё</small></a>
     </div>
-  </section>
+  </nav>
 
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
     <div class="lb-inner">
@@ -222,7 +238,7 @@
   </div>
 
   <footer>
-    <div class="wrap">Сделано профессионально, но по‑домашнему. <span class="tiny">Без ярлыков, без давления. PWA, офлайн, лайтбокс, пасхалки, локальные заметки.</span></div>
+    <div class="wrap">Сделано профессионально, но по‑домашнему. <span class="tiny">PWA, офлайн, пасхалки, локальные данные. ©</span></div>
   </footer>
 
   <script>
@@ -231,16 +247,21 @@
     const ctx = cvs.getContext('2d');
     let w,h,dots=[]; function rs(){w=cvs.width=innerWidth; h=cvs.height=innerHeight}
     addEventListener('resize', rs); rs();
-    function initDots(){const n=Math.min(140, Math.floor(w*h/16000)); dots=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.2,vx:(Math.random()-.5)*0.25,vy:(Math.random()-.5)*0.25,a:Math.random()*0.45+0.15}))}
+    function initDots(){const n=Math.min(150, Math.floor(w*h/16000)); dots=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.3,vx:(Math.random()-.5)*0.25,vy:(Math.random()-.5)*0.25,a:Math.random()*0.45+0.15}))}
     initDots();
     (function loop(){ctx.clearRect(0,0,w,h); for(const d of dots){d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>w)d.vx*=-1; if(d.y<0||d.y>h)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${d.a})`; ctx.fill()} requestAnimationFrame(loop)})()
+
+    // ===== tabs =====
+    const tabs=document.querySelectorAll('.tab');
+    const screens=[...document.querySelectorAll('.screen')];
+    tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); const go=t.dataset.go; screens.forEach(s=> s.hidden = s.dataset.tab!==go ); window.scrollTo({top:0, behavior:'smooth'}); }));
 
     // ===== time utils (MSK) =====
     const MSK_OFFSET = 3*60; // minutes
     function nowMSK(){ const n=new Date(); const utc=n.getTime()+n.getTimezoneOffset()*60000; return new Date(utc+MSK_OFFSET*60000) }
     function daysSince(dateStr){ const start=new Date(dateStr+'T00:00:00+03:00'); const diff=nowMSK()-start; return Math.floor(diff/86400000) }
     function msToNext(month,day){ const n=nowMSK(); let t=new Date(Date.UTC(n.getUTCFullYear(),month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000); if(t<n){ t=new Date(Date.UTC(n.getUTCFullYear()+1,month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000) } return t - n }
-    function pctYearTo(month,day){ const n=nowMSK(); const start=new Date(Date.UTC(n.getUTCFullYear(),0,1)); const end=new Date(Date.UTC(n.getUTCFullYear()+1,0,1)); const target=new Date(Date.UTC(n.getUTCFullYear(),month-1,day)); const total=end-start; const done=target-start; const nowpos=n-start; return Math.max(0, Math.min(1, nowpos/done)) }
+    function pctYearTo(month,day){ const n=nowMSK(); const start=new Date(Date.UTC(n.getUTCFullYear(),0,1)); const target=new Date(Date.UTC(n.getUTCFullYear(),month-1,day)); const nowpos=n-start; const total=target-start; return Math.max(0, Math.min(1, nowpos/total)) }
 
     function renderClocks(){
       document.getElementById('daysTogether').textContent = daysSince('2017-09-01');
@@ -248,10 +269,7 @@
       const de = Math.ceil(msToNext(12,28)/86400000); // Егор
       document.getElementById('nextBdayN').textContent = dn;
       document.getElementById('nextBdayE').textContent = de;
-      // rings
-      const circ=339;
-      const pn = 1 - pctYearTo(12,9);
-      const pe = 1 - pctYearTo(12,28);
+      const circ=339; const pn=1-pctYearTo(12,9); const pe=1-pctYearTo(12,28);
       document.getElementById('ringN').style.strokeDashoffset = String(circ * pn);
       document.getElementById('ringE').style.strokeDashoffset = String(circ * pe);
       document.getElementById('pctN').textContent = Math.round((1-pn)*100) + '% прожито';
@@ -261,94 +279,100 @@
     renderClocks(); setInterval(renderClocks, 60_000);
 
     // ===== lightbox + swipe =====
-    const gallery = Array.from(document.querySelectorAll('#gallery img'));
+    const galleryImgs = Array.from(document.querySelectorAll('#gallery img'));
     const box = document.getElementById('lightbox');
     const lbImg = document.getElementById('lb-img');
     const prevBtn = document.querySelector('.lb-prev');
     const nextBtn = document.querySelector('.lb-next');
     const closeBtn = document.getElementById('lb-close');
-    let idx=0; function openAt(i){idx=i; lbImg.src=gallery[idx].src; box.classList.add('active')}
-    document.getElementById('gallery').addEventListener('click', e=>{ const img=e.target.closest('img'); if(!img) return; openAt(gallery.indexOf(img)) });
+    let idx=0; function openAt(i){idx=i; lbImg.src=galleryImgs[idx].src; box.classList.add('active')}
+    document.getElementById('gallery').addEventListener('click', e=>{ const img=e.target.closest('img'); if(!img) return; openAt(galleryImgs.indexOf(img)) });
     function hide(){ box.classList.remove('active'); lbImg.src='' }
     closeBtn.addEventListener('click', hide);
     box.addEventListener('click', e=>{ if(e.target===box) hide() });
-    prevBtn.addEventListener('click', ()=> openAt((idx-1+gallery.length)%gallery.length));
-    nextBtn.addEventListener('click', ()=> openAt((idx+1)%gallery.length));
+    prevBtn.addEventListener('click', ()=> openAt((idx-1+galleryImgs.length)%galleryImgs.length));
+    nextBtn.addEventListener('click', ()=> openAt((idx+1)%galleryImgs.length));
     addEventListener('keydown', e=>{ if(e.key==='Escape') hide(); if(!box.classList.contains('active')) return; if(e.key==='ArrowLeft') prevBtn.click(); if(e.key==='ArrowRight') nextBtn.click(); });
-    // touch swipe
     let sx=0; lbImg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX});
     lbImg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX - sx; if(Math.abs(dx)>40){ dx>0?prevBtn.click():nextBtn.click(); }});
 
-    // ===== mood (7-day rolling) =====
-    const moodKey='nastya.mood';
-    const moodOpts=document.getElementById('moodOpts');
+    // ===== upload (local only) =====
+    const upInput=document.getElementById('upPhoto'); const upBtn=document.getElementById('upBtn'); if(upBtn) upBtn.addEventListener('click',()=>upInput.click());
+    if(upInput){ upInput.addEventListener('change', ()=>{ const f=upInput.files[0]; if(!f) return; const url=URL.createObjectURL(f); const fig=document.createElement('figure'); fig.className='ph'; const im=document.createElement('img'); im.loading='lazy'; im.src=url; fig.appendChild(im); document.getElementById('gallery').prepend(fig); galleryImgs.unshift(im); openAt(0); }); }
+
+    // ===== mood (7-day rolling, localStorage) =====
+    const moodKey='nastya.mood.v2';
     const moodTxt=document.getElementById('moodTxt');
     const moodInfo=document.getElementById('moodInfo');
     let moodState=JSON.parse(localStorage.getItem(moodKey)||'[]').filter(x=>Date.now()-x.t < 7*86400000);
-    function renderMood(){
-      localStorage.setItem(moodKey, JSON.stringify(moodState));
-      const today=new Date(nowMSK().toDateString()).getTime();
-      const todayRec=moodState.find(x=> new Date(x.t).toDateString()===new Date(today).toDateString());
-      document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', !!todayRec && todayRec.m===c.dataset.m));
-      moodTxt.value = todayRec? (todayRec.txt||'') : '';
-      moodInfo.textContent = `Записей за неделю: ${moodState.length}`;
-    }
-    moodOpts.addEventListener('click', e=>{ const c=e.target.closest('.chip'); if(!c) return; const m=c.dataset.m; const t=nowMSK().getTime(); let r=moodState.find(x=> new Date(x.t).toDateString()===new Date(t).toDateString()); if(!r){ r={t, m, txt:''}; moodState.push(r) } else { r.m=m } renderMood() });
-    document.getElementById('saveMood').addEventListener('click', ()=>{ const t=nowMSK().getTime(); let r=moodState.find(x=> new Date(x.t).toDateString()===new Date(t).toDateString()); if(!r){ r={t, m:'ok', txt:moodTxt.value} ; moodState.push(r) } else { r.txt=moodTxt.value } renderMood(); sparkle() });
+    function saveMoodState(){ localStorage.setItem(moodKey, JSON.stringify(moodState)) }
+    function todayKey(t){ return new Date(new Date(t).toDateString()).getTime() }
+    function renderMood(){ saveMoodState(); const t=todayKey(nowMSK()); const rec=moodState.find(x=> todayKey(x.t)===t ); document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', !!rec && rec.m===c.dataset.m)); moodTxt.value = rec? (rec.txt||'') : ''; moodInfo.textContent = `Записей за неделю: ${moodState.length}`; }
+    document.querySelectorAll('.chip').forEach(c=> c.addEventListener('click',()=>{ const t=todayKey(nowMSK()); let rec=moodState.find(x=> todayKey(x.t)===t ); if(!rec){ rec={t: Date.now(), m:c.dataset.m, txt:''}; moodState.push(rec) } else { rec.m=c.dataset.m } renderMood() }));
+    document.getElementById('saveMood').addEventListener('click', ()=>{ const t=todayKey(nowMSK()); let rec=moodState.find(x=> todayKey(x.t)===t ); if(!rec){ rec={t: Date.now(), m:'ok', txt:moodTxt.value}; moodState.push(rec) } else { rec.txt=moodTxt.value } renderMood(); vibrate([30,20,30]); });
     renderMood();
 
-    // ===== photo upload (local only) =====
-    const up=document.getElementById('upPhoto');
-    up.addEventListener('change', async ()=>{
-      const f=up.files[0]; if(!f) return; const url=URL.createObjectURL(f); const fig=document.createElement('figure'); fig.className='ph'; const im=document.createElement('img'); im.loading='lazy'; im.src=url; fig.appendChild(im); document.getElementById('gallery').prepend(fig); gallery.unshift(im); openAt(0);
-    });
+    // ===== guest local =====
+    const gKey='nastya.guest';
+    const gList=document.getElementById('gList');
+    function renderGuest(){ const arr=JSON.parse(localStorage.getItem(gKey)||'[]'); gList.innerHTML=''; arr.forEach(it=>{ const d=document.createElement('div'); d.className='g-item'; d.innerHTML=`<b>${it.n||'Аноним'}</b><div style="opacity:.8">${it.m||''}</div>`; gList.appendChild(d) }); }
+    renderGuest();
+    document.getElementById('gAdd').addEventListener('click', ()=>{ const n=document.getElementById('gName').value.trim(); const m=document.getElementById('gMsg').value.trim(); if(!m) return toast('Пусто'); const arr=JSON.parse(localStorage.getItem(gKey)||'[]'); arr.unshift({n,m, t:Date.now()}); localStorage.setItem(gKey, JSON.stringify(arr)); document.getElementById('gMsg').value=''; renderGuest(); vibrate([15,40,15]) })
 
-    // ===== easter: 3 taps + confetti =====
-    const heart=document.getElementById('heart'); let taps=0,tId; heart.addEventListener('click',()=>{ taps++; clearTimeout(tId); tId=setTimeout(()=>taps=0,500); if(taps>=3){
-      toast('Тихая пасхалка: иногда достаточно просто быть рядом. Спасибо, что ты есть.'); confetti(); taps=0; } });
+    // ===== toast & vibration =====
+    function toast(text){ const d=document.createElement('div'); d.textContent=text; d.style.cssText='position:fixed;left:50%;bottom:calc(18px + var(--safe));transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(8px);padding:12px 16px;border-radius:12px;z-index:99'; document.body.appendChild(d); setTimeout(()=>d.remove(),2600) }
+    function vibrate(p){ if('vibrate' in navigator) try{navigator.vibrate(p)}catch(e){} }
 
-    function toast(text){ const d=document.createElement('div'); d.textContent=text; d.style.cssText='position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(6px);padding:12px 16px;border-radius:12px;z-index:99'; document.body.appendChild(d); setTimeout(()=>d.remove(),2600) }
-
-    function confetti(){ const N=100; for(let i=0;i<N;i++){ const s=document.createElement('span'); const size=Math.random()*8+4; s.style.cssText=`position:fixed;left:${Math.random()*100}vw;top:-10px;width:${size}px;height:${size}px;border-radius:50%;background:hsl(${Math.random()*360} 90% 65%);opacity:.95;pointer-events:none;z-index:95`; document.body.appendChild(s); const dur=1200+Math.random()*1400; const dx=(Math.random()*2-1)*160; s.animate([{transform:'translate(0,0) rotate(0deg)'},{transform:`translate(${dx}px, 110vh) rotate(${Math.random()*720-360}deg)`}],{duration:dur,easing:'cubic-bezier(.2,.7,.2,1)'}).onfinish=()=>s.remove(); } }
-    function sparkle(){ const s=document.createElement('span'); s.textContent='✔ Сохранено'; toast(s.textContent) }
-
-    // ===== PWA: manifest + service worker (Blob) =====
-    const manifest = {
-      name: 'Насте — тихо и красиво', short_name: 'Насте', start_url: '.', display: 'standalone', background_color: '#0b1020', theme_color: '#0b1020',
-      icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%23ff71b8%22/><stop offset=%221%22 stop-color=%22%237aa6ff%22/></linearGradient></defs><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%22%230b1020%22/><path d=%22M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z%22 fill=%22url(%23g)%22/></svg>', sizes:'64x64', type:'image/svg+xml'}]
-    };
+    // ===== PWA manifest & service worker (inline) =====
+    const manifest = { name:'Насте — app', short_name:'Насте', start_url:'.', display:'standalone', background_color:'#0a0f1f', theme_color:'#0a0f1f', icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%23ff71b8%22/><stop offset=%221%22 stop-color=%22%237aa6ff%22/></linearGradient></defs><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%220a0f1f%22/><path d=%22M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z%22 fill=%22url(%23g)%22/></svg>', sizes:'64x64', type:'image/svg+xml'}] };
     const manUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/json'}));
     const link = document.createElement('link'); link.rel='manifest'; link.href=manUrl; document.head.appendChild(link);
-
-    // Service Worker inline
-    const swCode = `self.addEventListener('install', e=>{ e.waitUntil(caches.open('nastya-v1').then(c=>c.addAll(['./'])) )});
-self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
-    if('serviceWorker' in navigator){
-      const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'}));
-      navigator.serviceWorker.register(swUrl);
-    }
-
-    // Install prompt
+    const swCode = `self.addEventListener('install', e=>{ e.waitUntil(caches.open('nastya-app-v1').then(c=>c.addAll(['./']))) }); self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
+    if('serviceWorker' in navigator){ const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'})); navigator.serviceWorker.register(swUrl) }
     let deferredPrompt; window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBadge').style.display='inline-flex' });
-    document.getElementById('installBadge').addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; if(outcome==='accepted'){ toast('Установлено на экран!') } deferredPrompt=null })
+    document.getElementById('installBadge').addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; if(outcome==='accepted'){ toast('Установлено на экран') } deferredPrompt=null });
+    document.getElementById('installAgain').addEventListener('click', ()=> document.getElementById('installBadge').click());
 
-    // Notification for 14th 12:00 MSK
-    async function schedule14(){
-      if(!('Notification' in window)) return; 
-      if(Notification.permission!=='granted'){ try{ await Notification.requestPermission() }catch(e){} }
-      // check date
-      const n=nowMSK(); if(n.getDate()===14 && n.getHours()===12){ new Notification('Сегодня прогулка!'); confetti() }
+    // ===== 10s show on triple heart tap =====
+    const heart=document.getElementById('heart'); let taps=0, tId; heart.addEventListener('click',()=>{ taps++; clearTimeout(tId); tId=setTimeout(()=>taps=0,500); if(taps>=3){ startShow(); taps=0 } });
+
+    const showCVS=document.getElementById('show'); const sctx=showCVS.getContext('2d'); let sw,sh; function srs(){ sw=showCVS.width=innerWidth; sh=showCVS.height=innerHeight } addEventListener('resize', srs); srs();
+
+    function startShow(){
+      const start=performance.now();
+      vibrate([20,30,20,30,20]);
+      const aurora = []; for(let i=0;i<5;i++){ aurora.push({y: Math.random()*sh, phase: Math.random()*Math.PI*2, hue: 220+Math.random()*120}) }
+      const sparks = [];
+      function launch(x,y){ for(let i=0;i<60;i++){ const a=Math.random()*Math.PI*2; const sp=2+Math.random()*4; sparks.push({x,y,vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:1, hue: Math.random()*360}) } }
+      function burst(){ launch(Math.random()*sw, sh* (0.3+Math.random()*0.4)) }
+
+      function loop(t){
+        const dt = (t - (loop._last||t)) / 1000; loop._last=t;
+        const prog = Math.min(1, (t - start)/10000); // 10s
+        sctx.clearRect(0,0,sw,sh);
+        sctx.globalCompositeOperation='lighter';
+        // 0-0.2: heart pulse mask
+        if(prog<0.25){ const p = prog/0.25; const r = 80 + Math.sin(t*0.01)*8; drawHeart(sw/2, sh/2, r*(1+p*0.6), `hsla(${330+p*60},90%,60%,${0.6})`); }
+        // 0.2-0.6: aurora waves
+        if(prog>0.15){ sctx.save(); sctx.globalAlpha=0.6; aurora.forEach((a,i)=>{ sctx.beginPath(); for(let x=0;x<=sw;x+=6){ const y = a.y + Math.sin(x*0.003 + t*0.001 + a.phase)*40; i? sctx.lineTo(x,y): sctx.moveTo(x,y) } const grd = sctx.createLinearGradient(0,a.y-60, 0,a.y+60); grd.addColorStop(0,`hsla(${a.hue},80%,70%,.15)`); grd.addColorStop(1,`hsla(${a.hue+40},80%,60%,.05)`); sctx.strokeStyle=grd; sctx.lineWidth=8; sctx.stroke(); }); sctx.restore(); }
+        // 0.4-1.0: fireworks & confetti stream
+        if(prog>0.4 && Math.random()<0.08) burst();
+        for(let i=sparks.length-1;i>=0;i--){ const s=sparks[i]; s.x+=s.vx; s.y+=s.vy; s.vx*=0.99; s.vy = s.vy*0.99 + 0.03; s.life -= 0.01; if(s.life<=0) {sparks.splice(i,1); continue} sctx.fillStyle=`hsla(${s.hue},90%,60%,${s.life})`; sctx.beginPath(); sctx.arc(s.x,s.y,2,0,Math.PI*2); sctx.fill(); }
+        // soft vignette
+        const grd=sctx.createRadialGradient(sw/2,sh/2, Math.min(sw,sh)*0.2, sw/2,sh/2, Math.max(sw,sh)*0.7); grd.addColorStop(0,'transparent'); grd.addColorStop(1,'rgba(0,0,0,.25)'); sctx.fillStyle=grd; sctx.fillRect(0,0,sw,sh);
+        if(prog<1){ requestAnimationFrame(loop) } else { sctx.clearRect(0,0,sw,sh) }
+      }
+      requestAnimationFrame(loop);
     }
-    setInterval(schedule14, 60_000);
 
+    function drawHeart(x,y,size,color){
+      sctx.save(); sctx.translate(x,y); sctx.beginPath();
+      for(let a=0;a<Math.PI*2;a+=0.02){ const px = 16*Math.pow(Math.sin(a),3); const py = 13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a); sctx.lineTo(px*size/32, -py*size/32) }
+      sctx.closePath(); sctx.shadowColor=color; sctx.shadowBlur=30; sctx.fillStyle=color; sctx.fill(); sctx.restore();
+    }
+
+    // ===== notifications for 14th 12:00 MSK =====
+    async function schedule14(){ if(!('Notification' in window)) return; if(Notification.permission!=='granted'){ try{ await Notification.requestPermission() }catch(e){} } const n=nowMSK(); if(n.getDate()===14 && n.getHours()===12 && n.getMinutes()===0){ new Notification('Сегодня прогулка!'); startShow(); }} setInterval(schedule14, 60_000);
   </script>
 </body>
 </html>
-		
-
-
-
-
-
-
-		
