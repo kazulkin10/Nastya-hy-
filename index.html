@@ -3,33 +3,25 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Насте · app‑site</title>
+  <title>Насте · app‑site v4</title>
   <meta name="theme-color" content="#0a0f1f" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg:#0a0f1f; --bg2:#0b1024; --text:#eef2ff; --muted:#b9c4e3; --line:rgba(255,255,255,.08);
-      --card:rgba(255,255,255,.06); --card2:rgba(255,255,255,.1);
-      --accent:#ff71b8; --accent2:#7aa6ff; --ok:#86efac; --blue:#7dd3fc; --amber:#facc15;
-      --radius:22px; --shadow:0 10px 35px rgba(0,0,0,.35);
-      --safe: env(safe-area-inset-bottom);
+    :root{ --bg:#0a0f1f; --text:#eef2ff; --muted:#b9c4e3; --line:rgba(255,255,255,.08);
+      --card:rgba(255,255,255,.06); --card2:rgba(255,255,255,.1); --accent:#ff71b8; --accent2:#7aa6ff;
+      --radius:22px; --shadow:0 10px 35px rgba(0,0,0,.35); --safe:env(safe-area-inset-bottom);
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{box-sizing:border-box} html,body{height:100%}
     body{margin:0;background:radial-gradient(1200px 800px at 70% -10%, #141d3c 0%, #0b1020 55%, #060a16 100%);
       color:var(--text); font:400 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; overflow-x:hidden}
     a{color:inherit;text-decoration:none}
-
-    /* background canvases */
     canvas#bg, canvas#show {position:fixed; inset:0; z-index:-3}
     .glow{position:fixed; inset:-20vmax; z-index:-4; filter:blur(90px); opacity:.35; pointer-events:none; background:
       radial-gradient(40vmax 40vmax at 20% 20%, #ff71b820, transparent 60%),
       radial-gradient(40vmax 40vmax at 80% 0%, #7aa6ff20, transparent 55%),
       radial-gradient(60vmax 60vmax at 50% 85%, #a2ffde25, transparent 60%)}
-
-    /* app shell */
     header{position:sticky; top:0; z-index:40; backdrop-filter:blur(10px);
       background:linear-gradient(180deg, rgba(10,15,30,.7), rgba(10,15,30,.35) 60%, transparent);
       border-bottom:1px solid var(--line)}
@@ -38,54 +30,35 @@
     .brand{font:900 18px Inter}
     .badge{display:inline-flex; gap:8px; align-items:center; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid var(--line)}
     .btn{display:inline-flex; align-items:center; gap:10px; padding:10px 14px; border-radius:14px; background:linear-gradient(135deg, var(--accent), #ff8ed1); color:#120816; font-weight:800; box-shadow:0 6px 24px rgba(255,113,184,.28)}
-
-    /* tab bar */
     .tabs{position:fixed; left:0; right:0; bottom:0; z-index:50; backdrop-filter:blur(10px);
       background:linear-gradient(180deg, rgba(10,15,30,.25), rgba(10,15,30,.6)); border-top:1px solid var(--line); padding-bottom:calc(10px + var(--safe))}
     .tabs .inner{max-width:1080px; margin:0 auto; padding:8px 12px 6px; display:grid; grid-template-columns:repeat(4,1fr); gap:8px}
     .tab{display:flex; flex-direction:column; align-items:center; gap:4px; padding:8px 6px; border-radius:12px; color:var(--muted)}
     .tab.active{background:rgba(255,255,255,.06); color:var(--text); font-weight:700}
-
-    main{padding-bottom:90px}
-
-    /* screens */
-    section.screen{padding:22px 18px}
+    main{padding-bottom:90px} section.screen{padding:22px 18px}
     .container{max-width:1080px; margin:0 auto; display:grid; gap:16px}
     .card{background:var(--card); border:1px solid var(--line); border-radius:var(--radius); box-shadow:var(--shadow)}
     .p24{padding:22px}
-
-    /* hero */
     h1.title{margin:6px 0 0; font:900 42px/1.15 Inter}
     .subtitle{color:var(--muted); margin:10px 0 0}
-    .heart{font-size:22px; display:inline-flex; align-items:center; gap:8px; user-select:none}
-    .heart .tap{opacity:.65; font-weight:700}
     .stats{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:14px}
     .stat{padding:14px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid var(--line)}
     .stat b{display:block; font:900 22px Inter}
     .stat span{color:var(--muted); font-size:13px}
-
     .rings{display:grid; grid-template-columns:repeat(2,1fr); gap:12px; margin-top:10px}
     .ring{display:flex; align-items:center; gap:14px; padding:12px; border-radius:16px; background:rgba(255,255,255,.04); border:1px solid var(--line)}
     .ring svg{width:72px; height:72px}
-
-    /* music + notes */
     .grid2{display:grid; grid-template-columns:1fr; gap:12px}
     @media(min-width:860px){.grid2{grid-template-columns:1fr 1fr}}
     .badge2{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:12px; background:rgba(255,255,255,.06); border:1px solid var(--line)}
-
     .notes{display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
     .note{padding:16px; border-radius:16px; background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03)); border:1px solid var(--line)}
     .note h4{margin:0 0 6px; font:800 16px Inter}
-
-    /* gallery */
     .masonry{columns:1; column-gap:12px}
-    @media(min-width:640px){.masonry{columns:2}}
-    @media(min-width:980px){.masonry{columns:3}}
+    @media(min-width:640px){.masonry{columns:2}} @media(min-width:980px){.masonry{columns:3}}
     .ph{break-inside:avoid; border-radius:14px; overflow:hidden; margin:0 0 12px; position:relative; border:1px solid var(--line); box-shadow:var(--shadow)}
     .ph img{width:100%; display:block; transition:transform .4s ease}
     .ph:hover img{transform:scale(1.03)}
-
-    /* lightbox */
     .lightbox{position:fixed; inset:0; display:none; align-items:center; justify-content:center; backdrop-filter: blur(6px); background:rgba(4,6,14,.65); z-index:70}
     .lightbox.active{display:flex}
     .lb-inner{max-width:min(92vw,1080px); max-height:90vh; position:relative}
@@ -93,18 +66,22 @@
     .lb-x{position:absolute; top:-44px; right:0; background:var(--card2); border:1px solid var(--line); border-radius:12px; padding:8px 12px; cursor:pointer}
     .lb-prev,.lb-next{position:absolute; top:50%; transform:translateY(-50%); background:var(--card2); border:1px solid var(--line); padding:10px 12px; border-radius:12px; cursor:pointer}
     .lb-prev{left:-52px}.lb-next{right:-52px}
-
-    /* mood */
     .mood{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:10px}
     .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 12px; border-radius:999px; background:var(--card2); border:1px solid var(--line); cursor:pointer}
     .chip.active{outline:2px solid var(--accent)}
     .mood textarea{width:100%; min-height:92px; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); padding:10px}
-
-    /* guest */
-    .guest input,.guest textarea{width:100%; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); padding:10px}
+    .guest input,.guest textarea,.status input{width:100%; border-radius:12px; border:1px solid var(--line); background:rgba(255,255,255,.04); color:var(--text); padding:10px}
     .g-list{display:grid; gap:10px}
     .g-item{padding:12px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid var(--line)}
-
+    .status{display:grid; grid-template-columns:1fr auto; gap:10px; align-items:start}
+    .switch{display:flex; gap:8px; align-items:center}
+    .jar{position:relative; width:180px; height:200px}
+    .jar svg{width:100%; height:100%}
+    .jar .drop{position:absolute; font-size:28px; will-change:transform}
+    .thread{display:grid; gap:12px}
+    .post{padding:14px; border-radius:14px; background:rgba(255,255,255,.05); border:1px solid var(--line)}
+    .post .meta{font-size:13px; color:var(--muted); margin-bottom:6px}
+    .reply{margin-top:8px; padding:10px; border-left:2px solid rgba(255,255,255,.12)}
     footer{padding:36px 18px calc(70px + var(--safe)); color:var(--muted); text-align:center}
     .tiny{opacity:.75; font-size:13px}
   </style>
@@ -125,10 +102,9 @@
   <main id="main">
     <section class="screen" data-tab="home">
       <div class="container">
-        <div class="card p24">
-          <p class="heart" id="heart">💗 <span class="tap">(нажми 3 раза)</span></p>
+        <div class="card p24" id="titleArea">
           <h1 class="title">Привет, Настя. Здесь спокойно, красиво и очень аккуратно.</h1>
-          <p class="subtitle">Время, музыка, фотографии и маленькие вещи, которые важны. Всё работает как приложение.</p>
+          <p class="subtitle">Время, музыка, фотографии и маленькие вещи. Всё работает как приложение.</p>
           <div class="stats">
             <div class="stat"><b id="daysTogether">—</b><span>дней знакомы (с 01.09.2017)</span></div>
             <div class="stat"><b id="nextBdayN">—</b><span>до др Насти (9 декабря, МСК)</span></div>
@@ -156,6 +132,71 @@
             </div>
           </div>
         </div>
+
+        <div class="card p24">
+          <div class="row" style="justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+            <div class="switch">
+              <span class="badge">Я: 
+                <select id="me" style="background:transparent;border:none;color:inherit">
+                  <option value="egor">Егор</option>
+                  <option value="nastya">Настя</option>
+                </select>
+              </span>
+              <span class="badge">Друг: 
+                <select id="friend" style="background:transparent;border:none;color:inherit">
+                  <option value="nastya">Настя</option>
+                  <option value="egor">Егор</option>
+                </select>
+              </span>
+            </div>
+            <div class="badge" id="installAgain" style="cursor:pointer">📲 Установить</div>
+          </div>
+
+          <div class="mood">
+            <div>
+              <div class="chip" data-m="bad" data-emo="😶‍🌫️">😶‍🌫️ трудно</div>
+              <div class="chip" data-m="ok" data-emo="🙂">🙂 норм</div>
+              <div class="chip" data-m="good" data-emo="😊">😊 хорошо</div>
+              <div class="chip" data-m="happy" data-emo="🤩">🤩 супер</div>
+              <div class="jar" id="jar">
+                <svg viewBox="0 0 200 220">
+                  <defs>
+                    <linearGradient id="jg" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0" stop-color="rgba(255,255,255,.35)"/>
+                      <stop offset="1" stop-color="rgba(255,255,255,.08)"/>
+                    </linearGradient>
+                  </defs>
+                  <path d="M40 40 h120 a10 10 0 0 1 10 10 v110 a40 40 0 0 1 -40 40 h-60 a40 40 0 0 1 -40 -40 v-110 a10 10 0 0 1 10 -10 z" fill="url(#jg)" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <textarea id="moodTxt" placeholder="Короткая заметка на день (хранится неделю)"></textarea>
+              <div class="row" style="justify-content:flex-end;margin-top:8px"><a class="btn" id="saveMood" style="background:linear-gradient(135deg,#7aa6ff,#a2ffde)">Сохранить</a></div>
+              <div class="subtitle" id="moodInfo" style="margin-top:8px"></div>
+              <div class="status" style="margin-top:12px">
+                <input id="statusTxt" placeholder="Статус: что сейчас делаешь" />
+                <a class="btn" id="saveStatus">OK</a>
+              </div>
+              <div class="subtitle" id="friendInfo" style="margin-top:8px"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card p24">
+          <b>Лента настроения (7 дней, шифрование)</b>
+          <div class="row" style="gap:8px;flex-wrap:wrap;margin:10px 0 14px">
+            <a class="badge" id="syncPull" style="cursor:pointer">⤓ Обновить</a>
+            <a class="badge" id="syncPush" style="cursor:pointer">⤒ Отправить</a>
+          </div>
+          <div class="thread" id="thread"></div>
+          <div class="row" style="gap:10px; margin-top:12px">
+            <input class="status" id="replyTxt" placeholder="Ответ на последнее настроение друга" />
+            <a class="btn" id="replySend">Ответить</a>
+          </div>
+          <div class="subtitle" id="syncInfo" style="margin-top:10px"></div>
+        </div>
+
       </div>
     </section>
 
@@ -177,42 +218,14 @@
       </div>
     </section>
 
-    <section class="screen" data-tab="mood" hidden>
-      <div class="container">
-        <div class="card p24">
-          <b>День</b>
-          <div class="mood">
-            <div>
-              <div class="chip" data-m="bad">😶‍🌫️ трудно</div>
-              <div class="chip" data-m="ok">🙂 норм</div>
-              <div class="chip" data-m="good">😊 хорошо</div>
-              <div class="chip" data-m="happy">🤩 супер</div>
-            </div>
-            <div>
-              <textarea id="moodTxt" placeholder="Короткая заметка на день (хранится неделю)"></textarea>
-              <div class="row" style="justify-content:flex-end;margin-top:8px"><a class="btn" id="saveMood" style="background:linear-gradient(135deg,#7aa6ff,#a2ffde)">Сохранить</a></div>
-              <div class="subtitle" id="moodInfo" style="margin-top:8px"></div>
-            </div>
-          </div>
-        </div>
-        <div class="card p24 guest">
-          <b>Гостевая (локально)</b>
-          <input id="gName" placeholder="Имя"/>
-          <textarea id="gMsg" placeholder="Сообщение"></textarea>
-          <div class="row" style="justify-content:flex-end"><a class="btn" id="gAdd">Добавить</a></div>
-          <div class="g-list" id="gList"></div>
-        </div>
-      </div>
-    </section>
-
     <section class="screen" data-tab="about" hidden>
       <div class="container">
         <div class="card p24">
           <b>Инфо</b>
-          <p class="subtitle">MSK‑время • офлайн‑режим (PWA) • плавные анимации • лайтбокс со свайпом • локальные записи • безопасность (ничего не уходит с устройства).</p>
+          <p class="subtitle">MSK‑время • офлайн PWA • плавные анимации • шифрованная синхронизация ленты через GitHub‑файл (через прокси‑коммит).</p>
           <div class="row" style="gap:10px;flex-wrap:wrap;margin-top:8px">
             <span class="badge">⏳ До прогулки: <b id="walk">∞</b></span>
-            <span class="badge" id="installAgain" style="cursor:pointer">📲 Установить на экран</span>
+            <span class="badge" id="installAgain" style="cursor:pointer">📲 Установить</span>
           </div>
         </div>
       </div>
@@ -223,7 +236,6 @@
     <div class="inner">
       <a class="tab active" data-go="home" role="tab" aria-selected="true">🏠<small>Дом</small></a>
       <a class="tab" data-go="gallery" role="tab">🖼️<small>Фото</small></a>
-      <a class="tab" data-go="mood" role="tab">🗒️<small>День</small></a>
       <a class="tab" data-go="about" role="tab">⚙️<small>Ещё</small></a>
     </div>
   </nav>
@@ -238,141 +250,101 @@
   </div>
 
   <footer>
-    <div class="wrap">Сделано профессионально, но по‑домашнему. <span class="tiny">PWA, офлайн, пасхалки, локальные данные. ©</span></div>
+    <div class="wrap">хрю хрюююююю мееееееее мееее мяу. <span class="tiny">PWA, офлайн, пасхалки, локальные данные, шифрование. ©</span></div>
   </footer>
 
   <script>
-    // ===== particles background =====
-    const cvs = document.getElementById('bg');
-    const ctx = cvs.getContext('2d');
-    let w,h,dots=[]; function rs(){w=cvs.width=innerWidth; h=cvs.height=innerHeight}
-    addEventListener('resize', rs); rs();
-    function initDots(){const n=Math.min(150, Math.floor(w*h/16000)); dots=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.3,vx:(Math.random()-.5)*0.25,vy:(Math.random()-.5)*0.25,a:Math.random()*0.45+0.15}))}
-    initDots();
-    (function loop(){ctx.clearRect(0,0,w,h); for(const d of dots){d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>w)d.vx*=-1; if(d.y<0||d.y>h)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${d.a})`; ctx.fill()} requestAnimationFrame(loop)})()
+    // ====== CONFIG (замени на свои) ======
+    const GITHUB_RAW = 'https://raw.githubusercontent.com/<owner>/<repo>/main/mood.enc.json';
+    const COMMIT_API = 'https://<твой-домен>/commit'; // твой прокси-бэкенд
+    const COMMIT_KEY = 'замени-на-длинный-секрет'; // общий секрет для бэкенда
+    const PASSPHRASE = 'настя‑шифр‑вдвух'; // пароль для шифрования (PBKDF2)
 
-    // ===== tabs =====
-    const tabs=document.querySelectorAll('.tab');
-    const screens=[...document.querySelectorAll('.screen')];
-    tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); const go=t.dataset.go; screens.forEach(s=> s.hidden = s.dataset.tab!==go ); window.scrollTo({top:0, behavior:'smooth'}); }));
-
-    // ===== time utils (MSK) =====
-    const MSK_OFFSET = 3*60; // minutes
-    function nowMSK(){ const n=new Date(); const utc=n.getTime()+n.getTimezoneOffset()*60000; return new Date(utc+MSK_OFFSET*60000) }
+    // ====== helpers time (MSK) ======
+    const MSK_OFFSET = 3*60; function nowMSK(){ const n=new Date(); const utc=n.getTime()+n.getTimezoneOffset()*60000; return new Date(utc+MSK_OFFSET*60000) }
     function daysSince(dateStr){ const start=new Date(dateStr+'T00:00:00+03:00'); const diff=nowMSK()-start; return Math.floor(diff/86400000) }
-    function msToNext(month,day){ const n=nowMSK(); let t=new Date(Date.UTC(n.getUTCFullYear(),month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000); if(t<n){ t=new Date(Date.UTC(n.getUTCFullYear()+1,month-1,day,0,0,0)); t=new Date(t.getTime()+3*3600*1000) } return t - n }
+    function msToNext(month,day,hour=0,minute=0){ const n=nowMSK(); let t=new Date(Date.UTC(n.getUTCFullYear(),month-1,day,hour,minute,0)); t=new Date(t.getTime()+3*3600*1000); if(t<n){ t=new Date(Date.UTC(n.getUTCFullYear()+1,month-1,day,hour,minute,0)); t=new Date(t.getTime()+3*3600*1000) } return t - n }
     function pctYearTo(month,day){ const n=nowMSK(); const start=new Date(Date.UTC(n.getUTCFullYear(),0,1)); const target=new Date(Date.UTC(n.getUTCFullYear(),month-1,day)); const nowpos=n-start; const total=target-start; return Math.max(0, Math.min(1, nowpos/total)) }
 
-    function renderClocks(){
-      document.getElementById('daysTogether').textContent = daysSince('2017-09-01');
-      const dn = Math.ceil(msToNext(12,9)/86400000); // Настя
-      const de = Math.ceil(msToNext(12,28)/86400000); // Егор
-      document.getElementById('nextBdayN').textContent = dn;
-      document.getElementById('nextBdayE').textContent = de;
-      const circ=339; const pn=1-pctYearTo(12,9); const pe=1-pctYearTo(12,28);
-      document.getElementById('ringN').style.strokeDashoffset = String(circ * pn);
-      document.getElementById('ringE').style.strokeDashoffset = String(circ * pe);
-      document.getElementById('pctN').textContent = Math.round((1-pn)*100) + '% прожито';
-      document.getElementById('pctE').textContent = Math.round((1-pe)*100) + '% прожито';
-      document.getElementById('walk').textContent = '∞';
-    }
+    // ====== background particles ======
+    const cvs = document.getElementById('bg'); const ctx = cvs.getContext('2d'); let w,h,dots=[]; function rs(){w=cvs.width=innerWidth; h=cvs.height=innerHeight} addEventListener('resize', rs); rs();
+    function initDots(){const n=Math.min(160, Math.floor(w*h/16000)); dots=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.8+0.3,vx:(Math.random()-.5)*0.25,vy:(Math.random()-.5)*0.25,a:Math.random()*0.45+0.15}))} initDots();
+    (function loop(){ctx.clearRect(0,0,w,h); for(const d of dots){d.x+=d.vx; d.y+=d.vy; if(d.x<0||d.x>w)d.vx*=-1; if(d.y<0||d>h)d.vy*=-1; ctx.beginPath(); ctx.arc(d.x,d.y,d.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${d.a})`; ctx.fill()} requestAnimationFrame(loop)})()
+
+    // ====== tabs ======
+    const tabs=document.querySelectorAll('.tab'); const screens=[...document.querySelectorAll('.screen')]; tabs.forEach(t=>t.addEventListener('click',()=>{ tabs.forEach(x=>x.classList.remove('active')); t.classList.add('active'); const go=t.dataset.go; screens.forEach(s=> s.hidden = s.dataset.tab!==go ); window.scrollTo({top:0, behavior:'smooth'});}));
+
+    // ====== hero timers ======
+    function renderClocks(){ document.getElementById('daysTogether').textContent = daysSince('2017-09-01'); const dn=Math.ceil(msToNext(12,9)/86400000); const de=Math.ceil(msToNext(12,28)/86400000); document.getElementById('nextBdayN').textContent=dn; document.getElementById('nextBdayE').textContent=de; const circ=339; const pn=1-pctYearTo(12,9); const pe=1-pctYearTo(12,28); document.getElementById('ringN').style.strokeDashoffset=String(circ*pn); document.getElementById('ringE').style.strokeDashoffset=String(circ*pe); document.getElementById('pctN').textContent=Math.round((1-pn)*100)+'% прожито'; document.getElementById('pctE').textContent=Math.round((1-pe)*100)+'% прожито'; const ms=msToNext(9,14,10,0); const d=Math.max(0,Math.floor(ms/86400000)); const h=Math.max(0,Math.floor((ms%86400000)/3600000)); const m=Math.max(0,Math.floor((ms%3600000)/60000)); document.getElementById('walk').textContent=`${d}д ${h}ч ${m}м`; }
     renderClocks(); setInterval(renderClocks, 60_000);
 
-    // ===== lightbox + swipe =====
-    const galleryImgs = Array.from(document.querySelectorAll('#gallery img'));
-    const box = document.getElementById('lightbox');
-    const lbImg = document.getElementById('lb-img');
-    const prevBtn = document.querySelector('.lb-prev');
-    const nextBtn = document.querySelector('.lb-next');
-    const closeBtn = document.getElementById('lb-close');
-    let idx=0; function openAt(i){idx=i; lbImg.src=galleryImgs[idx].src; box.classList.add('active')}
-    document.getElementById('gallery').addEventListener('click', e=>{ const img=e.target.closest('img'); if(!img) return; openAt(galleryImgs.indexOf(img)) });
-    function hide(){ box.classList.remove('active'); lbImg.src='' }
-    closeBtn.addEventListener('click', hide);
-    box.addEventListener('click', e=>{ if(e.target===box) hide() });
-    prevBtn.addEventListener('click', ()=> openAt((idx-1+galleryImgs.length)%galleryImgs.length));
-    nextBtn.addEventListener('click', ()=> openAt((idx+1)%galleryImgs.length));
-    addEventListener('keydown', e=>{ if(e.key==='Escape') hide(); if(!box.classList.contains('active')) return; if(e.key==='ArrowLeft') prevBtn.click(); if(e.key==='ArrowRight') nextBtn.click(); });
-    let sx=0; lbImg.addEventListener('touchstart',e=>{sx=e.touches[0].clientX});
-    lbImg.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX - sx; if(Math.abs(dx)>40){ dx>0?prevBtn.click():nextBtn.click(); }});
+    // ====== lightbox ======
+    const galleryImgs=[]; document.querySelectorAll('#gallery img').forEach(im=>galleryImgs.push(im));
+    const box=document.getElementById('lightbox'); const lbImg=document.getElementById('lb-img'); const prevBtn=document.querySelector('.lb-prev'); const nextBtn=document.querySelector('.lb-next'); const closeBtn=document.getElementById('lb-close');
+    let idx=0; function openAt(i){idx=i; lbImg.src=galleryImgs[idx].src; box.classList.add('active')} document.getElementById('gallery').addEventListener('click',e=>{const img=e.target.closest('img'); if(!img)return; openAt(galleryImgs.indexOf(img))}); function hide(){box.classList.remove('active'); lbImg.src=''} closeBtn.addEventListener('click',hide); box.addEventListener('click',e=>{if(e.target===box)hide()}); prevBtn.addEventListener('click',()=>openAt((idx-1+galleryImgs.length)%galleryImgs.length)); nextBtn.addEventListener('click',()=>openAt((idx+1)%galleryImgs.length));
 
-    // ===== upload (local only) =====
-    const upInput=document.getElementById('upPhoto'); const upBtn=document.getElementById('upBtn'); if(upBtn) upBtn.addEventListener('click',()=>upInput.click());
-    if(upInput){ upInput.addEventListener('change', ()=>{ const f=upInput.files[0]; if(!f) return; const url=URL.createObjectURL(f); const fig=document.createElement('figure'); fig.className='ph'; const im=document.createElement('img'); im.loading='lazy'; im.src=url; fig.appendChild(im); document.getElementById('gallery').prepend(fig); galleryImgs.unshift(im); openAt(0); }); }
-
-    // ===== mood (7-day rolling, localStorage) =====
-    const moodKey='nastya.mood.v2';
-    const moodTxt=document.getElementById('moodTxt');
-    const moodInfo=document.getElementById('moodInfo');
-    let moodState=JSON.parse(localStorage.getItem(moodKey)||'[]').filter(x=>Date.now()-x.t < 7*86400000);
-    function saveMoodState(){ localStorage.setItem(moodKey, JSON.stringify(moodState)) }
-    function todayKey(t){ return new Date(new Date(t).toDateString()).getTime() }
-    function renderMood(){ saveMoodState(); const t=todayKey(nowMSK()); const rec=moodState.find(x=> todayKey(x.t)===t ); document.querySelectorAll('.chip').forEach(c=> c.classList.toggle('active', !!rec && rec.m===c.dataset.m)); moodTxt.value = rec? (rec.txt||'') : ''; moodInfo.textContent = `Записей за неделю: ${moodState.length}`; }
-    document.querySelectorAll('.chip').forEach(c=> c.addEventListener('click',()=>{ const t=todayKey(nowMSK()); let rec=moodState.find(x=> todayKey(x.t)===t ); if(!rec){ rec={t: Date.now(), m:c.dataset.m, txt:''}; moodState.push(rec) } else { rec.m=c.dataset.m } renderMood() }));
-    document.getElementById('saveMood').addEventListener('click', ()=>{ const t=todayKey(nowMSK()); let rec=moodState.find(x=> todayKey(x.t)===t ); if(!rec){ rec={t: Date.now(), m:'ok', txt:moodTxt.value}; moodState.push(rec) } else { rec.txt=moodTxt.value } renderMood(); vibrate([30,20,30]); });
-    renderMood();
-
-    // ===== guest local =====
-    const gKey='nastya.guest';
-    const gList=document.getElementById('gList');
-    function renderGuest(){ const arr=JSON.parse(localStorage.getItem(gKey)||'[]'); gList.innerHTML=''; arr.forEach(it=>{ const d=document.createElement('div'); d.className='g-item'; d.innerHTML=`<b>${it.n||'Аноним'}</b><div style="opacity:.8">${it.m||''}</div>`; gList.appendChild(d) }); }
-    renderGuest();
-    document.getElementById('gAdd').addEventListener('click', ()=>{ const n=document.getElementById('gName').value.trim(); const m=document.getElementById('gMsg').value.trim(); if(!m) return toast('Пусто'); const arr=JSON.parse(localStorage.getItem(gKey)||'[]'); arr.unshift({n,m, t:Date.now()}); localStorage.setItem(gKey, JSON.stringify(arr)); document.getElementById('gMsg').value=''; renderGuest(); vibrate([15,40,15]) })
-
-    // ===== toast & vibration =====
-    function toast(text){ const d=document.createElement('div'); d.textContent=text; d.style.cssText='position:fixed;left:50%;bottom:calc(18px + var(--safe));transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(8px);padding:12px 16px;border-radius:12px;z-index:99'; document.body.appendChild(d); setTimeout(()=>d.remove(),2600) }
+    // ====== PWA ======
+    function toast(text){ const d=document.createElement('div'); d.textContent=text; d.style.cssText='position:fixed;left:50%;bottom:calc(18px + var(--safe));transform:translateX(-50%);background:rgba(255,255,255,.08);border:1px solid var(--line);backdrop-filter:blur(8px);padding:12px 16px;border-radius:12px;z-index:99'; document.body.appendChild(d); setTimeout(()=>d.remove(),2600)}
     function vibrate(p){ if('vibrate' in navigator) try{navigator.vibrate(p)}catch(e){} }
+    const manifest={name:'Насте — app',short_name:'Насте',start_url:'.',display:'standalone',background_color:'#0a0f1f',theme_color:'#0a0f1f',icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%23ff71b8%22/><stop offset=%221%22 stop-color=%22%237aa6ff%22/></linearGradient></defs><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%220a0f1f%22/><path d=%22M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z%22 fill=%22url(%23g)%22/></svg>',sizes:'64x64',type:'image/svg+xml'}]};
+    const manUrl=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'})); const link=document.createElement('link'); link.rel='manifest'; link.href=manUrl; document.head.appendChild(link);
+    const swCode=`self.addEventListener('install',e=>{e.waitUntil(caches.open('nastya-app-v3').then(c=>c.addAll(['./']))) }); self.addEventListener('fetch',e=>{e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
+    if('serviceWorker' in navigator){ const swUrl=URL.createObjectURL(new Blob([swCode],{type:'text/javascript'})); navigator.serviceWorker.register(swUrl) }
+    let deferredPrompt; window.addEventListener('beforeinstallprompt',(e)=>{e.preventDefault();deferredPrompt=e;document.getElementById('installBadge').style.display='inline-flex'});
+    document.getElementById('installBadge').addEventListener('click',async()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; if(outcome==='accepted') toast('Установлено на экран'); deferredPrompt=null});
+    document.getElementById('installAgain').addEventListener('click',()=>document.getElementById('installBadge').click());
 
-    // ===== PWA manifest & service worker (inline) =====
-    const manifest = { name:'Насте — app', short_name:'Насте', start_url:'.', display:'standalone', background_color:'#0a0f1f', theme_color:'#0a0f1f', icons:[{src:'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><defs><linearGradient id=%22g%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22><stop stop-color=%22%23ff71b8%22/><stop offset=%221%22 stop-color=%22%237aa6ff%22/></linearGradient></defs><rect width=%2264%22 height=%2264%22 rx=%2216%22 fill=%220a0f1f%22/><path d=%22M32 50c-9-6-18-14-18-23a10 10 0 0 1 18-7 10 10 0 0 1 18 7c0 9-9 17-18 23z%22 fill=%22url(%23g)%22/></svg>', sizes:'64x64', type:'image/svg+xml'}] };
-    const manUrl = URL.createObjectURL(new Blob([JSON.stringify(manifest)], {type:'application/json'}));
-    const link = document.createElement('link'); link.rel='manifest'; link.href=manUrl; document.head.appendChild(link);
-    const swCode = `self.addEventListener('install', e=>{ e.waitUntil(caches.open('nastya-app-v1').then(c=>c.addAll(['./']))) }); self.addEventListener('fetch', e=>{ e.respondWith(caches.match(e.request).then(r=> r || fetch(e.request))) });`;
-    if('serviceWorker' in navigator){ const swUrl = URL.createObjectURL(new Blob([swCode], {type:'text/javascript'})); navigator.serviceWorker.register(swUrl) }
-    let deferredPrompt; window.addEventListener('beforeinstallprompt', (e)=>{ e.preventDefault(); deferredPrompt=e; document.getElementById('installBadge').style.display='inline-flex' });
-    document.getElementById('installBadge').addEventListener('click', async ()=>{ if(!deferredPrompt) return; deferredPrompt.prompt(); const {outcome}=await deferredPrompt.userChoice; if(outcome==='accepted'){ toast('Установлено на экран') } deferredPrompt=null });
-    document.getElementById('installAgain').addEventListener('click', ()=> document.getElementById('installBadge').click());
+    // ====== 10s SHOW on triple tap title (без сердечек) ======
+    const showCVS=document.getElementById('show'); const sctx=showCVS.getContext('2d'); let sw,sh; function srs2(){sw=showCVS.width=innerWidth; sh=showCVS.height=innerHeight} addEventListener('resize', srs2); srs2();
+    let tapCnt=0, tapTimer; document.getElementById('titleArea').addEventListener('click',()=>{tapCnt++; clearTimeout(tapTimer); tapTimer=setTimeout(()=>tapCnt=0,500); if(tapCnt>=3){startShow(); tapCnt=0}});
+    function startShow(){ vibrate([40,50,40,50,40]); const start=performance.now(); const ribbons=Array.from({length:6},()=>({h:180+Math.random()*160, amp:40+Math.random()*60, sp:0.001+Math.random()*0.0015, ph:Math.random()*6.28, y: Math.random()*sh*0.8+sh*0.1})); const orbs=Array.from({length:24},()=>({r: 2+Math.random()*3, R: 40+Math.random()*220, a: Math.random()*Math.PI*2, av: (Math.random()*.8+.2)/2000, hue: Math.random()*360 })); const shards=[]; for(let i=0;i<80;i++) shards.push({x:sw/2, y:sh/2, vx:(Math.random()*2-1)*4, vy:(Math.random()*2-1)*4, life:1, hue: 260+Math.random()*140});
+      function loop(t){ const prog=Math.min(1,(t-start)/10000); sctx.clearRect(0,0,sw,sh); sctx.globalCompositeOperation='lighter'; sctx.save(); sctx.globalAlpha=0.6; ribbons.forEach((rb,i)=>{ sctx.beginPath(); for(let x=0;x<=sw;x+=6){ const y=rb.y+Math.sin(x*0.004+t*rb.sp+rb.ph)*rb.amp*(1-prog*0.5); i? sctx.lineTo(x,y):sctx.moveTo(x,y) } const grd=sctx.createLinearGradient(0,rb.y-80,0,rb.y+80); grd.addColorStop(0,`hsla(${rb.h},80%,70%,.18)`); grd.addColorStop(1,`hsla(${rb.h+50},80%,60%,.06)`); sctx.strokeStyle=grd; sctx.lineWidth=8; sctx.stroke();}); sctx.restore(); orbs.forEach(o=>{o.a+=o.av*(1+prog*2); const x=sw/2+Math.cos(o.a)*o.R*(1-prog*0.3); const y=sh/2+Math.sin(o.a)*o.R*(1-prog*0.3); sctx.fillStyle=`hsla(${o.hue},90%,70%,${0.8*(1-prog*0.3)})`; sctx.beginPath(); sctx.arc(x,y,o.r,0,6.28); sctx.fill();}); for(let i=shards.length-1;i>=0;i--){ const s=shards[i]; s.x+=s.vx; s.y+=s.vy; s.vx*=0.99; s.vy=s.vy*0.99+0.02; s.life-=0.008; if(s.life<=0){ shards.splice(i,1); continue } sctx.fillStyle=`hsla(${s.hue},90%,60%,${s.life})`; sctx.fillRect(s.x,s.y,2,2);} const vg=sctx.createRadialGradient(sw/2,sh/2,Math.min(sw,sh)*0.2,sw/2,sh/2,Math.max(sw,sh)*0.7); vg.addColorStop(0,'transparent'); vg.addColorStop(1,'rgba(0,0,0,.25)'); sctx.fillStyle=vg; sctx.fillRect(0,0,sw,sh); if(prog<1){ requestAnimationFrame(loop)} else { sctx.clearRect(0,0,sw,sh)}} requestAnimationFrame(loop); }
 
-    // ===== 10s show on triple heart tap =====
-    const heart=document.getElementById('heart'); let taps=0, tId; heart.addEventListener('click',()=>{ taps++; clearTimeout(tId); tId=setTimeout(()=>taps=0,500); if(taps>=3){ startShow(); taps=0 } });
+    // ====== mood/status local + jar ======
+    const meSel=document.getElementById('me'); const frSel=document.getElementById('friend'); const moodTxt=document.getElementById('moodTxt'); const moodInfo=document.getElementById('moodInfo'); const statusTxt=document.getElementById('statusTxt'); const friendInfo=document.getElementById('friendInfo'); const jar=document.getElementById('jar');
+    const DB_KEY='nastya.app.db.v2'; function loadDB(){ try{ return JSON.parse(localStorage.getItem(DB_KEY))||{egor:{moods:[],status:'',updated:0}, nastya:{moods:[],status:'',updated:0}, thread:[]} }catch(e){ return {egor:{moods:[],status:'',updated:0}, nastya:{moods:[],status:'',updated:0}, thread:[]} }
+    } function saveDB(db){ localStorage.setItem(DB_KEY, JSON.stringify(db)) }
+    let db=loadDB(); function todayKey(t){ return new Date(new Date(t).toDateString()).getTime() } function weekAgo(t){ return t-7*86400000 }
+    function renderUI(){ const me=meSel.value, fr=frSel.value; if(me===fr){ frSel.value=me==='egor'?'nastya':'egor' } db[me].moods=db[me].moods.filter(x=>x.t>=weekAgo(Date.now())); saveDB(db); const today=todayKey(nowMSK()); const rec=db[me].moods.find(x=>todayKey(x.t)===today); document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', !!rec && rec.m===c.dataset.m)); moodTxt.value=rec?(rec.txt||''):''; statusTxt.value=db[me].status||''; moodInfo.textContent=`Записей за неделю: ${db[me].moods.length}`; const frMood=db[fr].moods.find(x=>todayKey(x.t)===today); const frMoodTxt=frMood?(frMood.txt||'—'):'—'; friendInfo.textContent=`Статус друга: ${db[fr].status||'—'} • Настроение: ${frMood?frMood.m:'—'} • Заметка: ${frMoodTxt}`; renderJar(db[me].moods); renderThread(); }
+    function renderJar(list){ jar.querySelectorAll('.drop').forEach(n=>n.remove()); const baseX=40, baseY=140, width=100, step=width/7; const grouped=[0,1,2,3,4,5,6].map(()=>[]); list.forEach(it=>{ const d=(new Date(it.t)).getDay(); const idx=(d+6)%7; grouped[idx].push(it) }); grouped.forEach((arr,day)=>{ arr.forEach((it,i)=>{ const s=document.createElement('div'); s.className='drop'; s.textContent=emojiFor(it.m); s.style.left=(baseX+day*step+8)+'px'; s.style.top=(baseY - i*24)+'px'; jar.appendChild(s); }) }) }
+    function emojiFor(m){ return {bad:'😶‍🌫️', ok:'🙂', good:'😊', happy:'🤩'}[m]||'🙂' }
+    document.querySelectorAll('.chip').forEach(c=> c.addEventListener('click',()=>{ const me=meSel.value; const m=c.dataset.m; const emo=c.dataset.emo; const t=Date.now(); let r=db[me].moods.find(x=> todayKey(x.t)===todayKey(t) ); if(!r){ r={t, m, txt:''}; db[me].moods.push(r) } else { r.m=m } db[me].updated=Date.now(); saveDB(db); renderUI(); dropToJar(emo); vibrate([25,25,25]); addThreadPost(me, m, moodTxt.value.trim()); }));
+    document.getElementById('saveMood').addEventListener('click',()=>{ const me=meSel.value; const t=Date.now(); let r=db[me].moods.find(x=> todayKey(x.t)===todayKey(t) ); if(!r){ r={t, m:'ok', txt:moodTxt.value}; db[me].moods.push(r) } else { r.txt=moodTxt.value } db[me].updated=Date.now(); saveDB(db); renderUI(); vibrate([15,40,15]); });
+    document.getElementById('saveStatus').addEventListener('click',()=>{ const me=meSel.value; db[me].status=statusTxt.value.slice(0,140); db[me].updated=Date.now(); saveDB(db); renderUI(); vibrate([20]); toast('OK') });
+    function dropToJar(emoji){ const d=document.createElement('div'); d.className='drop'; d.textContent=emoji; jar.appendChild(d); const rect=jar.getBoundingClientRect(); const x0=rect.left+rect.width/2; const y0=rect.top-20; const x1=rect.left+60+Math.random()*60; const y1=rect.top+140; const cpX=(x0+x1)/2+(Math.random()*2-1)*80; const cpY=y0-100-Math.random()*60; const start=performance.now(); function anim(t){ const p=Math.min(1,(t-start)/800); const x=(1-p)*(1-p)*x0 + 2*(1-p)*p*cpX + p*p*x1; const y=(1-p)*(1-p)*y0 + 2*(1-p)*p*cpY + p*p*y1; d.style.transform=`translate(${x-rect.left}px, ${y-rect.top}px)`; d.style.opacity=1-p*0.1; if(p<1) requestAnimationFrame(anim) } requestAnimationFrame(anim) }
 
-    const showCVS=document.getElementById('show'); const sctx=showCVS.getContext('2d'); let sw,sh; function srs(){ sw=showCVS.width=innerWidth; sh=showCVS.height=innerHeight } addEventListener('resize', srs); srs();
+    // ====== Thread (posts + replies) ======
+    const threadEl=document.getElementById('thread'); const replyTxt=document.getElementById('replyTxt');
+    function addThreadPost(author, mood, note){ const todayStr=new Date(nowMSK()).toISOString().slice(0,10); const id=`${todayStr}-${author}`; let post=db.thread.find(p=>p.id===id); if(!post){ post={ id, ts:new Date().toISOString(), author, mood, note, replies:[] }; db.thread.unshift(post) } else { post.mood=mood; post.note=note; post.ts=new Date().toISOString() } saveDB(db); renderThread(); }
+    function addReply(text){ const fr=frSel.value; const me=meSel.value; // reply to friend's today post
+      const todayStr=new Date(nowMSK()).toISOString().slice(0,10); const pid=`${todayStr}-${fr}`; let post=db.thread.find(p=>p.id===pid); if(!post){ post={ id:pid, ts:new Date().toISOString(), author:fr, mood:'ok', note:'', replies:[] }; db.thread.unshift(post) }
+      post.replies.push({ author:me, ts:new Date().toISOString(), text }); saveDB(db); renderThread(); vibrate([30]) }
+    document.getElementById('replySend').addEventListener('click',()=>{ const t=replyTxt.value.trim(); if(!t) return; addReply(t); replyTxt.value=''; });
+    function renderThread(){ threadEl.innerHTML=''; const cut=weekAgo(Date.now()); db.thread = db.thread.filter(p=> (new Date(p.ts)).getTime()>=cut ); saveDB(db); db.thread.slice(0,20).forEach(p=>{ const d=document.createElement('div'); d.className='post'; const who=p.author==='egor'?'Егор':'Настя'; const when=new Date(p.ts).toLocaleString('ru-RU',{hour:'2-digit',minute:'2-digit',day:'2-digit',month:'2-digit'}); d.innerHTML=`<div class="meta">${who} • ${when} • настроение ${emojiFor(p.mood)}</div><div>${p.note?escapeHTML(p.note):''}</div>`; if(p.replies?.length){ p.replies.forEach(r=>{ const rw=document.createElement('div'); rw.className='reply'; const wh=r.author==='egor'?'Егор':'Настя'; const whn=new Date(r.ts).toLocaleTimeString('ru-RU',{hour:'2-digit',minute:'2-digit'}); rw.innerHTML=`<div class="meta">${wh} • ${whn}</div><div>${escapeHTML(r.text)}</div>`; d.appendChild(rw) }) } threadEl.appendChild(d) }) }
+    function escapeHTML(s){ return s.replace(/[&<>\"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])) }
 
-    function startShow(){
-      const start=performance.now();
-      vibrate([20,30,20,30,20]);
-      const aurora = []; for(let i=0;i<5;i++){ aurora.push({y: Math.random()*sh, phase: Math.random()*Math.PI*2, hue: 220+Math.random()*120}) }
-      const sparks = [];
-      function launch(x,y){ for(let i=0;i<60;i++){ const a=Math.random()*Math.PI*2; const sp=2+Math.random()*4; sparks.push({x,y,vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:1, hue: Math.random()*360}) } }
-      function burst(){ launch(Math.random()*sw, sh* (0.3+Math.random()*0.4)) }
-
-      function loop(t){
-        const dt = (t - (loop._last||t)) / 1000; loop._last=t;
-        const prog = Math.min(1, (t - start)/10000); // 10s
-        sctx.clearRect(0,0,sw,sh);
-        sctx.globalCompositeOperation='lighter';
-        // 0-0.2: heart pulse mask
-        if(prog<0.25){ const p = prog/0.25; const r = 80 + Math.sin(t*0.01)*8; drawHeart(sw/2, sh/2, r*(1+p*0.6), `hsla(${330+p*60},90%,60%,${0.6})`); }
-        // 0.2-0.6: aurora waves
-        if(prog>0.15){ sctx.save(); sctx.globalAlpha=0.6; aurora.forEach((a,i)=>{ sctx.beginPath(); for(let x=0;x<=sw;x+=6){ const y = a.y + Math.sin(x*0.003 + t*0.001 + a.phase)*40; i? sctx.lineTo(x,y): sctx.moveTo(x,y) } const grd = sctx.createLinearGradient(0,a.y-60, 0,a.y+60); grd.addColorStop(0,`hsla(${a.hue},80%,70%,.15)`); grd.addColorStop(1,`hsla(${a.hue+40},80%,60%,.05)`); sctx.strokeStyle=grd; sctx.lineWidth=8; sctx.stroke(); }); sctx.restore(); }
-        // 0.4-1.0: fireworks & confetti stream
-        if(prog>0.4 && Math.random()<0.08) burst();
-        for(let i=sparks.length-1;i>=0;i--){ const s=sparks[i]; s.x+=s.vx; s.y+=s.vy; s.vx*=0.99; s.vy = s.vy*0.99 + 0.03; s.life -= 0.01; if(s.life<=0) {sparks.splice(i,1); continue} sctx.fillStyle=`hsla(${s.hue},90%,60%,${s.life})`; sctx.beginPath(); sctx.arc(s.x,s.y,2,0,Math.PI*2); sctx.fill(); }
-        // soft vignette
-        const grd=sctx.createRadialGradient(sw/2,sh/2, Math.min(sw,sh)*0.2, sw/2,sh/2, Math.max(sw,sh)*0.7); grd.addColorStop(0,'transparent'); grd.addColorStop(1,'rgba(0,0,0,.25)'); sctx.fillStyle=grd; sctx.fillRect(0,0,sw,sh);
-        if(prog<1){ requestAnimationFrame(loop) } else { sctx.clearRect(0,0,sw,sh) }
-      }
-      requestAnimationFrame(loop);
+    // ====== Sync to GitHub (encrypted) ======
+    async function getKey(){ const enc=new TextEncoder(); const salt=enc.encode('nastya‑salt‑v1'); const base=await crypto.subtle.importKey('raw', enc.encode(PASSPHRASE), {name:'PBKDF2'}, false, ['deriveKey']); return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:100000, hash:'SHA-256'}, base, {name:'AES-GCM', length:256}, false, ['encrypt','decrypt']) }
+    function b64(buf){ return btoa(String.fromCharCode(...new Uint8Array(buf))) }
+    function ub64(str){ return new Uint8Array(atob(str).split('').map(c=>c.charCodeAt(0))) }
+    async function encryptJSON(obj){ const iv=crypto.getRandomValues(new Uint8Array(12)); const key=await getKey(); const data=new TextEncoder().encode(JSON.stringify(obj)); const ct=await crypto.subtle.encrypt({name:'AES-GCM', iv}, key, data); return { iv:b64(iv), ct:b64(ct) } }
+    async function decryptJSON(payload){ try{ const key=await getKey(); const iv=ub64(payload.iv); const ct=ub64(payload.ct); const pt=await crypto.subtle.decrypt({name:'AES-GCM', iv}, key, ct); return JSON.parse(new TextDecoder().decode(pt)) }catch(e){ return {egor:{moods:[],status:'',updated:0}, nastya:{moods:[],status:'',updated:0}, thread:[]} }
     }
 
-    function drawHeart(x,y,size,color){
-      sctx.save(); sctx.translate(x,y); sctx.beginPath();
-      for(let a=0;a<Math.PI*2;a+=0.02){ const px = 16*Math.pow(Math.sin(a),3); const py = 13*Math.cos(a)-5*Math.cos(2*a)-2*Math.cos(3*a)-Math.cos(4*a); sctx.lineTo(px*size/32, -py*size/32) }
-      sctx.closePath(); sctx.shadowColor=color; sctx.shadowBlur=30; sctx.fillStyle=color; sctx.fill(); sctx.restore();
+    async function syncPull(){ try{ const r=await fetch(GITHUB_RAW+`?${Date.now()}`); if(!r.ok) throw 0; const payload=await r.json(); const remote=await decryptJSON(payload); mergeRemote(remote); renderUI(); document.getElementById('syncInfo').textContent='Синхронизировано (pull)'; }catch(e){ document.getElementById('syncInfo').textContent='Не удалось обновить' } }
+    function mergeRemote(remote){ // простое объединение (берём более свежие по updated; тред — объединяем)
+      ['egor','nastya'].forEach(k=>{ if((remote[k]?.updated||0) > (db[k]?.updated||0)) db[k]=remote[k] });
+      const ids=new Set(db.thread.map(p=>p.id)); (remote.thread||[]).forEach(p=>{ if(!ids.has(p.id)) db.thread.push(p) }); saveDB(db);
     }
+    async function syncPush(){ const payload=await encryptJSON(db); try{ const r=await fetch(COMMIT_API, { method:'POST', headers:{'Content-Type':'application/json','x-key':COMMIT_KEY}, body: JSON.stringify({ path:'mood.enc.json', payload }) }); const j=await r.json(); document.getElementById('syncInfo').textContent = j.ok? 'Отправлено (push)': 'Ошибка push'; }catch(e){ document.getElementById('syncInfo').textContent='Ошибка сети' } }
+    document.getElementById('syncPull').addEventListener('click', syncPull);
+    document.getElementById('syncPush').addEventListener('click', syncPush);
 
-    // ===== notifications for 14th 12:00 MSK =====
-    async function schedule14(){ if(!('Notification' in window)) return; if(Notification.permission!=='granted'){ try{ await Notification.requestPermission() }catch(e){} } const n=nowMSK(); if(n.getDate()===14 && n.getHours()===12 && n.getMinutes()===0){ new Notification('Сегодня прогулка!'); startShow(); }} setInterval(schedule14, 60_000);
+    // ====== minimal upload preview ======
+    const upInput=document.getElementById('upPhoto'); const upBtn=document.getElementById('upBtn'); if(upBtn) upBtn.addEventListener('click',()=>upInput.click()); if(upInput){ upInput.addEventListener('change',()=>{ const f=upInput.files[0]; if(!f) return; const url=URL.createObjectURL(f); const fig=document.createElement('figure'); fig.className='ph'; const im=document.createElement('img'); im.loading='lazy'; im.src=url; fig.appendChild(im); document.getElementById('gallery').prepend(fig); galleryImgs.unshift(im); openAt(0); }); }
+
+    // ====== Init ======
+    renderUI();
   </script>
 </body>
 </html>
